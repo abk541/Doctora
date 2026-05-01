@@ -10,10 +10,10 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "./icons/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "./assets/brand/hamster.png",
+      "sizes": "526x474",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

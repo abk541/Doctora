@@ -54,16 +54,16 @@ If a verified explanation is missing, the app says:
 
 `Je n’ai pas trouvé d’explication fiable dans les documents intégrés.`
 
-The sticker/joke layer is separate from the medical correction layer.
+The cute joke layer is separate from the medical correction layer.
 
-## Private Assets
+## Mascot Asset
 
-Reaction images live in:
+The only reaction/logo image currently used by the app is:
 
-`assets/stickers/`
+`assets/brand/hamster.png`
 
-The app displays the local sticker files as-is. It does not upload, generate, redraw, or recolor them.
+The older private reaction images are not referenced by the app or cache. The hamster is used as the app icon, the header mascot, and the answer reaction image.
 
 ## Privacy Note
 
-If the GitHub repository is public, the bundled stickers/PDF-derived question data are public too. Use a private repository or private hosting if those assets must stay private.
+If the GitHub repository is public, the bundled mascot/PDF-derived question data are public too. Use a private repository or private hosting if those assets must stay private.

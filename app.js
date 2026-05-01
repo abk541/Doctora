@@ -10,14 +10,7 @@ const reactionImage = document.getElementById("reactionImage");
 const reactionMessage = document.getElementById("reactionMessage");
 const particles = document.getElementById("particles");
 
-const stickerAssets = [
-  "assets/stickers/whatsapp_reaction_01.jpg",
-  "assets/stickers/whatsapp_reaction_02.jpg",
-  "assets/stickers/whatsapp_reaction_03.jpg",
-  "assets/stickers/whatsapp_reaction_04.jpg",
-  "assets/stickers/whatsapp_reaction_05.jpg",
-  "assets/stickers/whatsapp_reaction_06.jpg"
-];
+const HAMSTER_ASSET = "assets/brand/hamster.png";
 
 const correctMessages = [
   "Trop forte Dr.Baby 😌",
@@ -241,8 +234,7 @@ function normaliseQcm(raw) {
       source_page: item.source_page,
       source_section: item.source_topic,
       source_excerpt: item.explanation,
-      tags: [item.category, item.source_topic].filter(Boolean),
-      sticker_pool: stickerAssets
+      tags: [item.category, item.source_topic].filter(Boolean)
     };
   }).filter((item) => item.question && item.options.length >= 2);
 }
@@ -253,8 +245,7 @@ function normaliseLegacyPrompts(raw) {
     .filter((item) => item && item.question && !/combien de fois|Dans quelle rubrique|fichier local/i.test(item.question))
     .map((item) => ({
       ...item,
-      mode: "legacy",
-      sticker_pool: stickerAssets
+      mode: "legacy"
     }));
 }
 
@@ -329,16 +320,16 @@ function renderHome() {
     <section class="view">
       <article class="hero">
         <div class="hero-top">
-          <span class="eyebrow">Dr.Baby · Safari iPad</span>
+          <span class="eyebrow brand-chip"><img src="./${HAMSTER_ASSET}" alt="" />Dr.Baby · Safari iPad</span>
           <span class="pill">${escapeHtml(totalLabel)}</span>
         </div>
-        <h1>Dr.Baby</h1>
+        <h1><span class="hamster-title"><img src="./${HAMSTER_ASSET}" alt="" />Dr.Baby</span></h1>
         <p>Bonjour ${escapeHtml(nickname)}. De vrais QCM de concours, des corrections locales, et une petite dose de wa laaaa seulement après ta réponse.</p>
         <div class="hero-actions">
           <button class="primary" data-action="new-session">Commencer une session ✦</button>
           <button class="secondary" data-action="review-session">Revanche erreurs ↻</button>
         </div>
-        <div class="avatar-orbit" aria-hidden="true"><strong>Dr</strong></div>
+        <div class="avatar-orbit" aria-hidden="true"><img class="mascot-large" src="./${HAMSTER_ASSET}" alt="" /></div>
       </article>
 
       <section class="stats-grid">
@@ -406,11 +397,11 @@ function renderStudy() {
     <section class="view">
       <article class="hero compact-hero">
         <div class="hero-top">
-          <span class="eyebrow">QCM ${sessionIndex + 1}/${session.length}</span>
+          <span class="eyebrow brand-chip"><img src="./${HAMSTER_ASSET}" alt="" />QCM ${sessionIndex + 1}/${session.length}</span>
           <span class="pill">${escapeHtml(item.chapter)}</span>
         </div>
         <h1>QCM Dr.Baby</h1>
-        <p>Lis l’énoncé, élimine les pièges, choisis la meilleure proposition. Le sticker vient après, pas avant.</p>
+        <p>Lis l’énoncé, élimine les pièges, choisis la meilleure proposition. Le hamster vient après, pas avant.</p>
         <div class="progress-rail"><div class="progress-fill" style="width:${progress}%"></div></div>
       </article>
 
@@ -569,8 +560,8 @@ function answer(value) {
   });
   state.history = state.history.slice(0, 80);
   saveState();
-  renderStudy();
-  showReaction(mastered, item);
+  render();
+  showReaction(mastered);
 }
 
 function nextQuestion() {
@@ -583,7 +574,7 @@ function nextQuestion() {
     bind();
     return;
   }
-  renderStudy();
+  render();
 }
 
 function renderSessionEnd() {
@@ -690,7 +681,7 @@ function renderGarden() {
     <section class="view">
       <article class="hero">
         <div class="hero-top">
-          <span class="eyebrow">Secret</span>
+          <span class="eyebrow brand-chip"><img src="./${HAMSTER_ASSET}" alt="" />Secret</span>
           <span class="pill">Dr.Baby ♡</span>
         </div>
         <h1>Jardin secret</h1>
@@ -709,14 +700,14 @@ function renderGarden() {
           `;
         }).join("")}
       </section>
-      <div class="section-head"><h2>Stickers</h2><span>réactions privées</span></div>
-      <section class="stats-grid">
-        ${[1,2,3,4,5,6].map((n) => `
-          <article class="card sticker-tile">
-            <img src="./assets/stickers/whatsapp_reaction_0${n}.jpg" alt="" loading="lazy" />
-          </article>
-        `).join("")}
-      </section>
+      <div class="section-head"><h2>Mascotte officielle</h2><span>gros hamster premium</span></div>
+      <article class="card mascot-card">
+        <img src="./${HAMSTER_ASSET}" alt="" loading="lazy" />
+        <div>
+          <h3>Le gardien de Dr.Baby</h3>
+          <p class="muted">Il apparaît après les réponses pour juger doucement les QCM. Beaucoup de joues, zéro pression.</p>
+        </div>
+      </article>
     </section>
   `;
 }
@@ -748,10 +739,9 @@ function renderEmpty(title, message) {
   screen.innerHTML = `<section class="view">${emptyMarkup(title, message)}</section>`;
 }
 
-function showReaction(mastered, item) {
-  const stickers = item.sticker_pool?.length ? item.sticker_pool : stickerAssets;
+function showReaction(mastered) {
   reactionImage.hidden = false;
-  reactionImage.src = `./${pick(stickers)}`;
+  reactionImage.src = `./${HAMSTER_ASSET}`;
   reactionMessage.textContent = pick(mastered ? correctMessages : reviewMessages);
   reaction.classList.remove("hidden");
   if (mastered) burst();
