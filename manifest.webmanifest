@@ -1,0 +1,19 @@
+{
+  "name": "Doctora",
+  "short_name": "Doctora",
+  "description": "Révision médicale privée, locale et douce.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f2e8",
+  "theme_color": "#111c1a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

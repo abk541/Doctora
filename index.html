@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#111c1a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Doctora" />
+    <meta name="description" content="Révision médicale privée, locale et douce." />
+    <title>Doctora</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="boot" id="boot" aria-hidden="true">
+      <div class="boot-mark">D</div>
+      <p>préparation du jardin secret</p>
+    </div>
+
+    <div class="app" id="app">
+      <div class="ambient" aria-hidden="true">
+        <span class="line line-a"></span>
+        <span class="line line-b"></span>
+        <span class="glow glow-a"></span>
+        <span class="glow glow-b"></span>
+      </div>
+
+      <aside class="rail" aria-label="Navigation">
+        <button class="rail-logo" data-route="home" aria-label="Accueil">D</button>
+        <button class="rail-item active" data-route="home"><span>⌂</span><em>Accueil</em></button>
+        <button class="rail-item" data-route="study"><span>✦</span><em>Réviser</em></button>
+        <button class="rail-item" data-route="errors"><span>↻</span><em>Erreurs</em></button>
+        <button class="rail-item" data-route="progress"><span>◌</span><em>Score</em></button>
+        <button class="rail-item" data-route="garden"><span>♡</span><em>Secret</em></button>
+      </aside>
+
+      <main id="screen" class="screen" aria-live="polite"></main>
+    </div>
+
+    <div id="reaction" class="reaction hidden" role="status" aria-live="assertive">
+      <article class="reaction-card">
+        <img id="reactionImage" alt="" />
+        <p id="reactionMessage"></p>
+      </article>
+    </div>
+
+    <div id="particles" class="particles" aria-hidden="true"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
