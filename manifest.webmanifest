@@ -1,7 +1,7 @@
 {
-  "name": "Doctora",
-  "short_name": "Doctora",
-  "description": "Révision médicale privée, locale et douce.",
+  "name": "Dr.Baby",
+  "short_name": "Dr.Baby",
+  "description": "QCM médical privé, local et doux.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

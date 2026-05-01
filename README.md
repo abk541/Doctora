@@ -1,4 +1,4 @@
-# Doctora Web
+# Dr.Baby Web
 
 Static iPad Safari/PWA version of the private study gift.
 
@@ -9,6 +9,24 @@ Static iPad Safari/PWA version of the private study gift.
 3. Open the Pages URL on the iPad in Safari.
 4. Use Safari Share > Add to Home Screen for the best app-like feel.
 
+## Question Bank
+
+The app now loads real bundled QCM from:
+
+`data/qcm_concours_medical_pdfs.json`
+
+Expected shape:
+
+- `questions[].question`
+- `questions[].answer a` through `questions[].answer d`
+- `questions[].correct_answer`
+- `questions[].explanation`
+- `questions[].source_file`
+- `questions[].source_page`
+- `questions[].source_topic`
+
+The UI never asks her to upload anything. It only reads bundled local files published with the app.
+
 ## Progress Saving
 
 This is a static web app, so there is no server account or database.
@@ -17,20 +35,35 @@ Progress saves automatically in Safari using local browser storage:
 
 - XP
 - streak
-- mastered prompts
-- prompts marked `À revoir`
+- correct answers
+- wrong QCM marked `À revoir`
 - recent history
 
 The Progress screen also creates a `Sauvegarde` code. Copy it to Notes if you want a manual backup. Paste it into Restore to recover progress later.
 
-## Medical Content
+## Medical Reliability
 
-The app uses `data/medical_prompts.json`, generated from the bundled annales PDFs. These are open exam-style prompts, not fake multiple-choice questions.
+The correction screen uses only the bundled JSON:
 
-If a verified correction is not available in the local data, the app says:
+- her selected answer
+- the correct answer
+- the bundled explanation
+- the local source file, page, and topic
+
+If a verified explanation is missing, the app says:
 
 `Je n’ai pas trouvé d’explication fiable dans les documents intégrés.`
 
+The sticker/joke layer is separate from the medical correction layer.
+
+## Private Assets
+
+Reaction images live in:
+
+`assets/stickers/`
+
+The app displays the local sticker files as-is. It does not upload, generate, redraw, or recolor them.
+
 ## Privacy Note
 
-If the GitHub repository is public, the bundled stickers/PDFs are public too. Use a private repository or private hosting if those assets must stay private.
+If the GitHub repository is public, the bundled stickers/PDF-derived question data are public too. Use a private repository or private hosting if those assets must stay private.

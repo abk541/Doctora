@@ -1,18 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg" x1="60" y1="28" x2="450" y2="482" gradientUnits="userSpaceOnUse">
       <stop stop-color="#111c1a"/>
-      <stop offset=".58" stop-color="#426b58"/>
+      <stop offset=".52" stop-color="#426b58"/>
       <stop offset="1" stop-color="#d47e73"/>
     </linearGradient>
-    <linearGradient id="gold" x1="148" y1="92" x2="370" y2="418" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#fff7dd"/>
-      <stop offset=".48" stop-color="#e5bf6d"/>
+    <linearGradient id="gold" x1="156" y1="102" x2="368" y2="396" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff8dd"/>
+      <stop offset=".52" stop-color="#e5bf6d"/>
       <stop offset="1" stop-color="#fff1c3"/>
     </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="20" flood-color="#07100e" flood-opacity=".24"/>
+    </filter>
   </defs>
   <rect width="512" height="512" rx="116" fill="url(#bg)"/>
-  <path d="M145 354c55 55 167 55 222 0 47-47 49-137 5-184-45-49-91-25-116 15-25-40-71-64-116-15-44 47-42 137 5 184Z" fill="rgba(255,255,255,.12)"/>
-  <path d="M190 114h87c95 0 154 55 154 142 0 88-60 142-156 142h-85V114Zm80 220c53 0 84-29 84-78 0-48-31-78-84-78h-8v156h8Z" fill="url(#gold)"/>
-  <circle cx="382" cy="130" r="16" fill="#fff7dd"/>
+  <circle cx="385" cy="118" r="34" fill="#fff8dd" opacity=".18"/>
+  <path d="M105 331c57 57 165 57 222 0 41-41 43-113 4-153-36-37-73-20-95 14-22-34-59-51-95-14-39 40-37 112-36 153Z" fill="#fff8dd" opacity=".13"/>
+  <g filter="url(#shadow)">
+    <path d="M171 147h92c92 0 147 48 147 124 0 77-56 125-149 125h-90V147Zm86 182c48 0 76-21 76-58 0-36-28-57-76-57h-10v115h10Z" fill="url(#gold)"/>
+    <path d="M146 142h42v257h-42z" fill="url(#gold)"/>
+    <path d="M379 171v50h50v39h-50v50h-40v-50h-50v-39h50v-50h40Z" fill="#fff8dd"/>
+  </g>
+  <path d="M356 401c20-19 54-19 74 0 18 18 18 49 0 67-20 20-54 20-74 0-18-18-18-49 0-67Z" fill="#f4c5bd"/>
 </svg>
