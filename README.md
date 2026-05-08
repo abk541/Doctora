@@ -13,17 +13,26 @@ Static iPad Safari/PWA version of the private study gift.
 
 The app now loads real bundled QCM from:
 
-`data/qcm_concours_medical_pdfs.json`
+`data/qcm_concours_medical_difficulties.json`
 
 Expected shape:
 
 - `questions[].question`
-- `questions[].answer a` through `questions[].answer d`
-- `questions[].correct_answer`
+- `questions[].answer_a` through `questions[].answer_d`
+- `questions[].correct_answer`, using `A`, `B`, `C`, or `D`
+- `questions[].difficulty`, using `easy`, `medium`, `hard`, or `god_level`
 - `questions[].explanation`
-- `questions[].source_file`
-- `questions[].source_page`
-- `questions[].source_topic`
+- `questions[].category`
+- `questions[].topic`
+
+The session engine is adaptive:
+
+- streak `0-1`: easy
+- streak `2-3`: medium
+- streak `4-5`: hard
+- streak `6+`: god_level
+
+After every two correct answers in a row, the next question is selected from the next harder level. A wrong answer resets the streak and brings the next question back down.
 
 The UI never asks her to upload anything. It only reads bundled local files published with the app.
 

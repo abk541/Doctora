@@ -1,7 +1,9 @@
-const QCM_URL = "./data/qcm_concours_medical_pdfs.json";
+const QCM_URL = "./data/qcm_concours_medical_difficulties.json";
 const FALLBACK_URL = "./data/medical_prompts.json";
 const SAVE_KEY = "doctora_web_progress_v1";
 const SESSION_KEY = "doctora_web_session_v1";
+const SESSION_LENGTH = 10;
+const SESSION_ENGINE_VERSION = 2;
 
 const screen = document.getElementById("screen");
 const boot = document.getElementById("boot");
@@ -92,6 +94,7 @@ let route = "home";
 let chapter = "Tous";
 let session = [];
 let sessionIndex = 0;
+let sessionReviewOnly = false;
 let answered = false;
 let currentResult = null;
 
@@ -127,9 +130,11 @@ function saveState() {
 function loadSession() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "{}");
+    if (saved.engineVersion !== SESSION_ENGINE_VERSION) return false;
     if (!Array.isArray(saved.ids)) return false;
     session = saved.ids.map((id) => prompts.find((item) => item.id === id)).filter(Boolean);
     sessionIndex = Math.min(saved.index || 0, Math.max(0, session.length - 1));
+    sessionReviewOnly = Boolean(saved.reviewOnly);
     answered = false;
     currentResult = null;
     return session.length > 0;
@@ -140,8 +145,10 @@ function loadSession() {
 
 function saveSession() {
   sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+    engineVersion: SESSION_ENGINE_VERSION,
     ids: session.map((item) => item.id),
-    index: sessionIndex
+    index: sessionIndex,
+    reviewOnly: sessionReviewOnly
   }));
 }
 
@@ -198,8 +205,50 @@ function filteredPrompts() {
   return chapter === "Tous" ? prompts : prompts.filter((item) => item.chapter === chapter);
 }
 
+function difficultyLevels() {
+  return ["easy", "medium", "hard", "god_level"];
+}
+
+function difficultyRank(value) {
+  const key = String(value || "easy").toLowerCase();
+  const index = difficultyLevels().indexOf(key);
+  return index >= 0 ? index : 0;
+}
+
+function difficultyForStreak(streak) {
+  const index = Math.min(Math.floor(Math.max(0, streak) / 2), difficultyLevels().length - 1);
+  return difficultyLevels()[index];
+}
+
+function difficultyLabel(value) {
+  const labels = {
+    easy: "facile",
+    medium: "moyen",
+    hard: "difficile",
+    god_level: "god level"
+  };
+  return labels[String(value || "").toLowerCase()] || readableCategory(value || "facile");
+}
+
+function difficultyCounts() {
+  return prompts.reduce((acc, item) => {
+    const key = item.difficulty_key || item.difficulty || "easy";
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+}
+
 function answerKeys() {
   return ["answer a", "answer b", "answer c", "answer d"];
+}
+
+function answerDefinitions() {
+  return [
+    { key: "answer a", label: "A", fields: ["answer a", "answer_a", "a"] },
+    { key: "answer b", label: "B", fields: ["answer b", "answer_b", "b"] },
+    { key: "answer c", label: "C", fields: ["answer c", "answer_c", "c"] },
+    { key: "answer d", label: "D", fields: ["answer d", "answer_d", "d"] }
+  ];
 }
 
 function answerLabel(key) {
@@ -211,13 +260,14 @@ function normaliseQcm(raw) {
   if (!raw || !Array.isArray(raw.questions)) return [];
   contentMeta = raw.metadata || null;
   return raw.questions.map((item, index) => {
-    const options = answerKeys()
-      .map((key, optionIndex) => ({
-        key,
-        label: String.fromCharCode(65 + optionIndex),
-        text: item[key]
+    const options = answerDefinitions()
+      .map((definition) => ({
+        key: definition.key,
+        label: definition.label,
+        text: firstValue(item, definition.fields)
       }))
       .filter((option) => String(option.text || "").trim().length > 0);
+    const difficultyKey = normaliseDifficulty(item.difficulty);
 
     return {
       id: String(item.id || `qcm_${index + 1}`),
@@ -225,16 +275,17 @@ function normaliseQcm(raw) {
       type: "qcm",
       chapter: inferChapter(item),
       specialty_area: readableCategory(item.category),
-      difficulty: "concours",
+      difficulty: difficultyLabel(difficultyKey),
+      difficulty_key: difficultyKey,
       question: item.question,
       options,
       correct_answer: normaliseCorrectKey(item),
       short_explanation: item.explanation,
-      source_file: item.source_file,
+      source_file: item.source_file || "qcm_concours_medical_difficulties.json",
       source_page: item.source_page,
-      source_section: item.source_topic,
+      source_section: item.source_topic || item.topic,
       source_excerpt: item.explanation,
-      tags: [item.category, item.source_topic].filter(Boolean)
+      tags: [item.category, item.source_topic || item.topic, difficultyKey].filter(Boolean)
     };
   }).filter((item) => item.question && item.options.length >= 2);
 }
@@ -251,12 +302,21 @@ function normaliseLegacyPrompts(raw) {
 
 function normaliseCorrectKey(item) {
   const raw = String(item.correct_answer || "").trim().toLowerCase();
+  const compact = raw.replace(/[_-]/g, " ");
+  const byLabel = answerDefinitions().find((definition) => definition.label.toLowerCase() === raw);
+  if (byLabel) return byLabel.key;
+  const byKey = answerDefinitions().find((definition) => definition.key === compact);
+  if (byKey) return byKey.key;
   if (answerKeys().includes(raw)) return raw;
-  const byText = answerKeys().find((key) => String(item[key] || "").trim().toLowerCase() === raw);
-  return byText || raw;
+  const byText = answerDefinitions().find((definition) => {
+    const text = firstValue(item, definition.fields);
+    return String(text || "").trim().toLowerCase() === raw;
+  });
+  return byText?.key || raw;
 }
 
 function inferChapter(item) {
+  if (item.category) return readableCategory(item.category);
   const file = String(item.source_file || "").toLowerCase();
   if (file.includes("urgence")) return "Urgences";
   if (file.includes("chirurgicale")) return "Chirurgie";
@@ -264,6 +324,24 @@ function inferChapter(item) {
   if (file.includes("biologie")) return "Biologie";
   if (file.includes("anatomie")) return "Anatomie";
   return readableCategory(item.category || item.source_topic || "Annales");
+}
+
+function firstValue(item, fields) {
+  for (const field of fields) {
+    if (item[field] !== undefined && item[field] !== null && String(item[field]).trim() !== "") {
+      return item[field];
+    }
+  }
+  return "";
+}
+
+function normaliseDifficulty(value) {
+  const key = String(value || "easy").trim().toLowerCase().replace(/\s+/g, "_").replace(/-/g, "_");
+  if (difficultyLevels().includes(key)) return key;
+  if (["facile", "simple"].includes(key)) return "easy";
+  if (["moyen", "intermediaire", "intermédiaire"].includes(key)) return "medium";
+  if (["difficile", "dur"].includes(key)) return "hard";
+  return "easy";
 }
 
 function readableCategory(value) {
@@ -316,6 +394,8 @@ function renderHome() {
   const nickname = pick(nicknames);
   const featured = pick(prompts) || {};
   const totalLabel = prompts.length ? `${prompts.length} QCM` : "QCM locaux";
+  const nextDifficulty = difficultyForStreak(state.streak);
+  const streakBeforeUpgrade = state.streak >= 6 ? 0 : 2 - (state.streak % 2);
   screen.innerHTML = `
     <section class="view">
       <article class="hero">
@@ -335,6 +415,7 @@ function renderHome() {
       <section class="stats-grid">
         ${stat("Niveau", level(), `${state.xp % 120}/120 XP`)}
         ${stat("Série", state.streak, state.streak >= 5 ? "Wa daba bditi katkhla3ini." : "Une question à la fois.")}
+        ${stat("Prochain QCM", difficultyLabel(nextDifficulty), state.streak >= 6 ? "boss mode activé" : `${streakBeforeUpgrade} bonne(s) pour monter`)}
         ${stat("Précision", `${accuracy()}%`, "bonnes réponses")}
         ${stat("À revoir", reviewIDs().length, "comebacks en attente")}
       </section>
@@ -359,7 +440,7 @@ function renderHome() {
 
       <div class="section-head">
         <h2>Matières</h2>
-        <span>${escapeHtml(contentMeta?.title || "annales intégrées")}</span>
+        <span>${escapeHtml(contentMeta?.description || contentMeta?.title || "annales intégrées")}</span>
       </div>
       <section class="grid chapter-grid">
         ${Object.entries(counts).map(([name, count]) => `
@@ -367,6 +448,18 @@ function renderHome() {
             <strong>${escapeHtml(name)}</strong>
             <span class="muted">${count} QCM</span>
           </button>
+        `).join("")}
+      </section>
+      <div class="section-head">
+        <h2>Difficulté</h2>
+        <span>monte toutes les 2 bonnes réponses</span>
+      </div>
+      <section class="grid difficulty-grid">
+        ${difficultyLevels().map((difficulty) => `
+          <article class="card difficulty-card ${difficulty === nextDifficulty ? "active-difficulty" : ""}">
+            <strong>${escapeHtml(difficultyLabel(difficulty))}</strong>
+            <span class="muted">${difficultyCounts()[difficulty] || 0} QCM</span>
+          </article>
         `).join("")}
       </section>
     </section>
@@ -392,13 +485,13 @@ function renderStudy() {
     renderEmpty("Aucune question", "La banque locale n’a pas encore chargé.");
     return;
   }
-  const progress = Math.round(((sessionIndex + 1) / session.length) * 100);
+  const progress = Math.round(((sessionIndex + 1) / SESSION_LENGTH) * 100);
   screen.innerHTML = `
     <section class="view">
       <article class="hero compact-hero">
         <div class="hero-top">
-          <span class="eyebrow brand-chip"><img src="./${HAMSTER_ASSET}" alt="" />QCM ${sessionIndex + 1}/${session.length}</span>
-          <span class="pill">${escapeHtml(item.chapter)}</span>
+          <span class="eyebrow brand-chip"><img src="./${HAMSTER_ASSET}" alt="" />QCM ${sessionIndex + 1}/${SESSION_LENGTH}</span>
+          <span class="pill">${escapeHtml(difficultyLabel(item.difficulty_key))}</span>
         </div>
         <h1>QCM Dr.Baby</h1>
         <p>Lis l’énoncé, élimine les pièges, choisis la meilleure proposition. Le hamster vient après, pas avant.</p>
@@ -408,6 +501,7 @@ function renderStudy() {
       <article class="question-card">
         <div class="question-meta">
           <span class="tag">${escapeHtml(item.specialty_area || "QCM concours")}</span>
+          <span class="tag">${escapeHtml(difficultyLabel(item.difficulty_key))}</span>
           <span class="tag">${escapeHtml(item.source_section || item.chapter)}</span>
           <span class="tag">${escapeHtml(item.source_page ? `page ${item.source_page}` : "source locale")}</span>
         </div>
@@ -521,14 +615,42 @@ function legacySourceCard(item, result) {
 }
 
 function startSession(reviewOnly = false, resetRoute = true) {
-  const source = reviewOnly ? reviewPrompts() : filteredPrompts();
-  const safeSource = source.length ? source : prompts;
-  session = shuffle(safeSource).slice(0, Math.min(10, safeSource.length));
+  sessionReviewOnly = reviewOnly;
+  session = [];
   sessionIndex = 0;
   answered = false;
   currentResult = null;
+  appendQuestionForCurrentStreak();
   saveSession();
   if (resetRoute) setRoute("study");
+}
+
+function sessionSource() {
+  const source = sessionReviewOnly ? reviewPrompts() : filteredPrompts();
+  return source.length ? source : prompts;
+}
+
+function appendQuestionForCurrentStreak() {
+  const next = pickQuestionForStreak(sessionSource());
+  if (next) session.push(next);
+}
+
+function pickQuestionForStreak(source) {
+  if (!source.length) return null;
+  const target = difficultyForStreak(state.streak);
+  const targetRank = difficultyRank(target);
+  const seenIds = new Set(session.map((item) => item.id));
+  const seenQuestions = new Set(session.map((item) => item.question));
+  const fresh = source.filter((item) => !seenIds.has(item.id) && !seenQuestions.has(item.question));
+  const unseen = source.filter((item) => !seenIds.has(item.id));
+  const candidateBase = fresh.length ? fresh : (unseen.length ? unseen : source);
+  const ranked = candidateBase.map((item) => ({
+    item,
+    distance: Math.abs(difficultyRank(item.difficulty_key) - targetRank)
+  }));
+  const bestDistance = Math.min(...ranked.map((entry) => entry.distance));
+  const pool = ranked.filter((entry) => entry.distance === bestDistance).map((entry) => entry.item);
+  return pick(pool);
 }
 
 function answer(value) {
@@ -565,11 +687,19 @@ function answer(value) {
 }
 
 function nextQuestion() {
+  if (sessionIndex + 1 >= SESSION_LENGTH) {
+    renderSessionEnd();
+    bind();
+    return;
+  }
   sessionIndex += 1;
   answered = false;
   currentResult = null;
-  saveSession();
   if (sessionIndex >= session.length) {
+    appendQuestionForCurrentStreak();
+  }
+  saveSession();
+  if (!session[sessionIndex]) {
     renderSessionEnd();
     bind();
     return;

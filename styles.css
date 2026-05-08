@@ -401,6 +401,31 @@ button {
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
+.difficulty-grid {
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+}
+
+.difficulty-card {
+  display: grid;
+  gap: 8px;
+  min-height: 104px;
+  align-content: center;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.difficulty-card strong {
+  color: var(--ink);
+  font-size: 20px;
+}
+
+.active-difficulty {
+  border-color: rgba(209, 173, 99, 0.54);
+  background:
+    linear-gradient(135deg, rgba(255,248,226,0.92), rgba(223,238,224,0.72)),
+    var(--paper);
+  transform: translateY(-2px);
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

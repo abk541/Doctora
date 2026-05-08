@@ -1,11 +1,11 @@
-const CACHE_NAME = "doctora-cache-v5";
+const CACHE_NAME = "doctora-cache-v6";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
   "./manifest.webmanifest",
-  "./data/qcm_concours_medical_pdfs.json",
+  "./data/qcm_concours_medical_difficulties.json",
   "./data/medical_prompts.json",
   "./assets/brand/hamster.png"
 ];
