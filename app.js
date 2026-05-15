@@ -1,4 +1,5 @@
 const QCM_URL = "./data/qcm_concours_medical_difficulties.json";
+const COURSES_URL = "./data/courses.json";
 const FALLBACK_URL = "./data/medical_prompts.json";
 const SAVE_KEY = "doctora_web_progress_v1";
 const SESSION_KEY = "doctora_web_session_v1";
@@ -89,9 +90,11 @@ const secretNotes = [
 ];
 
 let prompts = [];
+let courses = [];
 let contentMeta = null;
 let route = "home";
 let chapter = "Tous";
+let selectedCourseId = null;
 let session = [];
 let sessionIndex = 0;
 let sessionReviewOnly = false;
@@ -281,7 +284,7 @@ function normaliseQcm(raw) {
       options,
       correct_answer: normaliseCorrectKey(item),
       short_explanation: item.explanation,
-      source_file: item.source_file || "qcm_concours_medical_difficulties.json",
+      source_file: item.source_file || "Banque QCM locale",
       source_page: item.source_page,
       source_section: item.source_topic || item.topic,
       source_excerpt: item.explanation,
@@ -382,6 +385,7 @@ function setRoute(nextRoute) {
 function render() {
   if (route === "home") renderHome();
   if (route === "study") renderStudy();
+  if (route === "courses") renderCourses();
   if (route === "errors") renderErrors();
   if (route === "progress") renderProgress();
   if (route === "garden") renderGarden();
@@ -394,8 +398,6 @@ function renderHome() {
   const nickname = pick(nicknames);
   const featured = pick(prompts) || {};
   const totalLabel = prompts.length ? `${prompts.length} QCM` : "QCM locaux";
-  const nextDifficulty = difficultyForStreak(state.streak);
-  const streakBeforeUpgrade = state.streak >= 6 ? 0 : 2 - (state.streak % 2);
   screen.innerHTML = `
     <section class="view">
       <article class="hero">
@@ -415,7 +417,6 @@ function renderHome() {
       <section class="stats-grid">
         ${stat("Niveau", level(), `${state.xp % 120}/120 XP`)}
         ${stat("Série", state.streak, state.streak >= 5 ? "Wa daba bditi katkhla3ini." : "Une question à la fois.")}
-        ${stat("Prochain QCM", difficultyLabel(nextDifficulty), state.streak >= 6 ? "boss mode activé" : `${streakBeforeUpgrade} bonne(s) pour monter`)}
         ${stat("Précision", `${accuracy()}%`, "bonnes réponses")}
         ${stat("À revoir", reviewIDs().length, "comebacks en attente")}
       </section>
@@ -434,13 +435,13 @@ function renderHome() {
         <div class="progress-rail"><div class="progress-fill" style="width:${pct}%"></div></div>
         <div class="action-grid">
           <button class="primary" data-action="new-session">Réviser maintenant</button>
-          <button class="ghost" data-route="garden">Jardin secret</button>
+          <button class="ghost" data-route="courses">Ouvrir les cours</button>
         </div>
       </article>
 
       <div class="section-head">
         <h2>Matières</h2>
-        <span>${escapeHtml(contentMeta?.description || contentMeta?.title || "annales intégrées")}</span>
+        <span>banque locale intégrée</span>
       </div>
       <section class="grid chapter-grid">
         ${Object.entries(counts).map(([name, count]) => `
@@ -448,18 +449,6 @@ function renderHome() {
             <strong>${escapeHtml(name)}</strong>
             <span class="muted">${count} QCM</span>
           </button>
-        `).join("")}
-      </section>
-      <div class="section-head">
-        <h2>Difficulté</h2>
-        <span>monte toutes les 2 bonnes réponses</span>
-      </div>
-      <section class="grid difficulty-grid">
-        ${difficultyLevels().map((difficulty) => `
-          <article class="card difficulty-card ${difficulty === nextDifficulty ? "active-difficulty" : ""}">
-            <strong>${escapeHtml(difficultyLabel(difficulty))}</strong>
-            <span class="muted">${difficultyCounts()[difficulty] || 0} QCM</span>
-          </article>
         `).join("")}
       </section>
     </section>
@@ -473,6 +462,73 @@ function stat(title, value, detail) {
       <strong>${escapeHtml(value)}</strong>
       <p>${escapeHtml(detail)}</p>
     </article>
+  `;
+}
+
+function selectedCourse() {
+  return courses.find((course) => course.id === selectedCourseId) || courses[0] || null;
+}
+
+function courseCategories() {
+  return Array.from(new Set(courses.map((course) => course.category))).sort((a, b) => a.localeCompare(b, "fr"));
+}
+
+function renderCourses() {
+  const current = selectedCourse();
+  if (!current) {
+    renderEmpty("Aucun cours", "Les PDF locaux ne se sont pas chargés.");
+    return;
+  }
+  selectedCourseId = current.id;
+  screen.innerHTML = `
+    <section class="view">
+      <article class="hero course-hero">
+        <div class="hero-top">
+          <span class="eyebrow brand-chip"><img src="./${HAMSTER_ASSET}" alt="" />Cours intégrés</span>
+          <span class="pill">${courses.length} PDF locaux</span>
+        </div>
+        <h1><span class="hamster-title"><img src="./${HAMSTER_ASSET}" alt="" />Cours</span></h1>
+        <p>Les supports sont déjà dans l’app. Aucun upload, aucun internet, juste le cabinet Dr.Baby avec ses PDF bien rangés.</p>
+      </article>
+
+      <section class="course-layout">
+        <aside class="course-list card">
+          <div class="course-list-head">
+            <span class="tag">Bibliothèque</span>
+            <img src="./${HAMSTER_ASSET}" alt="" />
+          </div>
+          ${courseCategories().map((category) => `
+            <div class="course-group">
+              <h3>${escapeHtml(category)}</h3>
+              ${courses.filter((course) => course.category === category).map((course) => `
+                <button class="course-row ${course.id === current.id ? "active" : ""}" data-course="${escapeHtml(course.id)}">
+                  <strong>${escapeHtml(course.title)}</strong>
+                  <span>${escapeHtml(course.summary)}</span>
+                </button>
+              `).join("")}
+            </div>
+          `).join("")}
+        </aside>
+
+        <article class="course-reader">
+          <div class="course-reader-head">
+            <div>
+              <span class="tag">${escapeHtml(current.category)}</span>
+              <h2>${escapeHtml(current.title)}</h2>
+              <p>${escapeHtml(current.summary)}</p>
+            </div>
+            <img src="./${HAMSTER_ASSET}" alt="" />
+          </div>
+          <div class="course-frame-wrap">
+            <iframe class="course-frame" title="${escapeHtml(current.title)}" src="${escapeHtml(current.file)}#view=FitH"></iframe>
+          </div>
+          <div class="action-grid">
+            <a class="primary link-button" href="${escapeHtml(current.file)}" target="_blank" rel="noopener">Ouvrir le PDF</a>
+            <button class="secondary" data-action="new-session">Me questionner</button>
+          </div>
+        </article>
+      </section>
+    </section>
   `;
 }
 
@@ -491,7 +547,7 @@ function renderStudy() {
       <article class="hero compact-hero">
         <div class="hero-top">
           <span class="eyebrow brand-chip"><img src="./${HAMSTER_ASSET}" alt="" />QCM ${sessionIndex + 1}/${SESSION_LENGTH}</span>
-          <span class="pill">${escapeHtml(difficultyLabel(item.difficulty_key))}</span>
+          <span class="pill">Dr.Baby mode focus</span>
         </div>
         <h1>QCM Dr.Baby</h1>
         <p>Lis l’énoncé, élimine les pièges, choisis la meilleure proposition. Le hamster vient après, pas avant.</p>
@@ -501,7 +557,6 @@ function renderStudy() {
       <article class="question-card">
         <div class="question-meta">
           <span class="tag">${escapeHtml(item.specialty_area || "QCM concours")}</span>
-          <span class="tag">${escapeHtml(difficultyLabel(item.difficulty_key))}</span>
           <span class="tag">${escapeHtml(item.source_section || item.chapter)}</span>
           <span class="tag">${escapeHtml(item.source_page ? `page ${item.source_page}` : "source locale")}</span>
         </div>
@@ -965,6 +1020,13 @@ function bind() {
       startSession(false);
     });
   });
+
+  document.querySelectorAll("[data-course]").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedCourseId = button.dataset.course;
+      render();
+    });
+  });
 }
 
 function installBottomNav() {
@@ -974,6 +1036,7 @@ function installBottomNav() {
   nav.innerHTML = `
     <button data-route="home" class="active"><span>⌂</span>Accueil</button>
     <button data-route="study"><span>✦</span>Réviser</button>
+    <button data-route="courses"><span>▤</span>Cours</button>
     <button data-route="errors"><span>↻</span>Erreurs</button>
     <button data-route="progress"><span>◌</span>Score</button>
     <button data-route="garden"><span>♡</span>Secret</button>
@@ -996,13 +1059,25 @@ async function loadQuestions() {
   }
 }
 
+async function loadCourses() {
+  try {
+    const response = await fetch(COURSES_URL, { cache: "no-cache" });
+    if (!response.ok) throw new Error(`courses ${response.status}`);
+    const raw = await response.json();
+    return Array.isArray(raw.courses) ? raw.courses : [];
+  } catch {
+    return [];
+  }
+}
+
 async function init() {
   installBottomNav();
   if ("storage" in navigator && navigator.storage.persist) {
     navigator.storage.persist().catch(() => {});
   }
   try {
-    prompts = await loadQuestions();
+    [prompts, courses] = await Promise.all([loadQuestions(), loadCourses()]);
+    selectedCourseId = courses[0]?.id || null;
     loadSession();
     saveState();
     render();

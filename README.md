@@ -36,6 +36,29 @@ After every two correct answers in a row, the next question is selected from the
 
 The UI never asks her to upload anything. It only reads bundled local files published with the app.
 
+## Courses
+
+The `Cours` tab loads the bundled PDF library from:
+
+`data/courses.json`
+
+Course PDFs live in:
+
+`content/cours/`
+
+The current bundled course files are:
+
+- `urgences_2018.pdf`
+- `medicale_2018.pdf`
+- `chirurgicale_2018.pdf`
+- `anatomie_2018.pdf`
+- `anatomie_schema.pdf`
+- `biologie_2018.pdf`
+- `qe_residanat_internat.pdf`
+- `qe_residanat_classees.pdf`
+
+To add a course, place the PDF in `content/cours/`, then add an entry to `data/courses.json`. No Swift, upload flow, account, or internet source is involved.
+
 ## Progress Saving
 
 This is a static web app, so there is no server account or database.

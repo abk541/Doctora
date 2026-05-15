@@ -1,13 +1,22 @@
-const CACHE_NAME = "doctora-cache-v6";
+const CACHE_NAME = "doctora-cache-v7";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
   "./manifest.webmanifest",
+  "./data/courses.json",
   "./data/qcm_concours_medical_difficulties.json",
   "./data/medical_prompts.json",
-  "./assets/brand/hamster.png"
+  "./assets/brand/hamster.png",
+  "./content/cours/anatomie_2018.pdf",
+  "./content/cours/anatomie_schema.pdf",
+  "./content/cours/biologie_2018.pdf",
+  "./content/cours/chirurgicale_2018.pdf",
+  "./content/cours/medicale_2018.pdf",
+  "./content/cours/qe_residanat_classees.pdf",
+  "./content/cours/qe_residanat_internat.pdf",
+  "./content/cours/urgences_2018.pdf"
 ];
 
 self.addEventListener("install", (event) => {

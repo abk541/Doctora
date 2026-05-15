@@ -1,0 +1,60 @@
+{
+  "courses": [
+    {
+      "id": "cours_urgences_2018",
+      "title": "Urgences 2018",
+      "category": "Urgences",
+      "file": "./content/cours/urgences_2018.pdf",
+      "summary": "Cours d’urgences intégré localement pour les révisions rapides et les retours aux sources."
+    },
+    {
+      "id": "cours_medicale_2018",
+      "title": "Pathologie médicale 2018",
+      "category": "Médecine",
+      "file": "./content/cours/medicale_2018.pdf",
+      "summary": "Support de pathologie médicale pour revoir les chapitres avant les QCM."
+    },
+    {
+      "id": "cours_chirurgicale_2018",
+      "title": "Pathologie chirurgicale 2018",
+      "category": "Chirurgie",
+      "file": "./content/cours/chirurgicale_2018.pdf",
+      "summary": "Cours de pathologie chirurgicale intégré dans l’app, consultable sans upload."
+    },
+    {
+      "id": "cours_anatomie_2018",
+      "title": "Anatomie 2018",
+      "category": "Anatomie",
+      "file": "./content/cours/anatomie_2018.pdf",
+      "summary": "Cours d’anatomie pour les bases et les rappels structurés."
+    },
+    {
+      "id": "cours_anatomie_schema",
+      "title": "Anatomie - Schémas",
+      "category": "Anatomie",
+      "file": "./content/cours/anatomie_schema.pdf",
+      "summary": "Support visuel d’anatomie avec schémas, utile quand le cerveau dit wa laaaa."
+    },
+    {
+      "id": "cours_biologie_2018",
+      "title": "Biologie 2018",
+      "category": "Biologie",
+      "file": "./content/cours/biologie_2018.pdf",
+      "summary": "Cours de biologie intégré pour consolider les notions utiles aux QCM."
+    },
+    {
+      "id": "cours_qe_internat",
+      "title": "QE Résidanat Internat",
+      "category": "Annales",
+      "file": "./content/cours/qe_residanat_internat.pdf",
+      "summary": "Document d’annales et questions d’entraînement, gardé localement."
+    },
+    {
+      "id": "cours_qe_classees",
+      "title": "QE Résidanat Classées",
+      "category": "Annales",
+      "file": "./content/cours/qe_residanat_classees.pdf",
+      "summary": "Questions classées par thème pour réviser sans chercher dans mille dossiers."
+    }
+  ]
+}
