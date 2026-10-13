@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff8fb1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="2 ans ❤️">
+<meta name="robots" content="noindex">
+<title>Joyeux 2 ans</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --choco:#5b3a29; --choco-2:#7a4f38; --pink:#ff8fb1; --rose:#ff4f7e; --blush:#ffd6e3;
+  --mallow:#fff5f8; --cloud:#eef5ff; --gold:#ffc94d; --mint:#bff0dc; --ink:#3b2418;
+  --muted:#8a6a5a; --card:#ffffff; --shadow:0 14px 34px rgba(122,79,56,.18);
+  --display:"Fredoka", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --body:"Nunito", system-ui, -apple-system, sans-serif;
+  --hand:"Caveat", "Bradley Hand", cursive;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--mallow);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden;height:100vh}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;border:0;background:none}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05}
+p{line-height:1.55;margin:0}
+.hand{font-family:var(--hand);font-weight:700}
+.wrap{width:100%;max-width:640px;margin:0 auto;padding:0 max(18px, env(safe-area-inset-left)) 0 max(18px, env(safe-area-inset-right))}
+
+/* ---------- scenes ---------- */
+.scene{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:72px 0;overflow:hidden}
+.scene:nth-of-type(even){background:linear-gradient(180deg,#fff 0%,var(--mallow) 100%)}
+.kicker{display:inline-block;font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);background:#fff;border-radius:999px;padding:6px 14px;box-shadow:var(--shadow);margin-bottom:16px}
+.title{font-size:clamp(34px,9vw,58px);color:var(--choco);margin-bottom:14px}
+.title em{font-style:normal;color:var(--rose)}
+.lead{font-size:clamp(17px,4.4vw,20px);color:var(--choco-2)}
+.small{font-size:14px;color:var(--muted)}
+.center{text-align:center}
+.card{background:var(--card);border-radius:26px;box-shadow:var(--shadow);padding:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:18px;background:var(--rose);color:#fff;border-radius:999px;padding:14px 24px;box-shadow:0 10px 22px rgba(255,79,126,.35);transition:transform .15s}
+.btn:active{transform:scale(.94)}
+.btn.ghost{background:#fff;color:var(--rose);box-shadow:var(--shadow)}
+.stack>*+*{margin-top:18px}
+
+/* reveal */
+[data-reveal]{opacity:0;transform:translateY(34px) scale(.98);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.9,.25,1.2);transition-delay:var(--d,0s)}
+[data-reveal].in{opacity:1;transform:none}
+
+/* ---------- background floaties ---------- */
+#floaties{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#floaties span{position:absolute;bottom:-60px;font-size:26px;opacity:.32;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-120vh) rotate(360deg)}}
+main{position:relative;z-index:1}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+/* ---------- gate ---------- */
+#gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:24px;background:radial-gradient(circle at 50% 35%,#ffe3ec 0%,#ffb9cf 55%,#ff8fb1 100%);transition:opacity .8s, visibility .8s}
+#gate.gone{opacity:0;visibility:hidden}
+.gift{position:relative;width:170px;height:160px;animation:wiggle 1.6s ease-in-out infinite}
+.gift .box{position:absolute;bottom:0;left:10px;width:150px;height:105px;background:var(--rose);border-radius:14px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08)}
+.gift .lid{position:absolute;top:22px;left:0;width:170px;height:40px;background:#ff6f95;border-radius:12px;transition:transform .9s cubic-bezier(.3,1.4,.5,1),opacity .9s}
+.gift .rib-v{position:absolute;bottom:0;left:72px;width:26px;height:105px;background:var(--gold)}
+.gift .lid::before{content:"";position:absolute;left:72px;top:0;width:26px;height:40px;background:var(--gold)}
+.gift .bow{position:absolute;top:-2px;left:50%;transform:translateX(-50%);font-size:44px}
+.gift.open{animation:none}
+.gift.open .lid{transform:translateY(-220px) rotate(-35deg);opacity:0}
+@keyframes wiggle{0%,60%,100%{transform:rotate(0)}70%{transform:rotate(-7deg)}80%{transform:rotate(7deg)}90%{transform:rotate(-4deg)}}
+#gate h1{font-size:clamp(30px,8vw,46px);color:#fff;text-shadow:0 3px 0 rgba(122,79,56,.25)}
+#gate p{color:#fff;font-size:18px;font-weight:600}
+.pulse{animation:pulse 1.3s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.07)}}
+
+/* ---------- hero ---------- */
+.hero{background:radial-gradient(circle at 50% 20%,#fff 0%,var(--blush) 70%)}
+.big2{font-family:var(--display);font-size:clamp(150px,44vw,260px);line-height:.85;color:var(--rose);text-shadow:0 10px 0 #ffb3c9, 0 22px 30px rgba(255,79,126,.3);display:inline-block;animation:bounce 2.2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-16px) rotate(4deg)}}
+.typer{min-height:1.4em;font-family:var(--hand);font-size:clamp(30px,8vw,40px);color:var(--choco)}
+.typer::after{content:"|";animation:blink 1s steps(1) infinite;color:var(--rose)}
+@keyframes blink{50%{opacity:0}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.stat{background:#fff;border-radius:20px;padding:14px 6px;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:var(--display);font-size:clamp(22px,6vw,30px);color:var(--rose)}
+.stat span{font-size:12.5px;color:var(--muted);font-weight:700}
+.sweets{font-size:34px;letter-spacing:6px}
+.sweets span{display:inline-block;animation:bob 2s ease-in-out infinite;animation-delay:calc(var(--i)*.2s)}
+@keyframes bob{50%{transform:translateY(-10px) rotate(10deg)}}
+.scroll-hint{margin-top:26px;font-size:14px;color:var(--muted);animation:bob 1.6s infinite}
+
+/* ---------- bumble ---------- */
+.phone{position:relative;width:min(300px,82vw);margin:0 auto;background:#fff;border-radius:40px;border:10px solid #2b1c14;padding:16px 14px 18px;box-shadow:0 30px 60px rgba(59,36,24,.28)}
+.phone .bar{display:flex;justify-content:center;align-items:center;gap:6px;font-family:var(--display);font-weight:700;color:#f5b400;font-size:20px;margin-bottom:12px}
+.profile{position:relative;height:300px;border-radius:24px;background:linear-gradient(160deg,#ffd86b,#ffb347 60%,#ff8fb1);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;transition:transform .7s cubic-bezier(.5,-.3,.6,1.3),opacity .7s;overflow:hidden}
+.profile .face{position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:110px}
+.profile h3{font-size:26px;text-shadow:0 2px 6px rgba(0,0,0,.2)}
+.profile p{font-size:13.5px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.profile.liked{transform:translateX(140%) rotate(28deg);opacity:0}
+.profile.shake{animation:shake .5s}
+@keyframes shake{20%,60%{transform:translateX(-14px) rotate(-4deg)}40%,80%{transform:translateX(14px) rotate(4deg)}}
+.stamp-like{position:absolute;top:18px;left:14px;border:4px solid #fff;color:#fff;font-family:var(--display);font-weight:700;padding:2px 10px;border-radius:10px;transform:rotate(-14deg);opacity:0;transition:opacity .2s}
+.liking .stamp-like{opacity:1}
+.swipe-btns{display:flex;justify-content:center;gap:36px;margin-top:14px;position:relative;height:68px}
+.swipe-btns button{width:64px;height:64px;border-radius:50%;font-size:28px;background:#fff;box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.3,1.6,.5,1),left .35s,top .35s}
+#nope{color:#999}
+#like{color:#fff;background:linear-gradient(135deg,#ffcf3f,#ff9f1a)}
+.match{position:absolute;inset:0;border-radius:30px;background:linear-gradient(160deg,#ffcf3f,#ff8fb1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;text-align:center;opacity:0;pointer-events:none;transform:scale(.7);transition:all .6s cubic-bezier(.3,1.5,.5,1);padding:20px}
+.match.show{opacity:1;transform:none;pointer-events:auto}
+.match h3{font-family:var(--hand);font-size:52px;line-height:1}
+.match .duo{font-size:54px}
+.match .duo span{display:inline-block;animation:bob 1.2s infinite}
+.toast{position:fixed;left:50%;bottom:max(26px,env(safe-area-inset-bottom));transform:translate(-50%,calc(100% + 80px));visibility:hidden;background:var(--choco);color:#fff;font-weight:800;padding:14px 20px;border-radius:18px;z-index:70;max-width:88vw;text-align:center;transition:transform .45s cubic-bezier(.3,1.5,.5,1);box-shadow:0 14px 30px rgba(0,0,0,.25)}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+
+/* ---------- mcdo ---------- */
+.night{background:linear-gradient(180deg,#1d1640 0%,#3a2366 70%,#6b3a7a 100%)!important;color:#fff}
+.night .title,.night .lead{color:#fff}
+.night .kicker{background:#2c2058;color:var(--gold)}
+.stars{position:absolute;inset:0;pointer-events:none}
+.stars i{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:twinkle 2s infinite}
+@keyframes twinkle{50%{opacity:.2}}
+.clock-row{display:flex;align-items:center;justify-content:center;gap:24px;margin:24px 0}
+.clock{position:relative;width:130px;height:130px;border-radius:50%;background:#fff;border:8px solid var(--gold);box-shadow:0 0 40px rgba(255,201,77,.5)}
+.clock .h,.clock .m{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;background:var(--choco);border-radius:4px}
+.clock .h{width:7px;height:32px;margin-left:-3.5px;transform:rotate(-120deg);transition:transform 2.4s cubic-bezier(.4,0,.2,1)}
+.clock .m{width:4px;height:48px;margin-left:-2px;transform:rotate(-1440deg);transition:transform 2.4s cubic-bezier(.4,0,.2,1)}
+.in .clock .h{transform:rotate(60deg)}
+.in .clock .m{transform:rotate(0deg)}
+.clock::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;background:var(--rose);border-radius:50%}
+.digital{font-family:var(--display);font-size:46px;color:var(--gold);text-shadow:0 0 18px rgba(255,201,77,.8)}
+.digital small{font-size:18px;animation:blink 1s steps(1) infinite}
+.mcbox{display:flex;justify-content:center;gap:14px;font-size:54px}
+.mcbox span{animation:bob 1.4s infinite;animation-delay:calc(var(--i)*.25s)}
+.shout{font-family:var(--display);font-weight:700;font-size:clamp(20px,5.4vw,26px);color:var(--gold);background:rgba(255,255,255,.08);border:2px dashed rgba(255,201,77,.6);border-radius:20px;padding:16px;animation:shout 2.6s infinite}
+@keyframes shout{0%,86%,100%{transform:none}88%{transform:translateX(-5px) rotate(-1deg)}90%{transform:translateX(5px) rotate(1deg)}92%{transform:translateX(-4px)}94%{transform:translateX(4px)}}
+.kiss{font-size:74px;display:inline-block;animation:kiss 1.6s ease-in-out infinite}
+@keyframes kiss{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.18)}}
+.night .card{background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(255,255,255,.2)}
+
+/* ---------- bracelet ---------- */
+.ring-stage{height:220px;display:flex;align-items:center;justify-content:center;perspective:700px;margin:10px 0}
+.ring{position:relative;width:190px;height:190px;transform-style:preserve-3d;animation:spin 9s linear infinite}
+@keyframes spin{from{transform:rotateX(64deg) rotateZ(0)}to{transform:rotateX(64deg) rotateZ(360deg)}}
+.bead{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px;border-radius:50%;transform:rotate(var(--a)) translateY(-90px)}
+.bead:nth-child(4n+1){background:#1f3b73}.bead:nth-child(4n+2){background:#fff;border:2px solid #ddd}.bead:nth-child(4n+3){background:#c8102e}.bead:nth-child(4n){background:#1f3b73}
+.tag{display:inline-flex;gap:0;border-radius:6px;overflow:hidden;font-family:var(--display);font-weight:700;font-size:14px;box-shadow:var(--shadow)}
+.tag span{padding:6px 10px;color:#fff}
+.tag span:nth-child(1){background:#1f3b73}.tag span:nth-child(2){background:#fff;color:#1f3b73}.tag span:nth-child(3){background:#c8102e}
+.check{display:flex;align-items:center;gap:12px;font-weight:800;font-size:17px}
+.check i{font-style:normal;width:34px;height:34px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none}
+
+/* ---------- memories ---------- */
+.mem-grid{display:grid;gap:16px}
+.mem{position:relative;overflow:hidden;text-align:left}
+.mem h3{font-size:24px;color:var(--choco);margin-bottom:6px}
+.lane{position:relative;height:84px;background:linear-gradient(90deg,#f6d7a8,#eec48a);border-radius:16px;margin-bottom:14px;overflow:hidden}
+.ball{position:absolute;left:-50px;top:22px;font-size:40px}
+.pins{position:absolute;right:16px;top:14px;font-size:30px;letter-spacing:-6px}
+.pins span{display:inline-block;transition:transform .5s,opacity .5s}
+.mem.play .ball{animation:roll 1.1s ease-in forwards}
+@keyframes roll{to{left:calc(100% - 110px);transform:rotate(720deg)}}
+.mem.play .pins span{transform:translateY(-30px) rotate(var(--r));opacity:0;transition-delay:1s}
+.strike{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:34px;color:var(--rose);opacity:0;transform:scale(.4)}
+.mem.play .strike{animation:pop .6s 1.2s forwards}
+@keyframes pop{to{opacity:1;transform:scale(1)}}
+.zoo{position:relative;height:84px;background:linear-gradient(180deg,#d5f5e3,#a8e6c3);border-radius:16px;margin-bottom:14px;overflow:hidden;display:flex;justify-content:space-around;align-items:flex-end}
+.zoo span{font-size:42px;transform:translateY(80px);transition:transform .6s cubic-bezier(.3,1.6,.5,1);transition-delay:calc(var(--i)*.15s)}
+.mem.play .zoo span{transform:translateY(6px)}
+.bench{position:relative;height:84px;background:linear-gradient(180deg,#e6f0ff,#cfe0ff);border-radius:16px;margin-bottom:14px;overflow:hidden}
+.bench .seat{position:absolute;left:18%;right:18%;bottom:16px;height:12px;background:#9b6b4a;border-radius:6px}
+.bench .seat::before,.bench .seat::after{content:"";position:absolute;bottom:-14px;width:8px;height:14px;background:#7a4f38}
+.bench .seat::before{left:12px}.bench .seat::after{right:12px}
+.cup{position:absolute;bottom:26px;font-size:34px;transition:left 1s cubic-bezier(.3,1.3,.5,1)}
+.cup.a{left:-50px}.cup.b{left:calc(100% + 10px)}
+.mem.play .cup.a{left:calc(50% - 40px)}
+.mem.play .cup.b{left:calc(50% + 4px)}
+.steam{position:absolute;bottom:58px;left:calc(50% - 16px);font-size:18px;opacity:0}
+.mem.play .steam{animation:steam 2s 1s infinite}
+@keyframes steam{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(-24px)}}
+.replay{position:absolute;top:14px;right:14px;font-size:12px;font-weight:800;color:var(--muted);background:var(--mallow);padding:6px 10px;border-radius:999px}
+
+/* ---------- hbila job ---------- */
+.job{position:relative;text-align:left;border:3px dashed var(--pink)}
+.job h3{font-size:26px;color:var(--choco);margin:4px 0 10px}
+.job dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:15.5px}
+.job dt{font-weight:800;color:var(--rose)}
+.job dd{margin:0}
+.stamp{position:absolute;top:44%;left:50%;width:max-content;max-width:92%;text-align:center;font-family:var(--display);font-weight:700;font-size:clamp(24px,7vw,34px);color:#e0244f;border:5px solid #e0244f;border-radius:14px;padding:6px 14px;background:rgba(255,255,255,.75);transform:translate(-50%,-50%) rotate(-14deg) scale(3);opacity:0;transition:transform .35s cubic-bezier(.5,0,.75,0),opacity .2s;pointer-events:none}
+.stamp.slam{transform:translate(-50%,-50%) rotate(-14deg) scale(1);opacity:1}
+.job.thud{animation:thud .35s .3s}
+@keyframes thud{50%{transform:scale(.97)}}
+.oldies{font-size:46px}
+.quote{font-family:var(--hand);font-size:clamp(26px,6.6vw,32px);color:var(--choco);line-height:1.15}
+
+/* ---------- hearts grid ---------- */
+.hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (min-width:560px){.hgrid{grid-template-columns:repeat(4,1fr)}}
+.flip{aspect-ratio:1;perspective:600px}
+.flip .in3d{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.flip.on .in3d{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:22px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:var(--shadow);padding:8px;text-align:center}
+.flip .f{background:linear-gradient(145deg,#ffb3c9,var(--rose));font-size:40px}
+.flip .b{background:#fff;transform:rotateY(180deg);font-family:var(--display);font-weight:600;font-size:clamp(14px,3.8vw,17px);color:var(--choco);line-height:1.15}
+.progress-pill{display:inline-block;background:#fff;border-radius:999px;padding:6px 14px;font-weight:800;color:var(--rose);box-shadow:var(--shadow)}
+.pearl-box{display:none}
+.pearl-box.show{display:block;animation:pop .7s forwards;opacity:0;transform:scale(.4)}
+.pearl{width:90px;height:90px;margin:0 auto 10px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#fff 0%,#f6eef7 30%,#dcd0e6 70%,#bfb0cf 100%);box-shadow:0 0 40px rgba(255,255,255,.9),0 10px 30px rgba(120,90,160,.35);animation:shine 3s ease-in-out infinite}
+@keyframes shine{50%{box-shadow:0 0 70px rgba(255,255,255,1),0 10px 30px rgba(120,90,160,.35)}}
+
+/* ---------- doctor ---------- */
+.doc{transition:background 1s}
+.doc[data-level="3"],.doc[data-level="4"],.doc[data-level="5"]{background:linear-gradient(180deg,#0f0c29,#302b63,#24243e)!important;color:#fff}
+.doc[data-level="3"] .title,.doc[data-level="4"] .title,.doc[data-level="5"] .title,.doc[data-level="3"] .lead,.doc[data-level="4"] .lead,.doc[data-level="5"] .lead{color:#fff}
+.scale{font-size:96px;line-height:1;display:inline-block;animation:bob 2s infinite}
+.scale-text{font-family:var(--display);font-weight:700;font-size:clamp(24px,6.4vw,32px);color:var(--rose);min-height:2.3em;display:flex;align-items:center;justify-content:center}
+.zoom-in{animation:zoomIn .6s cubic-bezier(.3,1.5,.5,1)}
+@keyframes zoomIn{from{transform:scale(.3);opacity:0}}
+.rx{position:relative;text-align:left;background:#fff;color:var(--ink);border-radius:18px;padding:22px 20px 18px;box-shadow:var(--shadow);background-image:repeating-linear-gradient(180deg,transparent 0 31px,#f0e4ea 31px 32px);background-position:0 54px}
+.rx h3{font-size:20px;color:var(--rose);margin-bottom:12px}
+.rx ol{margin:0;padding-left:22px;font-family:var(--hand);font-size:24px;line-height:32px}
+.rx .sig{text-align:right;font-family:var(--hand);font-size:22px;color:var(--choco-2);margin-top:6px}
+
+/* ---------- soft ---------- */
+.soft{background:linear-gradient(180deg,#f3ecff,#fff5f8)!important}
+.promise{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:12px 0;border-bottom:1px solid #f0e2ea}
+.promise:last-child{border:0}
+.promise i{font-style:normal;flex:none;width:30px;height:30px;border-radius:50%;background:var(--blush);display:grid;place-items:center;transform:scale(0);transition:transform .5s cubic-bezier(.3,1.8,.5,1);transition-delay:calc(var(--d) + .3s)}
+.in .promise i{transform:none}
+
+/* ---------- future ---------- */
+.timeline{position:relative;padding-left:56px;text-align:left}
+.timeline::before{content:"";position:absolute;left:23px;top:8px;bottom:8px;width:4px;border-radius:4px;background:repeating-linear-gradient(180deg,var(--pink) 0 10px,transparent 10px 18px)}
+.step{position:relative;margin-bottom:22px}
+.step .dot{position:absolute;left:-56px;top:0;width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;font-size:26px}
+.step h3{font-size:22px;color:var(--choco);margin:10px 0 6px}
+.house{position:relative;width:160px;height:140px;margin:10px 0}
+.roof{position:absolute;top:0;left:0;width:0;height:0;border-left:80px solid transparent;border-right:80px solid transparent;border-bottom:56px solid var(--choco-2)}
+.wall{position:absolute;top:56px;left:14px;width:132px;height:84px;background:#ffd1dc;border-radius:0 0 10px 10px;transition:background .4s;display:flex;justify-content:space-around;align-items:flex-end;padding-bottom:0}
+.wall .door{width:28px;height:44px;background:var(--choco);border-radius:14px 14px 0 0}
+.wall .win{width:26px;height:26px;background:#bfe3ff;border-radius:6px;align-self:center;border:3px solid #fff}
+.babies{font-size:30px;min-height:40px;letter-spacing:2px;word-break:break-all}
+.babies span{display:inline-block;animation:pop .4s forwards;opacity:0;transform:scale(.3)}
+.chat{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.bubble{max-width:85%;padding:10px 14px;border-radius:18px;font-weight:700;font-size:15px}
+.bubble.l{background:#eef0f4;align-self:flex-start;border-bottom-left-radius:4px}
+.bubble.r{background:var(--rose);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.mini-btn{font-family:var(--display);font-weight:600;font-size:15px;background:var(--blush);color:var(--rose);padding:9px 16px;border-radius:999px;margin-top:6px}
+.mini-btn:active{transform:scale(.94)}
+
+/* roles */
+.role-word{font-family:var(--display);font-weight:700;font-size:clamp(30px,8.5vw,46px);color:var(--rose);min-height:1.3em}
+.peanut{font-size:56px;display:inline-block}
+.peanut.crack{animation:crack .6s}
+@keyframes crack{30%{transform:rotate(-25deg) scale(1.2)}60%{transform:rotate(25deg) scale(.9)}}
+
+/* loader */
+.loader{height:26px;border-radius:999px;background:#fff;box-shadow:inset 0 2px 6px rgba(0,0,0,.08);overflow:hidden}
+.loader b{display:block;height:100%;width:0;border-radius:999px;background:repeating-linear-gradient(45deg,var(--rose) 0 14px,var(--pink) 14px 28px);transition:width .2s linear}
+.load-num{font-family:var(--display);font-size:54px;color:var(--rose)}
+.load-log{text-align:left;font-weight:700;font-size:15px}
+.load-log div{opacity:0;transform:translateX(-12px);transition:all .4s}
+.load-log div.on{opacity:1;transform:none}
+
+/* nicknames */
+.jar{font-size:110px;display:inline-block;cursor:pointer;transition:transform .15s}
+.jar:active{transform:scale(.9) rotate(-8deg)}
+.nick{min-height:150px;display:flex;align-items:center;justify-content:center}
+.nick-card{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:20px 18px;font-family:var(--display);font-weight:600;font-size:clamp(19px,5vw,23px);color:var(--choco);animation:candy .55s cubic-bezier(.3,1.6,.5,1)}
+.nick-card .e{display:block;font-size:44px;margin-bottom:6px}
+@keyframes candy{from{transform:translateY(60px) scale(.4) rotate(-12deg);opacity:0}}
+.nick-count{font-weight:800;color:var(--muted);font-size:14px}
+
+/* finale */
+.finale{background:radial-gradient(circle at 50% 30%,#fff 0%,var(--blush) 55%,var(--pink) 100%)!important}
+.bigheart{font-size:140px;display:inline-block;animation:beat 1s ease-in-out infinite;filter:drop-shadow(0 14px 24px rgba(255,79,126,.4))}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(1)}45%{transform:scale(1.12)}}
+.redo{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;align-items:center;font-weight:800}
+.redo span{background:#fff;border-radius:999px;padding:8px 12px;box-shadow:var(--shadow);font-size:15px}
+.redo em{font-style:normal;color:var(--rose)}
+.again{font-family:var(--hand);font-size:clamp(34px,9vw,48px);color:var(--choco)}
+.again span{display:inline-block;opacity:0}
+.in .again span{animation:pop .6s forwards}
+.final-shout{font-family:var(--display);font-weight:700;font-size:clamp(26px,7vw,38px);color:#fff;text-shadow:0 3px 0 rgba(224,36,79,.6)}
+
+/* letter */
+.letter{background:#fffdfb;border-radius:22px;box-shadow:var(--shadow);padding:26px 22px;text-align:left;position:relative}
+.letter p{font-size:17px;margin-bottom:14px;color:#3b2418}
+.letter p:first-child::first-letter{font-family:var(--hand);font-size:54px;float:left;line-height:.8;padding:6px 8px 0 0;color:var(--rose)}
+.letter.clamped{max-height:420px;overflow:hidden}
+.letter.clamped::after{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(transparent,#fffdfb);border-radius:0 0 22px 22px}
+footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:14px}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  #floaties{display:none}
+}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate" role="dialog" aria-label="Surprise">
+  <div class="gift" id="gift" aria-hidden="true"><div class="box"></div><div class="rib-v"></div><div class="lid"><span class="bow">🎀</span></div></div>
+  <h1>Pour Khadija 💌</h1>
+  <p>Un petit cadeau pour nos 2 ans…</p>
+  <button class="btn pulse" id="openGift">Ouvre ton cadeau 🎁</button>
+</div>
+
+<div id="floaties" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<main>
+
+<!-- HERO -->
+<section class="scene hero center" id="hero">
+  <div class="wrap stack">
+    <div data-reveal class="sweets" aria-hidden="true"><span style="--i:0">🍫</span><span style="--i:1">☁️</span><span style="--i:2">🍡</span><span style="--i:3">🍬</span></div>
+    <div data-reveal style="--d:.1s"><span class="kicker">Joyeux anniversaire à nous</span></div>
+    <div data-reveal style="--d:.2s"><span class="big2">2</span></div>
+    <h1 class="title" data-reveal style="--d:.3s">ans avec <em>toi</em>, mon amour</h1>
+    <div class="typer" id="typer" data-reveal style="--d:.4s" aria-live="polite"></div>
+    <p class="lead" data-reveal style="--d:.5s">Mon petit bout de chocolat tout mignon, mon petit nuage d'amour, mon petit marshmallow tout doux… que j'ai envie de garder dans ma poche pour toujourrrrs.</p>
+    <div class="stats" data-reveal style="--d:.6s">
+      <div class="stat"><b data-count="730">0</b><span>jours (environ)</span></div>
+      <div class="stat"><b data-count="17520">0</b><span>heures</span></div>
+      <div class="stat"><b>∞</b><span>bisous</span></div>
+    </div>
+    <div class="scroll-hint">Descends tout doucement ↓</div>
+  </div>
+</section>
+
+<!-- DEUX ANS -->
+<section class="scene center">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Deux ans déjà bébé…</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">DEUX ANS !!! <em>Hahaha</em></h2>
+    <p class="lead" data-reveal style="--d:.2s">Et pourtant j'ai pas l'impression qu'on arrive au bout de quelque chose. J'ai l'impression qu'on est encore <b>au tout début</b> de notre histoire.</p>
+    <div class="card" data-reveal style="--d:.3s">
+      <p class="hand" style="font-size:28px;line-height:1.2">« Si on me donnait le choix de recommencer toute ma vie depuis le début, je demanderais juste qu'on me laisse te retrouver à nouveau. »</p>
+    </div>
+    <p class="small" data-reveal style="--d:.4s">Encore tellement de souvenirs à créer, de voyages, de fous rires… et toute une vie à construire tous les deux.</p>
+  </div>
+</section>
+
+<!-- BUMBLE -->
+<section class="scene center" id="bumble">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Chapitre 1 · Bumble 🐝</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">J'étais sur le point de <em>supprimer l'app</em> 😱</h2>
+    <p class="lead" data-reveal style="--d:.2s">Parmi toutes les personnes du monde… c'est toi et moi qui nous sommes trouvés. À toi de jouer :</p>
+    <div class="phone" data-reveal style="--d:.3s">
+      <div class="bar">bumble <span>🐝</span></div>
+      <div class="profile" id="profile">
+        <div class="stamp-like">LIKE</div>
+        <div class="face">👩‍⚕️</div>
+        <h3>Khadija 💕</h3>
+        <p>Future meilleure médecin de l'univers · Hbila certifiée · Cheveux magnifiques</p>
+      </div>
+      <div class="swipe-btns" id="swipeBtns">
+        <button id="nope" aria-label="Passer">✕</button>
+        <button id="like" aria-label="Aimer">♥</button>
+      </div>
+      <div class="match" id="match">
+        <h3>It's a Match!</h3>
+        <div class="duo"><span>🧑</span>💛<span style="animation-delay:.3s">👩</span></div>
+        <p style="font-weight:800">Heureusement qu'on a swipé à droite yak a bébé 😮‍💨</p>
+        <p class="small" style="color:#fff">Et le plus drôle : on était tous les deux intéressés dès le début hahaha</p>
+      </div>
+    </div>
+    <p class="small" data-reveal style="--d:.4s">Ce qui m'a plu au début — ta façon de parler, ton rire, ta manière d'être — c'est exactement ce qui me fait craquer aujourd'hui. Sauf que maintenant, c'est mille fois plus fort.</p>
+  </div>
+</section>
+
+<!-- MCDO -->
+<section class="scene night center" id="mcdo">
+  <div class="stars" id="stars"></div>
+  <div class="wrap stack" style="position:relative">
+    <div data-reveal><span class="kicker">Chapitre 2 · McDo Maârif 🍟</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Notre premier rendez-vous…</h2>
+    <div class="clock-row" data-reveal style="--d:.2s">
+      <div class="clock" aria-hidden="true"><div class="h"></div><div class="m"></div></div>
+      <div class="digital">02:00<small> AM</small></div>
+    </div>
+    <div class="mcbox" data-reveal style="--d:.3s" aria-hidden="true"><span style="--i:0">🍔</span><span style="--i:1">🍟</span><span style="--i:2">🥤</span></div>
+    <div class="shout" data-reveal style="--d:.4s">KBIDTI, ON VA AU MCDO À 2H DU MATIN POUR UN PREMIER RENDEZ-VOUS ET ON FINIT PAR TOMBER AMOUREUX COMME ÇA ???</div>
+    <p class="lead" data-reveal style="--d:.5s">Pas besoin d'un restaurant luxueux. Tellement simple, tellement naturel, tellement <b>nous</b>. Il me suffisait d'être avec toi.</p>
+    <div class="card" data-reveal style="--d:.6s">
+      <div class="kiss" aria-hidden="true">💋</div>
+      <p style="margin-top:8px">Et puis notre premier bisou juste après… je crois que mon cœur avait déjà compris ce que ma tête allait mettre du temps à réaliser.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRACELET -->
+<section class="scene center">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Chapitre 3 · Le bracelet</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Hbibti, je le mets <em>toujours</em></h2>
+    <div class="ring-stage" data-reveal style="--d:.2s" aria-hidden="true"><div class="ring" id="ring"></div></div>
+    <div data-reveal style="--d:.25s"><span class="tag"><span>TOM</span><span>MY</span><span>❤</span></span></div>
+    <p class="lead" data-reveal style="--d:.3s">C'est pas juste un bracelet. C'est un petit morceau de notre histoire que je porte avec moi : nos débuts, cette nuit, ce premier bisou.</p>
+    <div class="card stack" data-reveal style="--d:.4s;text-align:left">
+      <div class="check"><i>✔︎</i>Porté depuis deux ans</div>
+      <div class="check"><i>✔︎</i>Toujours là — et moi aussi</div>
+      <div class="check"><i>✔︎</i>Amoureux encore plus qu'avant</div>
+      <p class="small">(jamais de dar de smail 😌)</p>
+    </div>
+  </div>
+</section>
+
+<!-- MEMORIES -->
+<section class="scene center">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Chapitre 4 · Nos souvenirs</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Pas besoin d'extraordinaire. <em>Il suffit que tu sois là.</em></h2>
+    <div class="mem-grid">
+      <button class="card mem" data-reveal style="--d:.15s" data-mem>
+        <span class="replay">↻ rejouer</span>
+        <div class="lane"><span class="ball">🎳</span><span class="pins"><span style="--r:-40deg">🎳</span><span style="--r:30deg">🎳</span><span style="--r:-20deg">🎳</span></span><span class="strike">STRIKE !</span></div>
+        <h3>Notre journée bowling</h3>
+        <p class="small">Un souvenir que je garde dans un coin de ma tête et de mon cœur.</p>
+      </button>
+      <button class="card mem" data-reveal style="--d:.25s" data-mem>
+        <span class="replay">↻ rejouer</span>
+        <div class="zoo"><span style="--i:0">🦒</span><span style="--i:1">🐒</span><span style="--i:2">🦁</span><span style="--i:3">🐘</span><span style="--i:4">🦓</span></div>
+        <h3>Notre journée au zoo</h3>
+        <p class="small">(Les animaux étaient mignons. Toi, plus.)</p>
+      </button>
+      <button class="card mem" data-reveal style="--d:.35s" data-mem>
+        <span class="replay">↻ rejouer</span>
+        <div class="bench"><span class="cup a">☕</span><span class="cup b">☕</span><span class="steam">♨︎ ❤</span><div class="seat"></div></div>
+        <h3>Nos pauses café à Nearshore</h3>
+        <p class="small">Toi qui arrives avec nos deux cafés, sur notre banc. Quelques minutes volées à nos journées. C'est tout bête, mais c'est le genre de souvenir que je veux garder toute ma vie.</p>
+      </button>
+    </div>
+    <p class="small" data-reveal>Et franchement, supporter mes idées et mes délires, il faut avoir du courage hahaha.</p>
+  </div>
+</section>
+
+<!-- HBILA -->
+<section class="scene center" id="hbila">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Annonce officielle 📢</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Parlons de toi, <em>a dak lhbila</em></h2>
+    <div class="card job" id="job" data-reveal style="--d:.2s">
+      <span class="small" style="font-weight:800">OFFRE D'EMPLOI · RÉF. 2ANS</span>
+      <h3>Poste : Hbila officielle de mon cœur</h3>
+      <dl>
+        <dt>Missions</dt><dd>Me faire rire, me faire craquer, me faire fondre et me rendre fou dans la même journée</dd>
+        <dt>Profil</dt><dd>Taquine, expressive, tendre, cheveux magnifiques, petites folies</dd>
+        <dt>Contrat</dt><dd>CDI. À vie. Sans période d'essai.</dd>
+      </dl>
+      <div class="stamp" id="stamp">POSTE POURVU À VIE</div>
+    </div>
+    <div data-reveal style="--d:.3s"><button class="btn ghost" id="apply">Postuler 📄</button></div>
+    <p class="lead" data-reveal style="--d:.35s">Le recrutement est fermé définitivement. Tu es hbila, mais tu es <b>MA</b> hbila.</p>
+    <div class="card stack" data-reveal style="--d:.4s">
+      <div class="oldies" aria-hidden="true">👴💋👵</div>
+      <p class="small" style="font-weight:800">Dans 60 ans :</p>
+      <p class="quote">« mais qu'est-ce que je vais faire de toi ya rebbi »</p>
+      <p class="small">…juste avant de te prendre dans mes bras et de te faire un bisou. Toujours aussi faible devant ton sourire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I LOVE -->
+<section class="scene center">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Ce que j'aime chez toi</span></div>
+    <h2 class="title" data-reveal style="--d:.1s"><em>TOI.</em> Pas une version parfaite inventée.</h2>
+    <p class="lead" data-reveal style="--d:.2s">Touche les cœurs, un par un 👇</p>
+    <div data-reveal style="--d:.25s"><span class="progress-pill" id="hcount">0 / 12</span></div>
+    <div class="hgrid" id="hgrid" data-reveal style="--d:.3s"></div>
+    <div class="pearl-box card" id="pearl">
+      <div class="pearl" aria-hidden="true"></div>
+      <h3 style="color:var(--choco);font-size:26px;margin-bottom:8px">À mes yeux, tu es une perle rare</h3>
+      <p class="small">Paix, confiance, évidence. Tu es la femme qui me correspond, celle avec qui je me projette naturellement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTOR -->
+<section class="scene center doc" id="doc" data-level="0">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Ma petite docteur 🩺</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">La meilleure médecin…</h2>
+    <div data-reveal style="--d:.2s"><span class="scale" id="scaleEmoji">🩺</span></div>
+    <div class="scale-text" id="scaleText" data-reveal style="--d:.25s">du monde entier</div>
+    <div data-reveal style="--d:.3s"><button class="btn" id="zoomBtn">Plus loin 🚀</button></div>
+    <p class="lead" data-reveal style="--d:.35s">Et je suis pas objectif du tout, et je l'assume complètement hahaha. Mais sérieusement : je suis tellement fier de toi.</p>
+    <div class="rx" data-reveal style="--d:.4s">
+      <h3>📋 Ordonnance du Dr. Amoureux</h3>
+      <ol>
+        <li>Le droit d'être fatiguée</li>
+        <li>Souffler, ne rien faire, se reposer</li>
+        <li>Câlins à volonté</li>
+        <li>Rien à prouver à personne</li>
+        <li>Juste être ma petite didij</li>
+      </ol>
+      <div class="sig">À renouveler à vie ✍︎</div>
+    </div>
+    <p class="small" data-reveal>Tu n'as pas besoin d'être forte tout le temps. Je veux être celui avec qui tu peux poser tout ce que tu portes sur tes épaules.</p>
+  </div>
+</section>
+
+<!-- SOFT: pardon + promises -->
+<section class="scene center soft">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Un moment sérieux 🤍</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Pardon, bébé</h2>
+    <p class="lead" data-reveal style="--d:.2s">Si j'ai été rude, injuste, si j'ai manqué de patience ou si je t'ai fait de la peine alors que tu ne le méritais pas : je te demande pardon.</p>
+    <div class="card" data-reveal style="--d:.3s">
+      <p class="small" style="font-weight:800;margin-bottom:6px;text-align:left">Je ne suis pas parfait, mais je te promets :</p>
+      <div class="promise" style="--d:.1s"><i>🤍</i><span>De continuer à apprendre et à faire attention</span></div>
+      <div class="promise" style="--d:.25s"><i>🤍</i><span>De reconnaître mes erreurs et de m'excuser sincèrement</span></div>
+      <div class="promise" style="--d:.4s"><i>🤍</i><span>De ne jamais tenir ton amour pour acquis</span></div>
+      <div class="promise" style="--d:.55s"><i>🤍</i><span>De te traiter avec douceur, respect et patience</span></div>
+      <div class="promise" style="--d:.7s"><i>🤍</i><span>Qu'on soit une équipe, pas deux personnes qui essaient de gagner</span></div>
+    </div>
+    <p class="small" data-reveal>Parfois les mots sont trop petits pour ce que je ressens. Alors j'espère que tu le vois à travers mes gestes.</p>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="scene center">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Ce que je veux être pour toi</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Je veux être ton…</h2>
+    <div class="role-word" id="roleWord" data-reveal style="--d:.2s">refuge</div>
+    <div data-reveal style="--d:.25s"><button class="btn" id="roleBtn">Et encore ? 👀</button></div>
+    <div class="card stack" data-reveal style="--d:.3s">
+      <span class="peanut" id="peanut" aria-hidden="true">🥜</span>
+      <p>Ton papa aussi — pas littéralement bébé, tu as compris ce que je veux dire, <b>ne commence pas à me casser les cacahuètes stp</b>.</p>
+      <button class="mini-btn" id="peanutBtn">Casser une cacahuète</button>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE -->
+<section class="scene">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Notre avenir ✨</span></div>
+    <h2 class="title center" data-reveal style="--d:.1s">Ce qui me fait le plus <em>sourire</em></h2>
+    <div class="timeline">
+      <div class="step" data-reveal>
+        <div class="dot">💍</div>
+        <h3>Un mariage</h3>
+        <p>Quand le moment sera venu. J'ai hâte de te voir dans ta robe de mariée.</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="dot">🏠</div>
+        <h3>Notre maison</h3>
+        <p>Choisir nos meubles… et se disputer gentiment sur la couleur d'un mur. Touche le mur :</p>
+        <button class="house" id="house" aria-label="Changer la couleur du mur"><div class="roof"></div><div class="wall" id="wall"><div class="win"></div><div class="door"></div><div class="win"></div></div></button>
+        <p class="small" id="wallMsg">Rose ? 🙂</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="dot">👶</div>
+        <h3>Des bébés</h3>
+        <p>Enfin, je veux dire, DES bébés. On verra combien on arrive à gérer sans devenir fous.</p>
+        <div class="babies" id="babies"></div>
+        <button class="mini-btn" id="babyBtn">+1 bébé</button>
+        <p class="small" id="babyMsg" style="margin-top:6px"> </p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="dot">🩺</div>
+        <h3>Toi, la meilleure médecin du monde</h3>
+        <p>…qui gère tes patients, tes enfants et ton mari <i>(li mamhtajch ta gestion 😌)</i> dans la même journée. Et moi qui fais le papa responsable tout en apprenant des bêtises aux enfants.</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="dot">👵</div>
+        <h3>Nos petits-enfants</h3>
+        <div class="chat">
+          <div class="bubble l">Mamie, papi, vous vous êtes rencontrés comment ?</div>
+          <div class="bubble r">Sur internet 😌</div>
+          <div class="bubble l">SUR INTERNET ?? 😂😂</div>
+          <div class="bubble r">Et le premier rendez-vous c'était au McDo à 2h du matin</div>
+          <div class="bubble l">Mamie était déjà hbila ?</div>
+          <div class="bubble r">Déjà. Et papi était déjà complètement fou d'elle ❤️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 70 YEARS -->
+<section class="scene center" id="years">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Avertissement ⚠️</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Chargement de <em>70 ans</em> d'embêtements…</h2>
+    <div class="load-num" data-reveal style="--d:.2s"><span id="loadNum">0</span>%</div>
+    <div class="loader" data-reveal style="--d:.25s"><b id="loadBar"></b></div>
+    <div class="card load-log" id="loadLog" data-reveal style="--d:.3s">
+      <div>✔︎ Blagues nulles : 10 000 en stock</div>
+      <div>✔︎ Bisous : ∞</div>
+      <div>✔︎ Pauses café : des centaines</div>
+      <div>✔︎ Fous rires : des milliers</div>
+      <div>✔︎ « oui bébé je sais » : ×1 000 000</div>
+      <div>✔︎ Vieux couple qui se taquine encore pour rien : activé</div>
+    </div>
+  </div>
+</section>
+
+<!-- NICKNAMES -->
+<section class="scene center">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Supplément spécial princesse 👑</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Les petits noms <em>ridicules</em></h2>
+    <p class="lead" data-reveal style="--d:.2s">Parce que je sais que tu adores ça. Touche le bocal 🍬</p>
+    <div data-reveal style="--d:.3s"><button class="jar" id="jar" aria-label="Un petit nom">🍯</button></div>
+    <div class="nick" id="nick" aria-live="polite"><p class="small">(il y en a beaucoup… vraiment beaucoup)</p></div>
+    <div class="nick-count" id="nickCount"></div>
+  </div>
+</section>
+
+<!-- FINALE -->
+<section class="scene center finale" id="finale">
+  <div class="wrap stack">
+    <div data-reveal><span class="bigheart" aria-hidden="true">❤️</span></div>
+    <h2 class="title" data-reveal style="--d:.1s">Mon cœur ne bat que <em>pour toi</em></h2>
+    <p class="lead" data-reveal style="--d:.2s">Et si je devais tout recommencer :</p>
+    <div class="redo" data-reveal style="--d:.3s">
+      <span>🐝 Bumble</span><em>→</em><span>👩 toi</span><em>→</em><span>🍟 McDo</span><em>→</em><span>💋 premier bisou</span><em>→</em><span>❤️ retomber amoureux</span>
+    </div>
+    <div class="again"><span style="animation-delay:.5s">Encore.</span> <span style="animation-delay:1.1s">Et encore.</span> <span style="animation-delay:1.7s">Et encore.</span></div>
+    <p class="final-shout" data-reveal style="--d:.4s">JE T'AIME MA FEMME. JOYEUX 2 ANS À NOUS !</p>
+    <p class="lead" data-reveal style="--d:.45s">Et prépare-toi, parce que je compte bien t'embêter pendant les 70 prochaines années 😌</p>
+    <div data-reveal style="--d:.5s;display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+      <button class="btn" id="party">Bon anniversaire à nous 🎉</button>
+      <a class="btn ghost" href="#lettre" style="text-decoration:none">Lire ma lettre 💌</a>
+    </div>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="scene" id="lettre" style="align-items:flex-start">
+  <div class="wrap stack">
+    <div class="center"><span class="kicker">La lettre complète 💌</span></div>
+    <h2 class="title center">Pour toi, ma kbidti</h2>
+    <article class="letter clamped" id="letter">
+      <p>Mon petit bout de chocolat tout mignon, mon petit nuage d'amour, mon petit marshmallow tout doux et tout adorable, mon petit bonbon d'amour que j'ai envie de croquer et de garder dans ma poche pour toujourrrrs</p>
+      <p>Joyeux 2 ans mon amour, ma didijti, ma hbiba diali, ma kbidti, mon bebe, mon omri, mon tout.</p>
+      <p>Deux ans deja bebe... DEUX ANS !!! Hahaha w quand j'y pense, j'arrive meme pas a realiser tout ce qu'on a vecu, tout ce qu'on a partage, tout ce qu'on est devenus l'un pour l'autre w surtout tout ce qu'il nous reste encore a vivre ensemble. Parce que le plus beau dans tout ca, c'est que j'ai pas l'impression qu'on arrive au bout de quelque chose, au contraire. J'ai l'impression qu'on est encore au tout debut de notre histoire, qu'on a encore tellement de souvenirs a creer, tellement de moments a vivre, tellement de voyages a faire, tellement de fou rires a avoir, tellement de choses a decouvrir ensemble w toute une vie a construire tous les deux. Et franchement, si on me donnait le choix de recommencer toute ma vie depuis le debut, je demanderais juste qu'on me laisse te retrouver a nouveau, meme si je devais refaire tout le chemin juste pour arriver jusqu'a toi.</p>
+      <p>Des fois je repense au fait qu'on s'est rencontrés sur bmble w j'étais sur le point de supprimer l'application hahaha. Genre parmi toutes les personnes du monde, parmi tous les gens qu'on aurait pu rencontrer, toutes les vies qu'on aurait pu avoir, c'est toi et moi qui nous sommes trouves. Et le plus drole, c'est qu'on etait tous les deux interesses des le debut hahaha. Heureusement qu'on a swipe a droite yak a bebe, sinon je serais passe a cote de la plus belle chose qui me soit arrivee. Imagine ma vie sans toi, c'est meme pas une vie que j'ai envie d'imaginer. Et quand je repense a ce qui m'a plu chez toi au debut, ta facon de parler, ton rire, ta maniere d'etre, je me rends compte que c'est encore exactement ces memes choses qui me font craquer aujourd'hui. Sauf que maintenant, c'est mille fois plus fort, parce que derriere cette voix, derriere ce rire, derriere ce sourire, il y a la femme que j'aime plus que tout au monde, la femme que je connais, que j'admire, que je comprends de mieux en mieux et avec qui je veux partager toute ma vie.</p>
+      <p>Et puis il y a NOTRE premier rendez-vous au mcdoo Maarif a 2h du matin. Kbidti, ON VA AU MCDO A 2H DU MATIN POUR UN PREMIER RENDEZ-VOUS ET FINIT PAR TOMBER AMOUREUX COMME CA ??? Mais franchement, je crois que je pourrais passer des heures a repenser a cette nuit. C'etait tellement simple, tellement naturel, tellement nous. Pas besoin d'un restaurant luxueux, d'un endroit incroyable ou d'un programme de fou pour que je passe un moment inoubliable. Il me suffisait d'etre avec toi. Et puis notre premier bisou juste apres... bebe, je crois que mon coeur avait deja compris ce que ma tete allait mettre du temps a realiser. Il y avait quelque chose chez toi qui me donnait envie de rester, d'en apprendre plus sur toi, de te revoir, de te parler encore et encore. Je savais pas encore a quel point tu allais devenir importante pour moi, mais j'avais deja envie de continuer cette histoire avec toi.</p>
+      <p>Et je peux pas parler de ce souvenir sans parler de ton bracelet tommy que tu m'avais offert ce jour-la. Hbibti, je le mets toujours. Et tu sais pourquoi ca me touche autant ? Parce que c'est pas juste un bracelet pour moi. C'est un petit morceau de notre histoire que je porte avec moi. C'est un souvenir de nos debuts, de cette nuit, de ce premier bisou, de cette periode ou on commencait a peine a se decouvrir. Deux ans plus tard, il est toujours la, et moi je suis toujours la aussi, amoureux de toi, encore plus qu'avant. Je sais pas si tu te rends compte de la valeur que peuvent avoir certaines petites choses quand elles viennent de la bonne personne. Un objet tout simple peut devenir precieux juste parce qu'il porte un souvenir avec toi. Et ce bracelet, je le garde parce qu'il vient de toi, ma vie.</p>
+      <p>Je repense aussi a notre journee bowling, a notre journee au zoo, a tous ces moments qui sont devenus des souvenirs que je garde dans un coin de ma tete et de mon coeur. Et je me dis que c'est ca que j'aime avec toi : on n'a pas besoin de vivre quelque chose d'extraordinaire a chaque fois pour que ca devienne special. Il suffit que tu sois la. On peut sortir, se balader, faire une activite, parler pendant des heures ou simplement passer du temps ensemble, et je finis toujours par me dire que je suis bien avec toi. Tu es devenue cette personne avec qui je peux partager les grands moments comme les plus petits, celle a qui j'ai envie de raconter mes journees, mes pensees, mes idees les plus debiles et mes projets les plus serieux. Et franchement, supporter mes idees et mes delires, il faut avoir du courage hahaha.</p>
+      <p>D'ailleurs, parlons de toi a dak lhbila. Ma hbiba, ma petite folle, mon adorable petit probleme prefere, celle qui peut me faire rire, me faire craquer, me faire fondre et me rendre fou dans la meme journee hahaha. J'adore ton cote taquin, j'adore quand tu es expressive, j'adore tes reactions, j'adore quand tu es heureuse et que tu souris, j'adore quand tu es tendre avec moi, quand tu viens chercher des calins ou des bisous, quand tu me montres ton amour a ta maniere. J'adore quand tu es juste toi-meme, sans avoir besoin de faire semblant, sans avoir besoin d'etre quelqu'un d'autre. C'est vraiment ca que j'aime chez toi, bebe. TOI. Pas une version parfaite inventee pour plaire a quelqu'un, pas une image, pas une idee de la femme ideale. Toi, Khadija, avec ton rire, tes expressions, tes petites folies, tes humeurs, ta tendresse, ton caractere, tes cheveux magnifiques qui me rendent fou, w tout ce qui fait que tu es toi.</p>
+      <p>Et oui, tu es hbila hahaha, mais tu es MA hbila, et personne n'a le droit de te remplacer dans ce poste tres important. Le recrutement est ferme definitivement, le poste est pourvu a vie, aucun CV ne sera accepte hahaha. Je te previens, meme dans 60 ans, si tu continues a etre hbila, je serai la a te regarder en disant "mais qu'est-ce que je vais faire de toi ya rebbi" avant de te prendre dans mes bras et de te faire un bisou. Et je sais deja que je serai toujours aussi faible devant ton sourire.</p>
+      <p>Mais au-dela de toutes nos blagues, il y a quelque chose que je veux que tu comprennes vraiment. Je te trouve merveilleuse, Khadija. Et je dis pas ca juste parce que je suis amoureux de toi. Je le pense sincerement. Tu es une femme avec tellement de belles choses en toi. Tu es attentionnee, genuine, loyale, pure dans ton coeur, et tu as une facon d'etre qui me donne envie de te connaitre encore plus chaque jour. J'aime le fait que tu sois sincere, j'aime ta sensibilite, j'aime la facon dont tu peux etre tendre, j'aime que tu sois expressive et que tu ne sois pas quelqu'un de froid avec moi. J'aime tes yeux, j'aime ta voix, j'aime tes cheveux, j'aime ton sourire, j'aime ta facon de parler, j'aime les petits details que je serais incapable d'expliquer a quelqu'un d'autre parce que pour moi ils sont simplement toi.</p>
+      <p>Et je veux que tu saches quelque chose, ma kbidti : a mes yeux, tu es une perle rare. Vraiment. Dans un monde ou on peut rencontrer tellement de personnes sans jamais ressentir ce sentiment de paix, de confiance et d'evidence, moi j'ai eu la chance de te rencontrer, toi. Tu es la femme qui me correspond, celle avec qui je me projette naturellement, celle avec qui je peux imaginer un avenir sans avoir besoin de me forcer a y croire. Je te regarde et je me dis que c'est avec toi que j'ai envie de faire les choses serieusement, de grandir, d'apprendre, de construire, de me battre pour mes objectifs et de devenir quelqu'un de meilleur.</p>
+      <p>Et surtout, je veux que tu saches a quel point je suis fier de toi. Ma petite docteur, la meilleure medecin du monde entier, de tout le maroc, de toute l'1frique, de toute la planete, de la galaxie et meme des galaxies qu'on n'a pas encore decouvertes. Oui oui, je parle bien de toi, madame la meilleure medecin de l'univers entier. Et je suis pas objectif du tout et je l'assume completement hahaha. Mais serieusement bebe, je sais que tu es souvent fatiguee, que tu as beaucoup de choses a gerer et que tes journees peuvent etre longues. Je sais que ce que tu fais demande des efforts, de la patience, de l'energie et beaucoup de courage. Et meme si je ne peux pas toujours etre a cote de toi pour voir tout ce que tu fais, je veux que tu saches que je suis fier de la femme que tu es, de ce que tu accomplis et de tout ce que tu essaies de devenir.</p>
+      <p>J'espere que tu ne doutes jamais de ta valeur, mon amour. J'espere que meme les jours ou tu es fatiguee, ou tu es decouragee, ou tu as l'impression de ne pas en faire assez, tu te rappelles que tu es deja quelqu'un d'extraordinaire. Tu n'as pas besoin de reussir quelque chose, d'etre productive, d'avoir une bonne journee ou de faire plaisir a tout le monde pour meriter mon amour. Tu n'as pas besoin d'etre forte tout le temps. Tu as le droit d'etre fatiguee, de souffler, de ne rien faire, de te reposer, de demander de l'aide et de te laisser prendre soin de toi. Je veux aussi etre cette personne pour toi, celle avec qui tu peux poser tout ce que tu portes sur tes epaules et juste etre ma petite didij, sans pression, sans obligation, sans avoir a prouver quoi que ce soit.</p>
+      <p>Et si je pouvais, je prendrais volontiers une partie de ta fatigue pour te laisser respirer un peu plus. Je voudrais pouvoir te faire rentrer a la maison apres une longue journee, te preparer un petit quelque chose, te laisser te reposer, te prendre dans mes bras et te rappeler que tu n'as pas a tout porter toute seule. Je veux etre celui qui pense a ton bien-etre, qui fait attention a tes besoins, qui remarque quand quelque chose ne va pas et qui essaie de te faciliter la vie, meme avec de petits gestes. Parce que prendre soin de toi, ce n'est pas une corvee pour moi. C'est quelque chose que j'ai envie de faire, naturellement, parce que tu comptes enormement pour moi.</p>
+      <p>Et tu sais ce que j'adore aussi ? Le fait que notre amour ne soit pas seulement fait de grands mots et de grandes declarations. Il est aussi dans ces petits moments que personne d'autre ne trouverait forcement extraordinaires, mais qui comptent tellement pour moi. Comme ces jours ou on travaillait bjoj f nearshore et ou tu venais me rejoindre pour notre petite pause cafe, avec deux cafes dans les mains, sur notre banc. Bebe, tu te rends compte que cette image me rend heureux rien qu'en y repensant ? Toi qui arrives avec nos deux cafes, nous deux assis ensemble, quelques minutes volees a nos journees, juste pour nous retrouver. C'est tout bete, mais c'est exactement le genre de souvenir que je voudrais garder toute ma vie.</p>
+      <p>Parce que je crois que le bonheur que je veux vivre avec toi dans le futur ressemble beaucoup a ca. Pas seulement les grandes vacances, les cadeaux, les restaurants, les celebrations et les photos parfaites. Je veux aussi les pauses cafe, les retours a la maison, les discussions qui durent trop longtemps, les petites courses qu'on fait ensemble, les repas qu'on preparera, les soirees ou on n'aura rien prevu, les moments ou on est fatigues tous les deux mais contents d'etre ensemble. Je veux ces jours ordinaires qui, avec le temps, finissent par devenir les plus beaux souvenirs. Je veux une vie dans laquelle notre amour ne serait pas seulement quelque chose qu'on celebre une fois par an, mais quelque chose qu'on ressent dans notre quotidien.</p>
+      <p>Et franchement, je crois que tu m'as appris quelque chose d'important sur l'amour. Avant, on peut avoir plein d'idees sur ce que ca veut dire aimer quelqu'un. On peut imaginer les papillons, les bisous, les moments romantiques et les belles paroles. Mais quand tu aimes vraiment une personne, tu commences aussi a comprendre la patience, les compromis, les concessions, l'importance de se mettre a la place de l'autre et de ne pas laisser son ego prendre toute la place. Tu comprends que l'objectif n'est pas de gagner chaque discussion, mais de se comprendre. Que parfois, il faut prendre le temps de reflechir avant de parler, ecouter vraiment et se rappeler que la personne en face de toi est quelqu'un que tu aimes profondement.</p>
+      <p>Je ne veux pas qu'on soit un couple qui pretend ne jamais avoir de difficultes. Je veux qu'on soit un couple qui sait se retrouver, se parler, se comprendre et avancer ensemble. Je veux qu'on continue a apprendre l'un de l'autre, a etre patients, a faire des efforts et a nous donner la possibilite de grandir. Je veux qu'on garde cette confiance qu'on a construite, cette tranquillite qu'on ressent quand on sait qu'on peut compter l'un sur l'autre. J'aime le fait qu'on se fasse confiance, qu'on n'ait pas besoin de vivre dans le doute ou de se demander constamment si l'autre est sincere. Pour moi, cette confiance est precieuse, et je veux la proteger. Je veux qu'on continue a avoir cette relation dans laquelle on peut respirer, etre nous-memes et aimer sans avoir peur de devoir constamment se mefier.</p>
+      <p>Et si jamais, au cours de ces deux annees, j'ai ete rude avec toi, si j'ai ete injuste, si j'ai dit quelque chose de blessant, meme sans le vouloir, si j'ai manque de patience ou si je t'ai fait de la peine alors que tu ne meritais pas de la recevoir de ma part, je veux te demander pardon, bebe. Je sais que les mots peuvent faire mal, meme quand on ne les prononce pas avec cette intention. Et je sais aussi que tu es quelqu'un qui peut etre blessee par les mots, parce que tu ressens les choses profondement. Je ne veux jamais utiliser le fait que tu m'aimes pour te faire penser que tout est acquis ou que je peux me permettre de ne pas faire attention a tes sentiments.</p>
+      <p>Je ne suis pas parfait, ma vie, et je ne vais pas te promettre que je le serai. Mais je peux te promettre que je veux continuer a apprendre, a faire attention, a me remettre en question quand il le faut et a essayer de comprendre ce que tu ressens, meme quand je ne le comprends pas immediatement. Je veux etre un homme qui sait reconnaitre ses erreurs, qui sait s'excuser sincerement et qui ne considere jamais ton amour comme une chose qu'il peut tenir pour acquise. Je veux te traiter avec douceur, avec respect, avec patience et avec tout l'amour que tu merites. Et quand je ne trouve pas les bons mots, parce que parfois j'ai du mal a exprimer ce que j'ai dans le coeur, j'espere que tu arriveras quand meme a voir, a travers mes gestes et mes efforts, a quel point tu comptes pour moi.</p>
+      <p>Parce que le probleme avec toi, bebe, c'est que ce que je ressens est tellement grand que parfois j'ai l'impression que les mots sont trop petits. Je peux te dire que je t'aime, que tu me manques, que tu es belle, que tu es importante pour moi, mais j'ai parfois l'impression que tout ca ne represente qu'une toute petite partie de ce que je ressens vraiment. Comment je suis cense t'expliquer que tu es devenue une partie de ma facon de voir la vie ? Que quand je pense a mes objectifs, j'ai envie de les atteindre et de pouvoir les partager avec toi ? Que quand je pense a l'avenir, je ne vois pas seulement ce que je veux accomplir pour moi, mais aussi ce que je veux construire pour nous ? Comment je peux mettre en quelques phrases le fait que ta presence m'apporte du confort, de la paix et un bonheur que je ne veux echanger contre rien ?</p>
+      <p>Tu illumines ma vie, a l3mer diali. Et je ne dis pas ca pour faire joli dans un message d'anniversaire. Je le dis parce que je le ressens. Tu me donnes envie d'avancer, de grandir, de travailler sur moi, de pousser plus loin, de construire quelque chose de solide et de devenir un homme dont tu pourras etre fiere. Tu me donnes envie de penser a demain avec enthousiasme, parce que dans ce demain, il y a toi. Et meme quand je suis fatigue, stresse ou preoccupe par mille choses, savoir que je t'ai dans ma vie change ma facon de voir les choses. Tu es une source de motivation, de douceur et de paix pour moi, et je ne veux jamais oublier de te dire a quel point c'est precieux.</p>
+      <p>Je veux aussi te dire que je ne t'aime pas uniquement pour ce que tu m'apportes. Je t'aime pour la personne que tu es, pour ta facon d'exister, pour tes qualites, pour tes petits defauts, pour tes reves, pour ta sensibilite, pour ta loyauté, pour ta purete, pour ton rire et pour toutes ces choses qui font que tu es irremplacable a mes yeux. Je veux te voir heureuse, epanouie, fiere de toi, en train de realiser tes reves. Je veux te voir accomplir tout ce que tu souhaites accomplir, devenir la femme que tu veux devenir et vivre la vie dont tu as toujours reve. Et je veux etre a tes cotes pendant tout ce chemin, pas pour te dire qui tu dois etre, mais pour t'encourager, te soutenir et te rappeler que tu n'es pas seule.</p>
+      <p>Et maintenant, parlons de ce qui me fait le plus sourire quand je pense a nous : notre avenir. Hbibti, quand je pense a notre avenir, je ne vois pas seulement un couple qui reste ensemble. Je vois une famille. Je vois un mariage, une maison, des enfants, des projets, des responsabilites, des moments de joie, des moments de fatigue, des anniversaires, des fetes, des repas en famille et toute une vie de petites habitudes qu'on va creer ensemble. Je vois une vie dans laquelle on aura nos propres traditions, nos propres souvenirs et notre petit monde a nous.</p>
+      <p>Je veux qu'on se marie quand le moment sera venu, qu'on construise notre vie ensemble, qu'on profite de nos premieres annees de mariage, qu'on apprenne a vivre ensemble dans notre propre maison et qu'on construise une base solide avant d'accueillir nos petits bouts de chou. Je veux qu'on puisse regarder autour de nous un jour et se dire qu'on a construit tout ca ensemble, petit a petit, avec de la patience, du travail, de la confiance et beaucoup d'amour.</p>
+      <p>Et oui, bebe, je veux un bebe avec toi. Enfin, je veux dire, DES bebes hahaha, on verra combien on arrivera a gerer sans devenir fous tous les deux. Imagine-nous parents, a khadija. Toi, la meilleure medecin du monde, qui essaies de gerer tes patients, tes enfants et ton mari (li mamhtajch ta gestion 😌) dans la meme journee hahaha. Moi qui essaie de faire le papa responsable tout en faisant des blagues nulles a nos enfants et en leur apprenant probablement des betises. On va avoir du boulot, je te le dis hahaha.</p>
+      <p>Mais au-dela de la blague, il y a quelque chose de tres profond que je ressens depuis que je suis avec toi. Tu m'as donne envie de devenir papa. Pas juste l'idee abstraite d'avoir des enfants un jour, mais l'envie reelle de construire une famille avec toi. L'envie de prendre soin de petits etres qui seront un melange de toi et de moi, de leur apprendre des choses, de les voir grandir, de les accompagner, de les proteger et de leur donner tout l'amour possible. Quand j'imagine mes futurs enfants, je t'imagine comme leur maman. Je pense a ton coeur, a ta tendresse, a ton intelligence, a ta facon de prendre soin des gens, et je me dis qu'ils auront une chance immense de t'avoir dans leur vie.</p>
+      <p>Je veux etre un papa dont nos enfants seront fiers, un papa present, attentionne, qui les ecoute, qui les protege et qui leur donne un exemple d'amour et de respect. Je veux qu'ils grandissent dans une maison ou ils se sentent aimes, en securite et libres d'etre eux-memes. Je veux qu'ils sachent qu'ils peuvent venir nous parler de tout, qu'ils n'ont pas besoin de cacher leurs peines ou leurs erreurs et qu'ils auront toujours un endroit ou revenir. Et je veux qu'ils grandissent en voyant deux personnes qui continuent a s'aimer, a se respecter, a se soutenir et a faire des efforts l'une pour l'autre.</p>
+      <p>Et surtout, je veux que tu saches que je ne veux pas seulement etre le pere de tes enfants. Je veux etre ton partenaire dans tout ca. Je veux qu'on se partage les responsabilites, qu'on se soutienne quand on sera fatigues, qu'on rigole quand nos enfants feront des betises, qu'on se serre les coudes quand les choses seront compliquees et qu'on se rappelle qu'avant d'etre des parents, on est aussi deux personnes qui se sont aimees et choisies. Je veux qu'on continue a prendre soin de notre couple, meme quand notre vie sera plus remplie, meme quand on aura moins de temps, meme quand les journees seront longues. Je veux que tu restes ma hbiba, ma kbidti, mon bebe, meme quand on aura une maison pleine de petits monstres qui courent partout hahaha.</p>
+      <p>Et un jour, quand nos enfants auront grandi, quand ils auront leurs propres vies, leurs propres projets et peut-etre leurs propres enfants, je nous imagine dans notre grande maison, tous les deux, avec nos petits-enfants qui courent partout, qui font du bruit, qui remplissent la maison de vie et qui nous epuisent en quelques heures hahaha. Je nous imagine les regarder jouer, nous regarder l'un l'autre avec des sourires et nous rappeler nos debuts. Je nous imagine raconter notre histoire, parler du fameux Mcdo maarif a 2h du matin, du premier bisou, du bracelet tommy (jamais de dar de smail), de nos premieres sorties et de toutes ces petites choses qui ont marque le debut de notre vie ensemble.</p>
+      <p>Je nous imagine leur dire qu'on s'est rencontres sur internet, et je suis sur que nos petits-enfants vont se moquer de nous hahaha. Je nous imagine leur raconter que leur grand-mere etait deja hbila a l'epoque et que leur grand-pere etait deja completement fou d'elle. Je nous imagine rire de nos anciennes photos, de nos anciennes habitudes, de nos petites disputes et de nos delires. Et je nous imagine surtout encore amoureux, avec cette complicite qui ne depend pas de notre age, de notre apparence ou de ce que la vie aura change autour de nous.</p>
+      <p>Parce que c'est vraiment ca que je veux, mon amour. Je ne veux pas seulement passer les prochaines annees avec toi. Je veux construire une vie avec toi, vieillir avec toi, te voir changer, changer moi aussi, decouvrir les nouvelles versions de nous-memes et continuer a nous choisir a travers toutes ces transformations. Je veux connaitre la femme que tu seras dans cinq ans, dans dix ans, dans vingt ans, et je veux que tu connaisses l'homme que je deviendrai aussi. Je veux qu'on puisse se regarder apres toutes ces annees et se dire qu'on a traverse tellement de choses, qu'on a appris tellement de choses, mais qu'on a garde quelque chose de precieux entre nous.</p>
+      <p>Je ne sais pas exactement comment la vie va se derouler. Je ne sais pas quels obstacles on rencontrera, quels projets changeront, quelles surprises nous attendent ou a quel point on evoluera avec le temps. Mais je sais une chose : je veux faire de mon mieux pour etre la pour toi. Je veux etre present dans les bons moments et dans les mauvais, dans les periodes ou tout va bien et dans celles ou tu auras besoin de soutien. Je veux etre ton refuge, ta personne de confiance, ton partenaire, ton meilleur ami, ton amant, ton protecteur, ton complice et ton mari. Je veux etre quelqu'un sur qui tu peux compter, quelqu'un qui prend tes sentiments au serieux, quelqu'un qui t'ecoute et qui essaie de te comprendre.</p>
+      <p>Je veux etre ton papa aussi, pas litteralement ton papa bebe, tu as compris ce que je veux dire, ne commence pas a me casser les cacahuètes stp. Je veux etre cette personne qui prend soin de toi, qui te rassure, qui te protege quand tu en as besoin et qui te laisse aussi toute la place pour etre independante, forte et toi-meme. Je veux etre ton meilleur ami, celui a qui tu peux raconter les histoires les plus debiles comme les choses les plus importantes. Je veux etre ton amant, celui qui continue a te regarder avec des yeux amoureux meme apres des annees de mariage. Je veux etre ton frere dans le sens de cette fidelite et de cette presence qui ne t'abandonnent pas. Je veux etre ton gardien, pas pour t'empecher de vivre, mais pour etre a tes cotes et veiller sur ton bonheur. Je veux etre tout ce que je peux etre pour toi, tout en restant un homme qui continue a apprendre comment mieux t'aimer.</p>
+      <p>Et je te promets une chose, bebe : je serai toujours la pour toi. Je ne peux pas te promettre que chaque jour sera parfait, ni que je trouverai toujours les bons mots, ni que je saurai toujours quoi faire. Mais je peux te promettre que je veux etre la, que je veux faire des efforts, que je veux ecouter, comprendre et avancer avec toi. Je veux que tu puisses compter sur moi, que tu puisses me parler quand quelque chose te pese et que tu n'aies pas peur de me montrer tes faiblesses. Je veux etre la personne qui te rappelle que tu n'as pas besoin de tout affronter toute seule.</p>
+      <p>Et je veux aussi que tu saches que tu n'as pas besoin de faire quoi que ce soit de particulier pour meriter mon amour. Tu n'as pas besoin d'etre parfaite, de toujours sourire, de toujours etre gentille, de toujours etre forte ou de toujours avoir de l'energie. Tu peux etre fatiguee, triste, de mauvaise humeur, silencieuse ou simplement avoir besoin de temps pour toi. Tu resteras khadija. Tu resteras la femme que j'aime. Je veux aimer toutes les parties de toi, pas seulement celles qui sont faciles a comprendre ou a vivre. Je veux apprendre a mieux te connaitre, a mieux comprendre ce qui te touche et a mieux prendre soin de ton coeur.</p>
+      <p>Tu sais, parfois j'ai peur qu'un jour la vie nous eloigne, qu'on finisse par se perdre au milieu de toutes les responsabilites, du travail, de la fatigue et des choses qui changent. Et je crois que cette peur existe justement parce que tu comptes tellement pour moi. Je n'ai pas envie de vivre dans cette peur, mais elle me rappelle a quel point je dois prendre soin de ce qu'on a. Je ne veux jamais qu'on cesse de faire attention l'un a l'autre sous pretexte qu'on se connait depuis longtemps. Je ne veux pas qu'on arrete de se seduire, de se surprendre, de se parler et de se faire rire. Je veux qu'on continue a entretenir notre amour, meme quand on aura mille choses a gerer.</p>
+      <p>Je veux qu'on soit ce vieux couple qui se taquine encore pour rien, qui se fait des petites blagues, qui se cherche du regard dans une piece remplie de monde et qui a toujours envie de rentrer ensemble a la maison. Je veux encore te faire rire quand tu seras fatiguee, meme si mes blagues sont nulles. Je veux encore t'embeter quand tu seras serieuse, meme si tu me regarderas avec tes yeux qui disent clairement que je suis insupportable hahaha. Je veux encore te prendre dans mes bras, te faire des bisous, te dire que tu es belle et te rappeler que tu es mon bebe, meme quand on aura des cheveux blancs et des petits-enfants qui nous appelleront papi et mamie.</p>
+      <p>Et si un jour on traverse une periode difficile, j'espere qu'on se rappellera de ces deux annees, de nos debuts, de nos souvenirs, de la confiance qu'on a construite et de toutes les raisons qui nous ont amenes jusqu'ici. J'espere qu'on se rappellera que notre histoire vaut la peine qu'on en prenne soin. J'espere qu'on continuera a se parler avec sincerite, a faire des compromis et a chercher des solutions ensemble. Je veux qu'on soit une equipe, pas deux personnes qui essaient de gagner l'une contre l'autre. Je veux qu'on se protege mutuellement, qu'on se respecte et qu'on se rappelle que notre amour est quelque chose qu'on construit tous les jours.</p>
+      <p>Khadija, ma kbidti, je ne sais pas si je te le dis assez souvent, mais je suis vraiment heureux de t'avoir dans ma vie. Je suis heureux de pouvoir t'appeler mon amour, de pouvoir te parler, de pouvoir te faire rire, de pouvoir partager mes journees avec toi et de pouvoir imaginer un avenir avec toi. Je suis heureux que tu sois la personne avec qui je peux etre moi-meme, avec mes idees, mes blagues, mes projets, mes moments de doute et mes moments de joie. Je suis heureux de savoir qu'il existe quelque part cette personne qui est devenue si importante pour moi, cette personne que j'ai envie de retrouver, de serrer dans mes bras et de garder pres de moi.</p>
+      <p>Et j'espere que je te rends heureuse, bebe. J'espere que tu te sens aimee avec moi. J'espere que tu sens que tu comptes, que tes efforts sont vus, que tes emotions sont importantes et que ta presence dans ma vie est quelque chose que je ne prends pas a la legere. J'espere que tu sais que je ne te considere pas comme acquise. Je veux continuer a te montrer, a travers les choses que je fais, que tu es importante pour moi. Je veux que tu puisses regarder notre relation et ressentir cette meme paix que je ressens quand je pense a toi, cette tranquillite de savoir qu'on est deux personnes qui veulent avancer ensemble et qui ont envie de construire quelque chose de beau.</p>
+      <p>Et je veux que tu saches aussi que je t'admire pour ce que tu es en dehors de notre couple. Tu es Khadija avant d'etre ma copine, tu es une femme avec tes propres reves, tes propres ambitions, tes propres pensees et ta propre histoire. Je veux continuer a decouvrir tout ca. Je veux connaitre tes nouveaux reves, tes nouvelles envies, les choses qui te passionneront demain et les choses qui te feront changer d'avis. Je veux te voir evoluer, reussir, apprendre et devenir encore plus la personne que tu souhaites etre. Et je veux que tu saches que je serai fier de toi a chaque etape, pas seulement quand tu atteindras tes objectifs, mais aussi pendant le chemin que tu feras pour y arriver.</p>
+      <p>Je t'aime pour tout ce que tu es aujourd'hui, et j'ai hate de rencontrer toutes les versions de toi que la vie nous reserve. J'ai hate de te voir dans ta robe de mariee, de construire notre maison avec toi, de choisir nos meubles, de se disputer gentiment sur la couleur d'un mur hahaha, de faire nos premieres courses pour notre chez-nous, de preparer nos premiers repas ensemble et de construire petit a petit cet endroit qui sera notre refuge. J'ai hate de rentrer du travail et de savoir que je rentre chez nous, vers toi. J'ai hate de vivre ces moments qui semblent ordinaires mais qui, pour moi, representent tout ce que je veux dans la vie.</p>
+      <p>Et j'ai hate de devenir papa avec toi, meme si je sais qu'on va probablement perdre quelques heures de sommeil hahaha. J'ai hate de voir nos enfants avoir ton sourire, tes expressions ou peut-etre ton caractere de hbila, et je suis deja desole pour le travail que ca va me donner hahaha. J'ai hate de les voir courir vers toi, de te voir les prendre dans tes bras, de nous voir apprendre ensemble a etre parents et de construire une famille ou chacun se sentira aime. J'ai hate de voir notre maison remplie de rires, de petites chaussures partout, de jouets qui trainent, de repas en famille et de ces moments de chaos qui deviendront probablement nos souvenirs preferes.</p>
+      <p>Mais en attendant tout ca, je veux aussi profiter de nous maintenant. Je veux continuer a vivre nos deux annees, notre jeunesse, nos sorties, nos petites habitudes, nos delires et toutes les choses qu'on a encore a decouvrir. Je ne veux pas attendre d'avoir une maison ou des enfants pour me sentir heureux avec toi. Je suis deja heureux de t'avoir aujourd'hui. Le futur me fait rever, mais le present avec toi est deja precieux. Et je veux qu'on continue a profiter de chaque etape, sans se presser, en construisant les choses a notre rythme, avec amour, patience et confiance.</p>
+      <p>Si je devais expliquer pourquoi je t'aime, je pourrais parler de ton sourire, de tes cheveux, de ton rire, de ta facon de parler, de ta tendresse et de toutes ces petites choses que j'adore chez toi. Je pourrais parler de notre premier rendez-vous, de notre premier bisou, du bracelet Tommy, du bowling, du zoo et de nos pauses cafe. Je pourrais parler de ton intelligence, de ta gentillesse, de ta loyauté et de la femme merveilleuse que tu es. Mais au fond, meme en enumerant tout ca, je n'aurais toujours pas explique l'essentiel.</p>
+      <p>L'essentiel, c'est que mon coeur ne bat que pour toi. C'est que je ne veux pas simplement etre amoureux de quelqu'un, je veux etre amoureux de toi. Je ne veux pas construire une histoire avec une personne au hasard, je veux construire notre histoire. Je ne veux pas imaginer une femme ideale abstraite, parce que quand je pense a la femme avec qui je veux partager ma vie, c'est toi que je vois. Je te choisis toi, avec tout ce que tu es, avec ce que je connais deja de toi et avec tout ce que je decouvrirai encore au fil des annees.</p>
+      <p>Je te veux toi, bebe. Et personne d'autre. Pas parce que je pense que le monde est rempli de personnes sans valeur, mais parce que c'est toi que j'aime, toi avec qui j'ai construit ces souvenirs, toi avec qui je me projette et toi avec qui je veux continuer a avancer. Ce que je ressens pour toi ne se resume pas a une attirance ou a une habitude. C'est un amour qui me donne envie de construire, de proteger, de grandir, de faire des efforts et de penser a demain avec toi.</p>
+      <p>Et si je pouvais te donner quelque chose pour notre deuxieme anniversaire, au-dela de n'importe quel cadeau, j'aimerais pouvoir te donner la certitude que tu es profondement aimee. J'aimerais que tu puisses ouvrir mon coeur comme on ouvre un livre et voir toutes les pages sur lesquelles ton nom apparait, toutes les fois ou j'ai pense a toi, toutes les fois ou j'ai imagine notre avenir, toutes les fois ou ton sourire m'est revenu en tete et toutes les fois ou je me suis dit que j'avais vraiment de la chance de t'avoir. Tu verrais a quel point tu es presente dans ma vie, meme quand tu n'es pas physiquement a cote de moi.</p>
+      <p>Je voudrais aussi pouvoir te montrer comment je te vois, parce que j'ai parfois l'impression que tu ne te rends pas compte de la place que tu as dans mon coeur. Je voudrais que tu puisses te regarder avec mes yeux pendant quelques minutes, juste pour comprendre pourquoi je te trouve si merveilleuse, pourquoi ton sourire peut changer ma journee et pourquoi je peux passer des heures a parler avec toi sans avoir l'impression de manquer de choses a te dire. Tu comprendrais pourquoi je t'appelle ma kbidti, mon omri, ma hbiba diali. Tu comprendrais pourquoi je peux etre aussi serieux quand je parle de notre avenir et aussi debile deux secondes apres quand je commence a t'embeter hahaha.</p>
+      <p>Parce que oui, mon amour, je suis capable de parler de mariage, de maison, de famille, de projets et de toute une vie ensemble, puis de redevenir le plus grand mrid de la planete juste pour te faire rire. C'est aussi ca que j'aime dans notre relation. On peut parler de choses serieuses, puis partir dans un delire completement debile. On peut etre tendres, puis se taquiner. On peut parler pendant des heures, puis se retrouver a rire pour une raison que personne d'autre ne comprendrait. Et je veux garder cette complicite toute notre vie.</p>
+      <p>Alors aujourd'hui, pour nos deux ans, je veux simplement te dire merci. Merci d'etre entree dans ma vie. Merci d'etre la personne que tu es. Merci pour tous les souvenirs qu'on a deja crees, pour ton amour, pour ta tendresse, pour ta confiance et pour tous ces petits gestes qui ont pris une grande place dans mon coeur. Merci pour ce bracelet que je porte encore, pour ce t-shirt que tu m'as fait imprimer hahaha. Bebe, tu sais a quel point ca m'avait touche ? Tu avais pris quelque chose qui me faisait rire, quelque chose que j'aimais, et tu en avais fait un cadeau personnel, un truc qui nous ressemblait. C'est exactement le genre de detail qui me fait t'aimer encore plus : tu arrives a rendre les choses speciales parce que tu y mets une partie de toi.</p>
+      <p>Et moi aussi, j'espere avoir reussi a te montrer mon amour a ma maniere. Quand je t'ai fait cette application pour tes etudes, je voulais faire quelque chose qui puisse t'aider, te faciliter la vie et te montrer que je soutiens ce que tu fais. Parce que je veux etre quelqu'un qui participe a tes reussites, quelqu'un qui essaie de trouver des solutions quand tu as un probleme et quelqu'un qui met ses competences au service de ton bonheur quand il le peut. Je ne pourrai pas tout regler dans ta vie, et je ne veux pas pretendre le contraire, mais je veux au moins etre celui qui se demande comment il peut t'aider, comment il peut t'encourager et comment il peut rendre certaines choses un peu plus faciles pour toi.</p>
+      <p>Je veux qu'on continue a avoir ces petites attentions, ces cadeaux qui ont du sens, ces gestes qui montrent qu'on se connait vraiment. Je veux continuer a apprendre ce qui te fait plaisir, ce qui te fait rire, ce qui te touche et ce qui te donne le sentiment d'etre aimee. Je veux que tu me connaisses aussi, que tu saches ce qui me rend heureux, ce qui me preoccupe et ce dont j'ai besoin. Je veux qu'on continue a se decouvrir, meme apres des annees ensemble, parce que je crois qu'on peut passer toute une vie avec une personne et continuer a apprendre de nouvelles choses sur elle.</p>
+      <p>Mon bebe, je ne sais pas combien de fois je vais encore te dire que je t'aime au cours de notre vie. Probablement des millions de fois, et tu vas finir par me dire "oui bebe je sais". Mais je vais continuer quand meme, parce que je ne veux pas que tu aies a deviner ce que tu representes pour moi. Je veux te le dire, te le montrer, te le rappeler et te le prouver, encore et encore. Je veux que tu n'aies jamais besoin de te demander si tu es importante pour moi. Tu l'es. Enormement. Plus que je ne sais l'exprimer correctement.</p>
+      <p>Et si un jour tu relis ce message dans quelques annees, j'espere que tu souriras. J'espere que tu te rappelleras de notre deuxieme anniversaire, de la personne que j'etais quand je t'ai ecrit ces mots, de ce qu'on vivait a ce moment-la et des reves qu'on avait pour notre avenir. Et j'espere surtout que tu pourras comparer tout ce qu'on aura vecu avec tout ce que je t'ai raconte ici. J'espere qu'on aura accompli beaucoup de nos projets, qu'on aura construit notre maison, qu'on sera maries, qu'on aura commence a fonder notre famille et qu'on aura encore mille choses a attendre avec impatience.</p>
+      <p>Mais meme si la vie ne se deroule pas exactement comme on l'imagine aujourd'hui, je veux qu'on garde cette envie d'avancer ensemble. Je veux qu'on continue a nous soutenir, a nous faire confiance, a nous respecter et a nous aimer avec sincerite. Je veux qu'on se rappelle que notre bonheur ne depend pas d'avoir une vie parfaite, mais aussi de la facon dont on se traite, dont on se comprend et dont on prend soin l'un de l'autre.</p>
+      <p>Joyeux deuxieme anniversaire, my babyyyy. Ma kbidti, ma hbiba diali, mon omri, mon bebe cherie. Deux ans que tu fais partie de ma vie, et je ne voudrais echanger cette histoire contre aucune autre. Merci pour ces deux annees, pour tout ce qu'elles m'ont apporte et pour tout ce qu'elles m'ont appris. Merci de m'avoir donne autant de raisons de sourire, autant de souvenirs a garder et autant de choses a esperer pour l'avenir.</p>
+      <p>Je t'aime plus que tout, bebe. Je t'aime quand tu ris, quand tu es tendre, quand tu me taquines, quand tu es fatiguee, quand tu es serieuse, quand tu es hbila et quand tu es juste ma petite khadija. Je t'aime dans les grands moments et dans les petits. Je t'aime dans nos souvenirs et dans tous ceux qu'on n'a pas encore crees. Je t'aime pour la femme que tu es, pour celle que tu deviens et pour toute la vie qu'on a encore devant nous.</p>
+      <p>Et je te choisis aujourd'hui, comme je te choisis dans mes projets, dans mes reves et dans mon avenir. Je veux etre la pour tes joies, pour tes reussites, pour tes peines, pour tes doutes et pour tous les moments que la vie nous reserve. Je veux etre ton partenaire, ton meilleur ami, ton amoureux, ton mari et le papa de nos futurs petits bouts de chou. Je veux construire avec toi, apprendre avec toi, grandir avec toi et vieillir avec toi.</p>
+      <p>Je veux encore des centaines de pauses cafe avec toi, des milliers de fous rires, des tonnes de bisous, des sorties improvisees, des discussions interminables, des voyages, des anniversaires, des fetes en famille, des soirees a la maison et des matins ou je pourrai me reveiller a cote de toi. Je veux encore tellement de choses avec toi que meme ce message n'aurait pas assez de place pour toutes les raconter.</p>
+      <p>Et surtout, je veux qu'on soit heureux ensemble. Qu'on continue a se choisir, a se comprendre, a se respecter et a s'aimer. Qu'on construise cette vie dont on reve, a notre rythme, avec notre amour, nos efforts, nos delires et notre complicite. Qu'on ait un jour cette grande maison pleine de vie, avec nos enfants, nos petits-enfants et tous ces souvenirs qui feront de notre histoire quelque chose d'unique.</p>
+      <p>Je t'aime, ma kbidti. Je t'aime, mon omri. Je t'aime, ma hbiba diali. Et si je devais tout recommencer, je retournerais sur bumble, je te retrouverais, je te parlerais, je t'inviterais a nouveau au Mcdo, je t'embrasserais encore pour la premiere fois et je retomberais amoureux de toi. Encore. Et encore. Et encore.</p>
+      <p>Parce que mon coeur ne bat que pour toi, bebe. Et j'espere qu'il aura la chance de continuer a battre a tes cotes pendant encore tres tres tres longtemps. ❤️</p>
+      <p>BON ANNIVERSAIRE A NOUS, MON AMOUR. DEUX ANS AVEC TOI ET TOUTE UNE VIE QUE J'ESPERE ENCORE DEVANT NOUS. ❤️❤️❤️</p>
+      <p>Et pour finir, parce que je sais que tu adores quand je te donne tous ces petits noms ridicules et que je vais jamais arreter de t'embeter avec ca hahaha, voici un petit supplement specialement reserve a ma princesse :</p>
+      <p>Mon petit cookie d'amour qui merite mille bisous mon petit marshmallow tout doux que je veux garder dans mes bras pour toujours mon petit bout de chocolat au lait, ma douceur preferee de toute la planete mon petit nuage d'amour sur lequel j'ai envie de dormir pour l'eternite ma petite fraise a la creme, la plus adorable des nanas mon petit bonbon tout mignon que je veux croquer de bisous ma petite crepe au chocolat, mon dessert prefere eternel mon petit ourson d'amour, tout doux, tout tendre et tout a moi ma petite princesse en sucre, la reine de mon coeur et de mes delires mon petit bebe chou a la vanille, mon rayon de soleil et ma douceur preferee ma petite praline d'amour, mon tresor que je ne veux jamais perdre mon petit macaron rose, aussi mignon que toi et mille fois moins precieux ma petite boule de tendresse, que j'ai envie de serrer dans mes bras jusqu'a la fin du monde mon petit coeur en guimauve, mon adorable petite hbila preferee ma petite madeleine au miel, ma douceur qui rend toutes mes journees meilleures mon petit cupcake d'amour avec son glaçage de bisous et sa decoration de calins ma petite brioche au sucre, mon petit bonheur du matin et du soir mon petit poussin d'amour, mon tresor, mon bebe, ma raison de sourire mon petit litchi d'amour, ma petite douceur rare et precieuse.<br>Et enfin, mon petit bout de chocolat, mon petit nuage, mon marshmallow, ma kbidti, mon omri, ma hbiba diali, ma Khadija, mon present prefere, mon avenir prefere et la personne avec qui je veux ecrire toute ma vie.</p>
+      <p>JE T'AIME MA FEMME, JOYEUX 2 ANS A NOUS, ET PREPARE-TOI PARCE QUE JE COMPTE BIEN T'EMBETER PENDANT LES 70 PROCHAINES ANNEES</p>
+    </article>
+    <div class="center"><button class="btn" id="readMore">Lire toute la lettre</button></div>
+    <div class="center"><a class="btn ghost" href="Joyeux-2-ans-Khadija.pptx" download style="text-decoration:none">Télécharger le PowerPoint 🤪</a></div>
+  </div>
+</section>
+
+<footer>Fait avec beaucoup trop d'amour · pour Khadija ❤️</footer>
+</main>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- toast ---------- */
+  let toastT;
+  const toast = (msg) => {
+    const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2400);
+  };
+
+  /* ---------- fx canvas (confetti + hearts) ---------- */
+  const cv = $("#fx"), ctx = cv.getContext("2d");
+  let parts = [], raf = null;
+  const size = () => { const d = devicePixelRatio || 1; cv.width = innerWidth * d; cv.height = innerHeight * d; cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px"; ctx.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener("resize", size);
+  const COLORS = ["#ff4f7e", "#ff8fb1", "#ffc94d", "#bff0dc", "#7a4f38", "#ffffff"];
+  const EMO = ["❤️", "💕", "🍫", "🍬", "☁️", "💖"];
+  function burst(x, y, n = 80, emoji = false) {
+    if (reduce) return;
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 9;
+      parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: Math.random() * 6.28, vr: (Math.random() - .5) * .3,
+        c: COLORS[i % COLORS.length], w: 6 + Math.random() * 6, life: 0, max: 90 + Math.random() * 60,
+        e: emoji && i % 3 === 0 ? EMO[i % EMO.length] : null });
+    }
+    if (!raf) loop();
+  }
+  function loop() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter(p => p.life < p.max);
+    for (const p of parts) {
+      p.life++; p.vy += .28; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      ctx.save(); ctx.globalAlpha = 1 - p.life / p.max; ctx.translate(p.x, p.y); ctx.rotate(p.r);
+      if (p.e) { ctx.font = "22px serif"; ctx.fillText(p.e, -11, 8); }
+      else { ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.w / 4, p.w, p.w / 2); }
+      ctx.restore();
+    }
+    raf = parts.length ? requestAnimationFrame(loop) : (ctx.clearRect(0, 0, innerWidth, innerHeight), null);
+  }
+  const bigParty = () => { burst(innerWidth * .2, innerHeight * .6, 90, true); setTimeout(() => burst(innerWidth * .8, innerHeight * .6, 90, true), 200); setTimeout(() => burst(innerWidth * .5, innerHeight * .4, 110, true), 420); };
+
+  /* tiny heart on taps in empty space */
+  document.addEventListener("pointerdown", (e) => {
+    if (e.target.closest("button,a,#gate")) return;
+    burst(e.clientX, e.clientY, 10, true);
+  });
+
+  /* ---------- floaties ---------- */
+  const fl = $("#floaties"), FL = ["💗", "🍫", "☁️", "🍬", "💕", "🍓", "🧁", "🍪"];
+  for (let i = 0; i < 10; i++) {
+    const s = document.createElement("span");
+    s.textContent = FL[i % FL.length];
+    s.style.left = Math.random() * 100 + "%";
+    s.style.fontSize = 16 + Math.random() * 20 + "px";
+    s.style.animationDuration = 14 + Math.random() * 16 + "s";
+    s.style.animationDelay = -Math.random() * 30 + "s";
+    fl.appendChild(s);
+  }
+
+  /* ---------- gate ---------- */
+  $("#openGift").addEventListener("click", () => {
+    $("#gift").classList.add("open");
+    bigParty();
+    setTimeout(() => { $("#gate").classList.add("gone"); document.body.classList.remove("locked"); startTyper(); startReveal(); }, 900);
+  });
+
+  /* ---------- reveal ---------- */
+  const handlers = {};
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) if (en.isIntersecting) {
+      en.target.classList.add("in");
+      handlers[en.target.id] && handlers[en.target.id](en.target);
+      io.unobserve(en.target);
+    }
+  }, { threshold: 0, rootMargin: "0px 0px -12% 0px" });
+  const startReveal = () => $$(".scene, [data-reveal]").forEach(s => io.observe(s));
+
+  /* ---------- typer ---------- */
+  const NAMES = ["ma didijti", "ma hbiba diali", "ma kbidti", "mon bébé", "mon omri", "mon tout ❤️"];
+  let typerOn = false;
+  function startTyper() {
+    if (typerOn) return; typerOn = true;
+    const el = $("#typer"); let n = 0, i = 0, del = false;
+    (function tick() {
+      const w = NAMES[n];
+      el.textContent = w.slice(0, i);
+      if (!del && i < w.length) i++;
+      else if (!del) { del = true; return setTimeout(tick, 1300); }
+      else if (i > 0) i--;
+      else { del = false; n = (n + 1) % NAMES.length; }
+      setTimeout(tick, del ? 45 : 95);
+    })();
+  }
+
+  /* ---------- counters ---------- */
+  handlers.hero = (s) => $$("[data-count]", s).forEach(el => {
+    const end = +el.dataset.count, t0 = performance.now(), dur = 1800;
+    const f = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))).toLocaleString("fr-FR"); if (k < 1) requestAnimationFrame(f); };
+    requestAnimationFrame(f);
+  });
+
+  /* ---------- bumble ---------- */
+  const NOPES = ["Interdit. Réessaie 😤", "Non non non 🙅‍♀️", "Tu es sûr ?? Réfléchis bien", "Le bouton est cassé, désolé 😌", "Ok maintenant il s'enfuit 🏃"];
+  let nopeN = 0, matched = false;
+  $("#nope").addEventListener("click", () => {
+    if (matched) return;
+    const p = $("#profile"); p.classList.remove("shake"); void p.offsetWidth; p.classList.add("shake");
+    toast(NOPES[Math.min(nopeN, NOPES.length - 1)]);
+    nopeN++;
+    if (nopeN >= 3) { const b = $("#nope"); b.style.position = "absolute"; b.style.left = (Math.random() * 150 - 20) + "px"; b.style.top = (Math.random() * 30 - 40) + "px"; b.style.transform = `scale(${Math.max(.4, 1 - nopeN * .12)})`; }
+  });
+  const doMatch = () => {
+    if (matched) return; matched = true;
+    const p = $("#profile"); p.classList.add("liking");
+    setTimeout(() => p.classList.add("liked"), 350);
+    setTimeout(() => { $("#match").classList.add("show"); const r = $("#match").getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 90, true); }, 900);
+  };
+  $("#like").addEventListener("click", doMatch);
+  /* swipe gesture */
+  let sx = null;
+  $("#profile").addEventListener("touchstart", e => sx = e.touches[0].clientX, { passive: true });
+  $("#profile").addEventListener("touchend", e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (dx > 60) doMatch(); else if (dx < -60) $("#nope").click(); sx = null; });
+
+  /* ---------- stars ---------- */
+  const st = $("#stars");
+  for (let i = 0; i < 50; i++) { const s = document.createElement("i"); s.style.left = Math.random() * 100 + "%"; s.style.top = Math.random() * 100 + "%"; s.style.animationDelay = Math.random() * 2 + "s"; st.appendChild(s); }
+
+  /* ---------- bracelet ---------- */
+  const ring = $("#ring");
+  for (let i = 0; i < 20; i++) { const b = document.createElement("div"); b.className = "bead"; b.style.setProperty("--a", (i * 18) + "deg"); ring.appendChild(b); }
+
+  /* ---------- memories ---------- */
+  const mio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add("play"), 400); mio.unobserve(e.target); } }), { threshold: .6 });
+  $$("[data-mem]").forEach(m => {
+    mio.observe(m);
+    m.addEventListener("click", () => { m.classList.remove("play"); void m.offsetWidth; setTimeout(() => m.classList.add("play"), 30); });
+  });
+
+  /* ---------- hbila stamp ---------- */
+  const job = $("#job");
+  const sio = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => { $("#stamp").classList.add("slam"); job.classList.add("thud"); }, 900); sio.unobserve(job); } }), { threshold: .7 });
+  sio.observe(job);
+  const APPLY = ["Aucun CV ne sera accepté 🙅‍♂️", "Le poste est pourvu. À vie.", "Candidature refusée avant même d'être lue 😌", "Il y a déjà la meilleure. Désolé."];
+  let ap = 0;
+  $("#apply").addEventListener("click", () => toast(APPLY[ap++ % APPLY.length]));
+
+  /* ---------- hearts ---------- */
+  const LOVES = ["tes yeux 👀", "ta voix 🎶", "tes cheveux magnifiques 💇‍♀️", "ton sourire 😊", "ton rire 😂", "ta façon de parler 🗣️", "ton côté taquin 😏", "ta tendresse 🧸", "genuine ✨", "loyale 🤞", "pure de cœur 🤍", "tes petites folies 🙃"];
+  const hg = $("#hgrid"); let found = 0;
+  LOVES.forEach(w => {
+    const f = document.createElement("button"); f.className = "flip"; f.setAttribute("aria-label", "Retourner le cœur");
+    f.innerHTML = `<div class="in3d"><div class="f">💗</div><div class="b">${w}</div></div>`;
+    f.addEventListener("click", () => {
+      if (f.classList.contains("on")) return;
+      f.classList.add("on"); found++;
+      $("#hcount").textContent = `${found} / ${LOVES.length}`;
+      const r = f.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 14, true);
+      if (found === LOVES.length) setTimeout(() => { $("#pearl").classList.add("show"); bigParty(); }, 500);
+    });
+    hg.appendChild(f);
+  });
+
+  /* ---------- doctor zoom ---------- */
+  const SCALES = [["🩺", "du monde entier"], ["🇲🇦", "de tout le Maroc"], ["🌍", "de toute l'Afrique"], ["🌎", "de toute la planète"], ["🌌", "de la galaxie"], ["🛸", "et même des galaxies qu'on n'a pas encore découvertes"], ["👩‍⚕️✨", "Madame la meilleure médecin de l'UNIVERS ENTIER"]];
+  let lv = 0;
+  $("#zoomBtn").addEventListener("click", () => {
+    lv = (lv + 1) % SCALES.length;
+    const [e, t] = SCALES[lv];
+    const se = $("#scaleEmoji"), sc = $("#scaleText");
+    se.textContent = e; sc.textContent = t;
+    [se, sc].forEach(x => { x.classList.remove("zoom-in"); void x.offsetWidth; x.classList.add("zoom-in"); });
+    $("#doc").dataset.level = Math.min(lv, 5);
+    $("#zoomBtn").textContent = lv === SCALES.length - 1 ? "Recommencer 🔁" : lv === SCALES.length - 2 ? "Encore plus loin 🤯" : "Plus loin 🚀";
+    if (lv === SCALES.length - 1) { const r = sc.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 100, true); }
+  });
+
+  /* ---------- roles ---------- */
+  const ROLES = ["refuge", "personne de confiance", "partenaire", "meilleur ami", "amant", "protecteur", "complice", "gardien", "mari 💍", "refuge"];
+  let ro = 0;
+  $("#roleBtn").addEventListener("click", () => {
+    ro = (ro + 1) % (ROLES.length - 1);
+    const w = $("#roleWord"); w.textContent = ROLES[ro]; w.classList.remove("zoom-in"); void w.offsetWidth; w.classList.add("zoom-in");
+    if (ROLES[ro].startsWith("mari")) { const r = w.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 20, 60, true); }
+  });
+  const PEANUT = ["Aïe. Elle a commencé 🥜", "Tu vois ?! Tu me casses les cacahuètes 😤", "Stp arrête 😂", "Ok j'ai plus de cacahuètes."];
+  let pn = 0;
+  $("#peanutBtn").addEventListener("click", () => { const p = $("#peanut"); p.classList.remove("crack"); void p.offsetWidth; p.classList.add("crack"); toast(PEANUT[Math.min(pn++, PEANUT.length - 1)]); });
+
+  /* ---------- house + babies ---------- */
+  const WALLS = [["#ffd1dc", "Rose ? 🙂"], ["#c8f0d8", "Vert ? 🤨"], ["#ffe9a8", "Jaune ? 😬"], ["#d6d0ff", "Lavande ? 🧐"], ["#efe6dc", "Beige ? 😑"], ["#ff8fb1", "Bon ok… c'est toi qui choisis 😌"]];
+  let wi = 0;
+  $("#house").addEventListener("click", () => { wi = (wi + 1) % WALLS.length; $("#wall").style.background = WALLS[wi][0]; $("#wallMsg").textContent = WALLS[wi][1]; });
+  const BABY = ["Trop mignon 🥹", "On gère, on gère 😎", "Ça commence à faire du monde 😅", "On perd quelques heures de sommeil… 😵‍💫", "On devient fous tous les deux 🤪", "Une maison pleine de petits monstres qui courent partout 🏃‍♀️🏃", "STOP. On verra. 😂"];
+  const BE = ["👶", "👧", "👦", "🍼", "🧸", "👶", "🚼"];
+  let bn = 0;
+  $("#babyBtn").addEventListener("click", () => {
+    if (bn >= BABY.length) { bn = 0; $("#babies").innerHTML = ""; $("#babyMsg").textContent = "On recommence le calcul 😌"; $("#babyBtn").textContent = "+1 bébé"; return; }
+    const s = document.createElement("span"); s.textContent = BE[bn % BE.length]; $("#babies").appendChild(s);
+    $("#babyMsg").textContent = BABY[bn]; bn++;
+    if (bn >= BABY.length) $("#babyBtn").textContent = "Recommencer";
+  });
+
+  /* ---------- 70 years loader ---------- */
+  handlers.years = () => {
+    const logs = $$("#loadLog div"); let p = 0;
+    const iv = setInterval(() => {
+      p = Math.min(100, p + (p > 90 ? .4 : 1.6));
+      $("#loadNum").textContent = Math.floor(p); $("#loadBar").style.width = p + "%";
+      logs.forEach((l, i) => { if (p > (i + 1) * 15) l.classList.add("on"); });
+      if (p >= 100) { clearInterval(iv); $("#loadNum").textContent = "100"; toast("70 ans d'embêtements chargés avec succès ✅"); }
+    }, 60);
+  };
+
+  /* ---------- nicknames ---------- */
+  const NICKS = [
+    ["🍪", "Mon petit cookie d'amour qui mérite mille bisous"],
+    ["🍡", "Mon petit marshmallow tout doux que je veux garder dans mes bras pour toujours"],
+    ["🍫", "Mon petit bout de chocolat au lait, ma douceur préférée de toute la planète"],
+    ["☁️", "Mon petit nuage d'amour sur lequel j'ai envie de dormir pour l'éternité"],
+    ["🍓", "Ma petite fraise à la crème, la plus adorable des nanas"],
+    ["🍬", "Mon petit bonbon tout mignon que je veux croquer de bisous"],
+    ["🥞", "Ma petite crêpe au chocolat, mon dessert préféré éternel"],
+    ["🧸", "Mon petit ourson d'amour, tout doux, tout tendre et tout à moi"],
+    ["👑", "Ma petite princesse en sucre, la reine de mon cœur et de mes délires"],
+    ["🌞", "Mon petit bébé chou à la vanille, mon rayon de soleil"],
+    ["💎", "Ma petite praline d'amour, mon trésor que je ne veux jamais perdre"],
+    ["🌸", "Mon petit macaron rose, aussi mignon que toi et mille fois moins précieux"],
+    ["🤗", "Ma petite boule de tendresse, que j'ai envie de serrer jusqu'à la fin du monde"],
+    ["💗", "Mon petit cœur en guimauve, mon adorable petite hbila préférée"],
+    ["🍯", "Ma petite madeleine au miel, qui rend toutes mes journées meilleures"],
+    ["🧁", "Mon petit cupcake d'amour avec son glaçage de bisous et sa déco de câlins"],
+    ["🥐", "Ma petite brioche au sucre, mon petit bonheur du matin et du soir"],
+    ["🐣", "Mon petit poussin d'amour, mon trésor, ma raison de sourire"],
+    ["🍒", "Mon petit litchi d'amour, ma petite douceur rare et précieuse"],
+    ["❤️", "Ma kbidti, mon omri, ma hbiba diali, ma Khadija — mon présent préféré, mon avenir préféré"]
+  ];
+  let ni = 0;
+  $("#jar").addEventListener("click", () => {
+    const [e, t] = NICKS[ni];
+    $("#nick").innerHTML = `<div class="nick-card"><span class="e">${e}</span>${t}</div>`;
+    $("#nickCount").textContent = `${ni + 1} / ${NICKS.length}` + (ni === NICKS.length - 1 ? " — et ce n'est que le début 😌" : "");
+    const r = $("#jar").getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 20, 18, true);
+    if (ni === NICKS.length - 1) bigParty();
+    ni = (ni + 1) % NICKS.length;
+  });
+
+  /* ---------- finale ---------- */
+  handlers.finale = () => setTimeout(bigParty, 1900);
+  $("#party").addEventListener("click", bigParty);
+
+  /* ---------- letter ---------- */
+  $("#readMore").addEventListener("click", () => {
+    const l = $("#letter"), open = l.classList.toggle("clamped");
+    $("#readMore").textContent = open ? "Lire toute la lettre" : "Replier la lettre";
+    if (open) l.scrollIntoView({ behavior: "smooth" });
+  });
+})();
+</script>
+</body>
+</html>
