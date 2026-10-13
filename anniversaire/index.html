@@ -301,6 +301,7 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
 <body class="locked">
 
 <div id="gate" role="dialog" aria-label="Surprise">
+  <div class="couple gate-couple"><span class="c-l"><img class="av" src="img/lui.png" alt="Lui"></span><span class="c-h">💞</span><span class="c-r"><img class="av" src="img/elle.png" alt="Khadija"></span></div>
   <div class="gift" id="gift" aria-hidden="true"><div class="box"></div><div class="rib-v"></div><div class="lid"><span class="bow">🎀</span></div></div>
   <h1>Pour Khadija 💌</h1>
   <p>Un petit cadeau pour nos 2 ans…</p>
@@ -320,6 +321,7 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
     <div data-reveal style="--d:.1s"><span class="kicker">Joyeux anniversaire à nous</span></div>
     <div data-reveal style="--d:.2s"><span class="big2">2</span></div>
     <h1 class="title" data-reveal style="--d:.3s">ans avec <em>toi</em>, mon amour</h1>
+    <div class="couple" data-reveal style="--d:.35s"><span class="c-l"><img class="av" src="img/lui.png" alt="Lui"></span><span class="c-h">❤️</span><span class="c-r"><img class="av" src="img/elle.png" alt="Khadija"></span></div>
     <div class="typer" id="typer" data-reveal style="--d:.4s" aria-live="polite"></div>
     <p class="lead" data-reveal style="--d:.5s">Mon petit bout de chocolat tout mignon, mon petit nuage d'amour, mon petit marshmallow tout doux… que j'ai envie de garder dans ma poche pour toujourrrrs.</p>
     <div class="stats" data-reveal style="--d:.6s">
@@ -354,7 +356,7 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
       <div class="bar">bumble <span>🐝</span></div>
       <div class="profile" id="profile">
         <div class="stamp-like">LIKE</div>
-        <div class="face">👩‍⚕️</div>
+        <div class="face"><img class="av big" src="img/elle.png" alt="Khadija"></div>
         <h3>Khadija 💕</h3>
         <p>Future meilleure médecin de l'univers · Hbila certifiée · Cheveux magnifiques</p>
       </div>
@@ -364,7 +366,7 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
       </div>
       <div class="match" id="match">
         <h3>It's a Match!</h3>
-        <div class="duo"><span>🧑</span>💛<span style="animation-delay:.3s">👩</span></div>
+        <div class="duo"><span><img class="av" src="img/lui.png" alt="Lui"></span>💛<span style="animation-delay:.3s"><img class="av" src="img/elle.png" alt="Khadija"></span></div>
         <p style="font-weight:800">Heureusement qu'on a swipé à droite yak a bébé 😮‍💨</p>
         <p class="small" style="color:#fff">Et le plus drôle : on était tous les deux intéressés dès le début hahaha</p>
       </div>
@@ -457,7 +459,7 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
     <div data-reveal style="--d:.3s"><button class="btn ghost" id="apply">Postuler 📄</button></div>
     <p class="lead" data-reveal style="--d:.35s">Le recrutement est fermé définitivement. Tu es hbila, mais tu es <b>MA</b> hbila.</p>
     <div class="card stack" data-reveal style="--d:.4s">
-      <div class="oldies" aria-hidden="true">👴💋👵</div>
+      <div class="oldies couple old"><span class="c-l"><img class="av" src="img/lui.png" alt="Lui"></span><span class="c-h">💋</span><span class="c-r"><img class="av" src="img/elle.png" alt="Khadija"></span></div><p class="small">(version papi &amp; mamie 👴👵)</p>
       <p class="small" style="font-weight:800">Dans 60 ans :</p>
       <p class="quote">« mais qu'est-ce que je vais faire de toi ya rebbi »</p>
       <p class="small">…juste avant de te prendre dans mes bras et de te faire un bisou. Toujours aussi faible devant ton sourire.</p>
@@ -618,7 +620,7 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
 <!-- FINALE -->
 <section class="scene center finale" id="finale">
   <div class="wrap stack">
-    <div data-reveal><span class="bigheart" aria-hidden="true">❤️</span></div>
+    <div class="kissing" id="kissing"><span class="k-l"><img class="av" src="img/lui.png" alt="Lui"></span><span class="bigheart" aria-hidden="true">❤️</span><span class="k-r"><img class="av" src="img/elle.png" alt="Khadija"></span></div>
     <h2 class="title" data-reveal style="--d:.1s">Mon cœur ne bat que <em>pour toi</em></h2>
     <p class="lead" data-reveal style="--d:.2s">Et si je devais tout recommencer :</p>
     <div class="redo" data-reveal style="--d:.3s">
@@ -978,5 +980,197 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
   });
 })();
 </script>
+<style>
+/* ===== insane scroll layer ===== */
+#prog{position:fixed;top:0;left:0;right:0;height:calc(8px + env(safe-area-inset-top));z-index:40;pointer-events:none}
+#prog .track{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,143,177,.25)}
+#prog .fill{position:absolute;left:0;bottom:0;height:6px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#ff8fb1,#ff4f7e,#ffc94d)}
+#prog .runner,#prog .goal{position:absolute;bottom:2px;font-size:22px;line-height:1}
+#prog .runner{left:0;transform:translateX(-50%)}
+#prog .goal{right:4px}
+.ch{display:inline-block;white-space:pre}
+.word{display:inline-block;white-space:nowrap}
+.title.in .ch,.big-word.in .ch{animation:chPop .7s cubic-bezier(.3,1.8,.5,1) backwards;animation-delay:calc(var(--ci) * 28ms + var(--d,0s))}
+@keyframes chPop{0%{opacity:0;transform:translateY(60px) rotate(25deg) scale(.2)}}
+.title .ch:hover{animation:jelly .5s}
+[data-reveal].v-left{transform:translateX(-90px) rotate(-6deg)}
+[data-reveal].v-right{transform:translateX(90px) rotate(6deg)}
+[data-reveal].v-zoom{transform:scale(.4) rotate(-8deg)}
+[data-reveal].v-flip{transform:perspective(700px) rotateX(75deg)}
+[data-reveal].in{transform:none}
+.marquee{position:relative;z-index:2;overflow:hidden;padding:18px 0;background:var(--rose);rotate:-3deg;margin:-14px -20px;box-shadow:0 10px 30px rgba(255,79,126,.35)}
+.marquee.alt{background:var(--choco);rotate:2.5deg}
+.marquee .rail{display:flex;gap:28px;width:max-content;font-family:var(--display);font-weight:700;font-size:clamp(24px,6vw,36px);color:#fff;white-space:nowrap;will-change:transform}
+.marquee .rail span{display:inline-flex;gap:10px;align-items:center}
+.deco{position:absolute;z-index:0;pointer-events:none;opacity:.22;will-change:transform;user-select:none}
+.scene>.wrap{position:relative;z-index:1;will-change:transform;transform-origin:50% 50%}
+.trail{position:fixed;z-index:65;pointer-events:none;font-size:22px;animation:trail 1s ease-out forwards}
+@keyframes trail{to{opacity:0;transform:translateY(-60px) scale(1.6) rotate(30deg)}}
+@keyframes jelly{30%{transform:scale(1.3,.7)}60%{transform:scale(.8,1.2)}}
+.big2{will-change:transform}
+@media (prefers-reduced-motion: reduce){.marquee .rail{transform:none!important}.deco{display:none}}
+.av{width:84px;height:84px;border-radius:50%;border:4px solid #fff;box-shadow:0 10px 24px rgba(122,79,56,.3);object-fit:cover;display:block;background:#fff}
+.av.big{width:150px;height:150px}
+.av.mini{width:30px;height:30px;border-width:2px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+#prog .runner,#prog .goal{bottom:-14px}
+#prog .runner{animation:hop .45s ease-in-out infinite alternate}
+@keyframes hop{to{translate:0 -4px}}
+.pkiss{position:absolute;left:24px;top:-6px;font-size:16px}
+.couple{display:flex;justify-content:center;align-items:center;gap:6px;margin:6px 0}
+.couple .c-l{animation:lean-l 1.6s ease-in-out infinite}
+.couple .c-r{animation:lean-r 1.6s ease-in-out infinite}
+.couple .c-h{font-size:34px;animation:beat 1s infinite}
+@keyframes lean-l{50%{transform:translateX(10px) rotate(8deg)}}
+@keyframes lean-r{50%{transform:translateX(-10px) rotate(-8deg)}}
+.gate-couple .av{width:96px;height:96px}
+.old .av{filter:sepia(.85) contrast(.9);width:70px;height:70px}
+.duo{display:flex;align-items:center;gap:6px}
+.duo .av{width:76px;height:76px}
+.profile .face{top:20px}
+.kissing{position:relative;height:190px;display:flex;justify-content:center;align-items:center}
+.kissing .k-l,.kissing .k-r{position:absolute;top:30px;transition:transform 1.4s cubic-bezier(.3,1.5,.5,1)}
+.kissing .k-l{left:50%;transform:translateX(-260%) rotate(-20deg)}
+.kissing .k-r{right:50%;transform:translateX(260%) rotate(20deg)}
+.kissing .av{width:110px;height:110px}
+.in .kissing .k-l,.kissing.in .k-l{transform:translateX(-88%) rotate(10deg)}
+.in .kissing .k-r,.kissing.in .k-r{transform:translateX(88%) rotate(-10deg)}
+.kissing .bigheart{position:relative;z-index:2;font-size:70px;margin-top:-90px}
+</style>
+<div id="prog" aria-hidden="true"><div class="track"></div><div class="fill"></div><span class="runner"><img class="av mini" src="img/lui.png" alt=""></span><span class="goal"><img class="av mini" src="img/elle.png" alt=""></span></div>
+<script>
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter("fr", { granularity: "grapheme" }) : null;
+  const graphemes = (t) => seg ? [...seg.segment(t)].map(x => x.segment) : Array.from(t);
+
+  /* split titles into bouncing letters (words kept together) */
+  function split(el) {
+    let ci = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+            const w = document.createElement("span"); w.className = "word";
+            graphemes(part).forEach(g => { const c = document.createElement("span"); c.className = "ch"; c.textContent = g; c.style.setProperty("--ci", ci++); w.appendChild(c); });
+            frag.appendChild(w);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    };
+    walk(el);
+  }
+  if (!reduce) $$(".title").forEach(split);
+
+  /* varied entrance directions */
+  const V = ["v-left", "v-right", "v-zoom", "v-flip"];
+  $$("[data-reveal]").forEach((el, i) => { if (!el.classList.contains("title")) el.classList.add(V[i % V.length]); });
+
+  /* nickname marquees */
+  const N1 = ["🍫 bout de chocolat", "☁️ petit nuage", "🍡 marshmallow", "🍬 bonbon d'amour", "💗 kbidti", "✨ omri", "❤️ hbiba diali"];
+  const N2 = ["🐝 Bumble", "🍟 McDo 2h", "💋 premier bisou", "📿 Tommy", "🎳 strike", "☕ pause café", "💍 bientôt"];
+  const mk = (items, alt) => {
+    const m = document.createElement("div"); m.className = "marquee" + (alt ? " alt" : ""); m.setAttribute("aria-hidden", "true");
+    const r = document.createElement("div"); r.className = "rail";
+    r.innerHTML = Array(4).fill(items.map(x => `<span>${x}</span>`).join("")).join("");
+    m.appendChild(r); return m;
+  };
+  const scenes = $$(".scene");
+  const anchors = [[1, N1, false], [4, N2, true], [8, N1.slice().reverse(), false], [13, N2.slice().reverse(), true]];
+  anchors.forEach(([i, items, alt]) => scenes[i] && scenes[i].before(mk(items, alt)));
+  const rails = $$(".marquee .rail");
+
+  /* parallax deco emojis per scene */
+  const DE = ["🍫", "🍬", "☁️", "💗", "🍓", "🧁", "🍪", "✨", "💕", "🍭"];
+  scenes.forEach((s, i) => {
+    for (let k = 0; k < 3; k++) {
+      const d = document.createElement("span"); d.className = "deco"; d.setAttribute("aria-hidden", "true");
+      d.textContent = DE[(i * 3 + k) % DE.length];
+      d.style.fontSize = 60 + Math.random() * 90 + "px";
+      d.style.left = (k === 0 ? -4 : k === 1 ? 72 : 30 + Math.random() * 30) + "%";
+      d.style.top = (10 + Math.random() * 70) + "%";
+      d.dataset.speed = (0.15 + Math.random() * 0.35) * (k % 2 ? -1 : 1);
+      d.dataset.rot = (Math.random() - .5) * 0.25;
+      s.prepend(d);
+    }
+  });
+  const decos = $$(".deco");
+
+  /* scroll engine */
+  const fill = document.querySelector("#prog .fill"), runner = document.querySelector("#prog .runner");
+  const big2 = document.querySelector(".big2"), heroWrap = document.querySelector("#hero .wrap");
+  const wraps = scenes.filter(s => s.id !== "lettre").map(s => s.querySelector(".wrap"));
+  let lastY = scrollY, vel = 0, ticking = false, done = false;
+  function frame() {
+    ticking = false;
+    const y = scrollY, H = innerHeight, max = document.documentElement.scrollHeight - H;
+    const p = max > 0 ? Math.min(1, y / max) : 0;
+    fill.style.transform = `scaleX(${p})`;
+    runner.style.left = `calc(${p * 100}% * .92)`;
+    if (p > .985 && !done) { done = true; runner.insertAdjacentHTML("beforeend", "<b class=\"pkiss\">💋</b>"); }
+    if (reduce) return;
+    vel += ((y - lastY) - vel) * .25; lastY = y;
+    const skew = Math.max(-7, Math.min(7, vel * .12));
+    /* hero zoom-out */
+    const hp = Math.min(1.4, y / H);
+    if (big2) big2.parentElement.style.transform = `translateY(${hp * 120}px) scale(${1 + hp * 2.2}) rotate(${hp * 120}deg)`, big2.parentElement.style.opacity = Math.max(0, 1 - hp * 1.1);
+    /* tilt + jelly per visible scene */
+    wraps.forEach(w => {
+      if (!w || w === heroWrap) return;
+      const r = w.parentElement.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > H + 100) return;
+      const enter = Math.max(0, Math.min(1, (H - r.top) / (H * .55)));
+      const rx = (1 - enter) * 22;
+      const sc = .86 + enter * .14;
+      w.style.transform = `perspective(1000px) rotateX(${rx}deg) scale(${sc}) skewY(${skew}deg)`;
+    });
+    /* marquees follow scroll */
+    rails.forEach((r, i) => { const dir = i % 2 ? 1 : -1; r.style.transform = `translateX(${(dir * y * .45) % (r.scrollWidth / 4) - (dir > 0 ? r.scrollWidth / 4 : 0)}px)`; });
+    /* parallax decos */
+    decos.forEach(d => {
+      const r = d.parentElement.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > H + 200) return;
+      const off = (r.top + r.height / 2 - H / 2);
+      d.style.transform = `translate3d(0,${off * d.dataset.speed}px,0) rotate(${off * d.dataset.rot}deg)`;
+    });
+  }
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", onScroll);
+  /* keep jelly settling after scroll stops */
+  (function settle() { if (Math.abs(vel) > .2) { vel *= .85; onScroll(); } requestAnimationFrame(settle); })();
+  frame();
+
+  /* finger / mouse trail */
+  const TR = ["💗", "✨", "💕", "🍬", "⭐"]; let lt = 0, ti = 0;
+  const trail = (x, y) => {
+    const now = performance.now(); if (reduce || now - lt < 45) return; lt = now;
+    const s = document.createElement("span"); s.className = "trail"; s.textContent = TR[ti++ % TR.length];
+    s.style.left = x - 11 + "px"; s.style.top = y - 11 + "px"; document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+  };
+  addEventListener("touchmove", e => trail(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+  addEventListener("mousemove", e => trail(e.clientX, e.clientY));
+
+  /* kicker confetti pop when each chapter appears */
+  const kio = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting || document.body.classList.contains("locked")) return;
+    kio.unobserve(e.target);
+    const r = e.target.getBoundingClientRect();
+    for (let i = 0; i < 8; i++) {
+      const s = document.createElement("span"); s.className = "trail"; s.textContent = TR[i % TR.length];
+      s.style.left = r.left + Math.random() * r.width + "px"; s.style.top = r.top + Math.random() * 10 + "px";
+      s.style.animationDuration = 0.8 + Math.random() * .8 + "s";
+      document.body.appendChild(s); setTimeout(() => s.remove(), 1700);
+    }
+  }), { threshold: 1 });
+  $$(".kicker").forEach(k => kio.observe(k));
+})();
+</script>
+
 </body>
 </html>
