@@ -219,7 +219,7 @@ p{margin:0;line-height:1.5}
 .kcount{font-family:var(--display);font-weight:700;font-size:58px;color:var(--rose);line-height:1}
 
 /* trophies */
-.trophies{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.trophies{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .tro{aspect-ratio:1;border-radius:18px;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:.45;transition:all .4s}
 .tro small{font-size:9.5px;font-weight:800;color:var(--muted);text-align:center;line-height:1.05;margin-top:2px;padding:0 3px}
 .tro.got{filter:none;opacity:1;background:#fff8e1;animation:okpop .6s}
@@ -230,6 +230,77 @@ p{margin:0;line-height:1.5}
 footer{padding:30px 0 calc(90px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:14px}
 footer a{color:var(--rose);font-weight:800}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.deco{display:none}}
+/* hbila-metre */
+.dial{position:relative;width:min(280px,76vw);aspect-ratio:2/1.15;margin:6px auto 0;overflow:hidden}
+.arc{position:absolute;left:0;right:0;top:0;aspect-ratio:1;border-radius:50%;background:conic-gradient(from -90deg,#bff0dc 0 45deg,#ffe58a 45deg 90deg,#ff8fb1 90deg 135deg,#ff2e63 135deg 180deg,transparent 180deg);-webkit-mask:radial-gradient(circle,transparent 52%,#000 53%);mask:radial-gradient(circle,transparent 52%,#000 53%)}
+.needle{position:absolute;left:50%;bottom:13%;width:6px;height:44%;margin-left:-3px;background:var(--choco);border-radius:6px;transform-origin:50% 100%;transform:rotate(-90deg);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.cap{position:absolute;left:50%;bottom:calc(13% - 12px);width:24px;height:24px;margin-left:-12px;border-radius:50%;background:var(--rose)}
+.gl{position:absolute;font-size:11px;font-weight:800;color:var(--muted)}
+.g0{left:2%;bottom:14%}.g1{left:16%;top:8%}.g2{right:16%;top:8%}.g3{right:2%;bottom:14%;font-size:16px}
+.gread{font-family:var(--display);font-weight:700;font-size:38px;color:var(--rose);margin-top:6px}
+.gread.alarm{animation:shake .4s 3;color:#e0244f}
+.glog{text-align:left;font-weight:700;font-size:14.5px;min-height:20px}
+.glog div{animation:okpop .4s}
+/* traducteur */
+.trad{display:grid;gap:12px}
+.tcard{position:relative;height:118px;perspective:900px;width:100%}
+.tcard .in3d{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.tcard.on .in3d{transform:rotateX(180deg)}
+.tcard .f,.tcard .b{position:absolute;inset:0;border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:var(--shadow);text-align:left}
+.tcard .f{background:#fff}
+.tcard .b{background:var(--choco);color:#fff;transform:rotateX(180deg)}
+.tcard small{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--rose)}
+.tcard .b small{color:var(--gold)}
+.tcard q{font-family:var(--display);font-weight:600;font-size:clamp(17px,4.6vw,20px);margin-top:4px}
+/* diagnostic */
+.patient{text-align:left}
+.pt-head{display:flex;gap:12px;align-items:center}
+.pt-head .av{width:64px;height:64px}
+.pt-head b{display:block;font-family:var(--display);font-size:19px;color:var(--choco)}
+.symp{margin:0;padding-left:20px;font-weight:700;line-height:1.6}
+.dx{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dx button{background:var(--mallow);border:2px solid var(--blush);border-radius:14px;padding:11px 8px;font-weight:800}
+.dx button.no{animation:shake .45s;background:#ffe0e0}
+.dx button.yes{background:var(--mint);border-color:#6fd3a8}
+.rx{margin-top:12px;font-weight:800;color:var(--choco)}
+.rx .paper{background:#fff;border:2px dashed var(--pink);border-radius:14px;padding:12px;font-family:var(--hand);font-size:22px;line-height:1.15;animation:okpop .5s}
+/* blague */
+.joke{min-height:250px;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.jq{font-family:var(--display);font-weight:600;font-size:clamp(20px,5.4vw,24px);color:var(--choco)}
+.ja{font-family:var(--hand);font-size:clamp(28px,7vw,34px);color:var(--rose);min-height:1.2em;transform:scale(0);transition:transform .45s cubic-bezier(.3,1.7,.5,1)}
+.ja.show{transform:none}
+.rate{display:none;justify-content:center;gap:14px}
+.rate.show{display:flex}
+.rate button{font-size:38px;width:64px;height:64px;border-radius:50%;background:var(--mallow);box-shadow:var(--shadow);transition:transform .15s}
+.rate button:active{transform:scale(.85)}
+.drum{display:inline-block;animation:shake .15s infinite}
+/* slot */
+.reels{display:flex;flex-direction:column;gap:8px}
+.reel{height:46px;border-radius:14px;background:var(--mallow);box-shadow:inset 0 2px 8px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:600;font-size:clamp(17px,4.6vw,20px);color:var(--choco);overflow:hidden}
+.reel.spin{animation:blurY .12s linear infinite;color:var(--muted)}
+@keyframes blurY{50%{transform:translateY(-4px);filter:blur(1.2px)}}
+.reel.stop{animation:okpop .35s}
+.nameout{font-family:var(--hand);font-size:clamp(28px,7vw,36px);color:var(--rose);margin-top:14px;min-height:1.2em;line-height:1.1}
+/* fake ads */
+.ad-wrap{overflow:hidden;transition:height .6s cubic-bezier(.6,0,.3,1),opacity .4s;padding:30px 18px;max-width:640px;margin:0 auto}
+.ad-wrap.closing{opacity:0}
+.ad{position:relative;border-radius:24px;padding:26px 20px 70px;background:linear-gradient(135deg,#2a1f4d,#5b2a86);color:#fff;text-align:center;box-shadow:0 20px 40px rgba(42,31,77,.35);overflow:hidden}
+.ad::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 2px,transparent 2px 4px);pointer-events:none}
+.ad-tag{position:absolute;top:12px;left:14px;font-size:11px;font-weight:800;letter-spacing:.1em;background:var(--gold);color:var(--choco);padding:3px 8px;border-radius:6px}
+.ad h3{font-size:clamp(24px,6.6vw,32px);margin:14px 0 6px;color:var(--gold)}
+.ad .prod{font-size:64px;display:inline-block;animation:adspin 3s ease-in-out infinite}
+@keyframes adspin{50%{transform:rotate(-10deg) scale(1.12)}}
+.ad ul{list-style:none;padding:0;margin:12px 0 0;font-weight:700;line-height:1.7}
+.ad .fine{font-size:11px;opacity:.65;margin-top:10px}
+.ad-skip{position:absolute;right:12px;bottom:12px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:9px 14px;font-weight:800;font-size:14px}
+.ad-skip:not([disabled]){background:#fff;color:var(--choco)}
+.ferris{cursor:pointer}
+.ferris.crazy{animation:crazy 1.2s cubic-bezier(.3,1.4,.5,1)}
+@keyframes crazy{to{transform:rotate(1440deg) scale(1.3)}}
+.joke-pop{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom));transform:translate(-50%,160%);z-index:44;width:min(92vw,420px);background:#fff;border-radius:20px;padding:14px 44px 14px 16px;box-shadow:0 18px 40px rgba(0,0,0,.22);font-weight:800;color:var(--choco);transition:transform .5s cubic-bezier(.3,1.5,.5,1);border:3px solid var(--pink)}
+.joke-pop.show{transform:translate(-50%,0)}
+.joke-pop small{display:block;color:var(--rose);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.joke-pop button{position:absolute;top:8px;right:10px;font-size:18px;color:var(--muted)}
 </style>
 </head>
 <body class="locked">
@@ -240,7 +311,7 @@ footer a{color:var(--rose);font-weight:800}
     <div class="half r">ADMIT<br>ONE<br>❤️</div>
   </div>
   <h1>Bienvenue au Parc d'Amour</h1>
-  <p>10 attractions · 10 trophées · 1 grand prix</p>
+  <p>15 attractions · 15 trophées · 2 pubs · 1 grand prix</p>
   <button class="btn" id="enter">Déchirer le ticket 🎟️</button>
 </div>
 
@@ -248,7 +319,7 @@ footer a{color:var(--rose);font-weight:800}
 <canvas id="fx" aria-hidden="true"></canvas>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <button id="muteBtn" aria-label="Son">🔊</button>
-<button id="shelfBtn">🏆 <span id="shelfN">0</span>/10</button>
+<button id="shelfBtn">🏆 <span id="shelfN">0</span>/15</button>
 
 <main>
 <!-- HERO -->
@@ -264,25 +335,21 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<!-- 1 CATCH -->
-<section class="scene" id="g-catch">
+<section class="scene center" id="g-love">
   <div class="num">01</div>
   <div class="wrap stack">
-    <div class="center" data-reveal><span class="kicker">Attraction 1 · Pluie de bonbons</span></div>
-    <h2 class="title center" data-reveal>Attrape les <em>douceurs</em></h2>
-    <p class="lead center" data-reveal>Glisse ton doigt pour bouger. Attrape les bonnes choses, évite les révisions et le réveil de garde. Bonus : ton chéri tombe du ciel (+5).</p>
-    <div class="legend" data-reveal><span>🍫🍬🍟☕💋 +1</span><span>🧑 chéri +5</span><span>📚⏰🥦 −2</span></div>
-    <div class="hud" data-reveal><span>Score : <b id="cScore">0</b></span><span>⏱ <b id="cTime">30</b>s</span></div>
-    <div class="arena" id="cArena" data-reveal>
-      <canvas id="cCan"></canvas>
-      <div class="overlay" id="cOver"><div style="font-size:54px">🧺</div><p class="result" id="cMsg">Prête, docteur ?</p><button class="btn" id="cStart">Jouer</button></div>
+    <div data-reveal><span class="kicker">Attraction 1 · Question piège</span></div>
+    <h2 class="title" data-reveal>Une question <em>très simple</em></h2>
+    <div class="love-arena" id="loveArena" data-reveal>
+      <div class="q">Est-ce que tu m'aimes ? 🥺</div>
+      <button class="btn" id="yesBtn">Oui 💖</button>
+      <button class="btn ghost" id="noBtn">Non</button>
     </div>
+    <div class="hug" id="hug"><img class="av l" src="../anniversaire/img/lui.png" alt=""><span style="font-size:40px;z-index:2">💞</span><img class="av r" src="../anniversaire/img/elle.png" alt=""></div>
+    <p class="result" id="loveMsg"></p>
   </div>
 </section>
 
-<div class="marquee" aria-hidden="true"><div class="rail" data-dir="-1"></div></div>
-
-<!-- 2 MEMORY -->
 <section class="scene" id="g-memory">
   <div class="num">02</div>
   <div class="wrap stack">
@@ -295,7 +362,6 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<!-- 3 QUIZ -->
 <section class="scene" id="g-quiz" style="background:linear-gradient(180deg,#fff,#f3ecff)">
   <div class="num">03</div>
   <div class="wrap stack">
@@ -312,7 +378,8 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<!-- COMMANDMENTS horizontal -->
+<div class="marquee" aria-hidden="true"><div class="rail" data-dir="-1"></div></div>
+
 <section class="hscroll" id="cmds">
   <div class="sticky">
     <div class="head"><span class="kicker" style="background:#7a4f38;color:var(--gold)">Pause entre deux attractions</span><h2 class="title" style="margin-top:12px">Les 8 commandements du couple</h2></div>
@@ -330,7 +397,6 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<!-- 4 WHACK -->
 <section class="scene" id="g-whack">
   <div class="num">04</div>
   <div class="wrap stack">
@@ -343,25 +409,24 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<div class="marquee alt" aria-hidden="true"><div class="rail" data-dir="1"></div></div>
+<div class="ad-wrap" id="ad1"><div class="ad"><span class="ad-tag">PUBLICITÉ</span><div class="prod">📦</div><h3>NOUVEAU : Ton Chéri™ 2.0</h3><ul><li>✅ 30 % de blagues nulles en plus</li><li>✅ Câlins illimités, sans abonnement</li><li>✅ Se recharge uniquement avec des bisous</li><li>✅ Garantie à vie (non échangeable, non remboursable)</li></ul><p class="fine">*Ton Chéri™ peut s'endormir devant les films. Ne pas laisser seul avec des frites.</p><button class="ad-skip" disabled>Passer la pub dans <b>4</b></button></div></div>
 
-<!-- 5 LOVE -->
-<section class="scene center" id="g-love">
+<section class="scene center" id="g-hbila" style="background:linear-gradient(180deg,#fff,#fff0f5)">
   <div class="num">05</div>
   <div class="wrap stack">
-    <div data-reveal><span class="kicker">Attraction 5 · Question piège</span></div>
-    <h2 class="title" data-reveal>Une question <em>très simple</em></h2>
-    <div class="love-arena" id="loveArena" data-reveal>
-      <div class="q">Est-ce que tu m'aimes ? 🥺</div>
-      <button class="btn" id="yesBtn">Oui 💖</button>
-      <button class="btn ghost" id="noBtn">Non</button>
+    <div data-reveal><span class="kicker">Attraction 5 · Le Hbila-mètre</span></div>
+    <h2 class="title" data-reveal>Mesure ton niveau de <em>hbila</em></h2>
+    <p class="lead" data-reveal>Appareil médical de haute précision. Homologué par personne.</p>
+    <div class="gauge card" data-reveal>
+      <div class="dial"><div class="arc"></div><div class="needle" id="needle"></div><div class="cap"></div>
+        <span class="gl g0">calme</span><span class="gl g1">taquine</span><span class="gl g2">hbila</span><span class="gl g3">🚨</span></div>
+      <div class="gread" id="gRead">— %</div>
+      <div class="glog" id="gLog"></div>
     </div>
-    <div class="hug" id="hug"><img class="av l" src="../anniversaire/img/lui.png" alt=""><span style="font-size:40px;z-index:2">💞</span><img class="av r" src="../anniversaire/img/elle.png" alt=""></div>
-    <p class="result" id="loveMsg"></p>
+    <div data-reveal><button class="btn" id="gBtn">Mesurer 📏</button></div>
   </div>
 </section>
 
-<!-- 6 SCRATCH -->
 <section class="scene" id="g-scratch" style="background:linear-gradient(180deg,#fff,#fff0d9)">
   <div class="num">06</div>
   <div class="wrap stack">
@@ -373,11 +438,40 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<!-- 7 BUBBLES -->
-<section class="scene" id="g-bubble">
+<div class="marquee alt" aria-hidden="true"><div class="rail" data-dir="1"></div></div>
+
+<section class="scene" id="g-trad">
   <div class="num">07</div>
   <div class="wrap stack">
-    <div class="center" data-reveal><span class="kicker">Attraction 7 · Papier bulle anti-stress</span></div>
+    <div class="center" data-reveal><span class="kicker">Attraction 7 · Le traducteur officiel</span></div>
+    <h2 class="title center" data-reveal>Ce qu'on dit vs <em>ce qu'on pense</em></h2>
+    <p class="lead center" data-reveal>Touche chaque carte pour traduire. Retourne-les toutes pour le trophée.</p>
+    <div class="trad" id="trad" data-reveal></div>
+    <p class="result center" id="tMsg"></p>
+  </div>
+</section>
+
+<section class="scene" id="g-catch">
+  <div class="num">08</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 8 · Pluie de bonbons</span></div>
+    <h2 class="title center" data-reveal>Attrape les <em>douceurs</em></h2>
+    <p class="lead center" data-reveal>Glisse ton doigt pour bouger. Attrape les bonnes choses, évite les révisions et le réveil de garde. Bonus : ton chéri tombe du ciel (+5).</p>
+    <div class="legend" data-reveal><span>🍫🍬🍟☕💋 +1</span><span>🧑 chéri +5</span><span>📚⏰🥦 −2</span></div>
+    <div class="hud" data-reveal><span>Score : <b id="cScore">0</b></span><span>⏱ <b id="cTime">30</b>s</span></div>
+    <div class="arena" id="cArena" data-reveal>
+      <canvas id="cCan"></canvas>
+      <div class="overlay" id="cOver"><div style="font-size:54px">🧺</div><p class="result" id="cMsg">Prête, docteur ?</p><button class="btn" id="cStart">Jouer</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="ad-wrap" id="ad2"><div class="ad"><span class="ad-tag">PUBLICITÉ</span><div class="prod">⚡</div><h3>HBILA ÉNERGIE</h3><p>La boisson officielle des hbilas professionnelles.</p><ul><li>💥 +200 % de taquinerie</li><li>😂 Fous rires garantis</li><li>👑 Irrésistibilité permanente</li></ul><p class="fine">Effets secondaires : ton chéri devient encore plus fou de toi. Demander conseil à un médecin (toi).</p><button class="ad-skip" disabled>Passer la pub dans <b>4</b></button></div></div>
+
+<section class="scene" id="g-bubble">
+  <div class="num">09</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 9 · Papier bulle anti-stress</span></div>
     <h2 class="title center" data-reveal>Éclate <em>tout</em></h2>
     <p class="lead center" data-reveal>Spécial journées de garde. Chaque bulle cache un petit mot.</p>
     <div class="hud" data-reveal><span>Éclatées : <b id="bN">0</b>/30</span><button class="btn small ghost" id="bReset">Nouveau papier</button></div>
@@ -386,14 +480,29 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
+<section class="scene" id="g-diag" style="background:linear-gradient(180deg,#fff,#e9f7ff)">
+  <div class="num">10</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 10 · Consultation</span></div>
+    <h2 class="title center" data-reveal>Dr. Khadija, <em>un patient</em> vous attend</h2>
+    <div class="card patient" data-reveal>
+      <div class="pt-head"><img class="av" src="../anniversaire/img/lui.png" alt=""><div><b>Patient : ton chéri</b><span class="small">Âge : grand bébé · Groupe sanguin : McDo+</span></div></div>
+      <p class="small" style="font-weight:800;margin:12px 0 6px">Symptômes signalés :</p>
+      <ul class="symp" id="symp"></ul>
+      <p class="small" style="font-weight:800;margin:12px 0 8px">Votre diagnostic, docteur ?</p>
+      <div class="dx" id="dx"></div>
+      <div class="rx" id="rxOut"></div>
+    </div>
+  </div>
+</section>
+
 <div class="marquee" aria-hidden="true"><div class="rail" data-dir="-1"></div></div>
 
-<!-- 8 WHEEL -->
 <section class="scene center" id="g-wheel">
-  <div class="num">08</div>
+  <div class="num">11</div>
   <div class="wrap stack">
-    <div data-reveal><span class="kicker">Attraction 8 · La roue des rendez-vous</span></div>
-    <h2 class="title" data-reveal>Où on va <em>ce week-end</em> ?</h2>
+    <div data-reveal><span class="kicker">Attraction 11 · La roue des rendez-vous</span></div>
+    <h2 class="title" data-reveal>Où on va pour <em>la prochaine sortie</em> ?</h2>
     <p class="lead" data-reveal>La roue décide. La roue est neutre. (La roue est peut-être un peu truquée.)</p>
     <div class="wheel-box" data-reveal><div class="pointer">🔻</div><div class="wheel" id="wheel"></div><div class="hub">💗</div></div>
     <div data-reveal><button class="btn" id="spin">Tourner la roue 🎡</button></div>
@@ -401,11 +510,26 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<!-- 9 COOKIE -->
-<section class="scene center" id="g-cookie" style="background:linear-gradient(180deg,#fff,#fff5e6)">
-  <div class="num">09</div>
+<section class="scene center" id="g-joke">
+  <div class="num">12</div>
   <div class="wrap stack">
-    <div data-reveal><span class="kicker">Attraction 9 · Biscuit de la fortune</span></div>
+    <div data-reveal><span class="kicker">Attraction 12 · Le stand des blagues nulles</span></div>
+    <h2 class="title" data-reveal>Une blague <em>(nulle)</em> pour toi</h2>
+    <p class="lead" data-reveal>Note 3 blagues pour le trophée. Sois indulgente, il les a choisies avec amour.</p>
+    <div class="card joke" data-reveal>
+      <div class="jq" id="jQ"></div>
+      <div class="ja" id="jA"></div>
+      <div id="jBtns"><button class="btn" id="jReveal">Révéler la chute 🥁</button></div>
+      <div class="rate" id="jRate"><button data-r="0">😐</button><button data-r="1">🙄</button><button data-r="2">😂</button></div>
+      <p class="result" id="jMsg"></p>
+    </div>
+  </div>
+</section>
+
+<section class="scene center" id="g-cookie" style="background:linear-gradient(180deg,#fff,#fff5e6)">
+  <div class="num">13</div>
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Attraction 13 · Biscuit de la fortune</span></div>
     <h2 class="title" data-reveal>Ton <em>avenir</em> en un biscuit</h2>
     <p class="lead" data-reveal>Tape sur le biscuit pour l'ouvrir.</p>
     <div class="cookie-stage" id="cookieStage" data-reveal>
@@ -416,11 +540,26 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
-<!-- 10 KISS -->
-<section class="scene center" id="g-kiss">
-  <div class="num">10</div>
+<section class="scene center" id="g-names" style="background:linear-gradient(180deg,#fff,#fff6d6)">
+  <div class="num">14</div>
   <div class="wrap stack">
-    <div data-reveal><span class="kicker">Attraction 10 · Machine à bisous</span></div>
+    <div data-reveal><span class="kicker">Attraction 14 · La machine à petits noms</span></div>
+    <h2 class="title" data-reveal>Un petit nom <em>ridicule</em> au hasard</h2>
+    <p class="lead" data-reveal>Parce que je n'en ai jamais assez. Tire le levier.</p>
+    <div class="slot card" data-reveal>
+      <div class="reels"><div class="reel" id="r0"></div><div class="reel" id="r1"></div><div class="reel" id="r2"></div></div>
+      <div class="nameout" id="nameOut">…</div>
+    </div>
+    <div data-reveal><button class="btn" id="nameBtn">Tirer le levier 🎰</button></div>
+  </div>
+</section>
+
+<div class="marquee alt" aria-hidden="true"><div class="rail" data-dir="1"></div></div>
+
+<section class="scene center" id="g-kiss">
+  <div class="num">15</div>
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Attraction 15 · Machine à bisous</span></div>
     <h2 class="title" data-reveal>Envoie-lui des <em>bisous</em></h2>
     <p class="lead" data-reveal>Il est en manque. C'est une urgence médicale, docteur.</p>
     <div class="kiss-stage" id="kissStage" data-reveal>
@@ -438,7 +577,7 @@ footer a{color:var(--rose);font-weight:800}
   <div class="wrap stack">
     <div data-reveal><span class="kicker">La vitrine</span></div>
     <h2 class="title" data-reveal>Tes <em>trophées</em></h2>
-    <p class="lead" data-reveal>Débloque les 10 pour gagner le grand prix.</p>
+    <p class="lead" data-reveal>Débloque les 15 pour gagner le grand prix. (Indice : il y a aussi un easter egg caché quelque part en haut… 🥚)</p>
     <div class="trophies" id="trophies" data-reveal></div>
     <div class="grand card" id="grand">
       <div class="voucher stack">
@@ -510,9 +649,11 @@ footer a{color:var(--rose);font-weight:800}
 
   /* ---------- trophies ---------- */
   const BADGES = [
-    ["catch", "🧺", "Attrapeuse pro", "g-catch"], ["memory", "🧠", "Mémoire d'éléphant", "g-memory"], ["quiz", "🎓", "Experte de nous", "g-quiz"],
-    ["whack", "🔨", "Anti-blagues", "g-whack"], ["love", "💘", "A dit OUI", "g-love"], ["scratch", "🎟️", "Gratteuse", "g-scratch"],
-    ["bubble", "🫧", "Éclateuse", "g-bubble"], ["wheel", "🎡", "Reine de la roue", "g-wheel"], ["cookie", "🥠", "Voyante", "g-cookie"], ["kiss", "💋", "Machine à bisous", "g-kiss"],
+    ["love", "💘", "A dit OUI", "g-love"], ["memory", "🧠", "Mémoire d'éléphant", "g-memory"], ["quiz", "🎓", "Experte de nous", "g-quiz"],
+    ["whack", "🔨", "Anti-blagues", "g-whack"], ["hbila", "📏", "Hbila mesurée", "g-hbila"], ["scratch", "🎟️", "Gratteuse", "g-scratch"],
+    ["trad", "🗣️", "Traductrice", "g-trad"], ["catch", "🧺", "Attrapeuse pro", "g-catch"], ["bubble", "🫧", "Éclateuse", "g-bubble"],
+    ["diag", "🩺", "Diagnostic parfait", "g-diag"], ["wheel", "🎡", "Reine de la roue", "g-wheel"], ["joke", "🤡", "Public difficile", "g-joke"],
+    ["cookie", "🥠", "Voyante", "g-cookie"], ["names", "🍬", "Petits noms", "g-names"], ["kiss", "💋", "Machine à bisous", "g-kiss"],
   ];
   let got = new Set();
   try { got = new Set(JSON.parse(localStorage.getItem("parc-badges") || "[]")); } catch (e) {}
@@ -527,7 +668,7 @@ footer a{color:var(--rose);font-weight:800}
     got.add(id); try { localStorage.setItem("parc-badges", JSON.stringify([...got])); } catch (e) {}
     const b = BADGES.find(x => x[0] === id);
     renderBadges(); S.win(); party();
-    toast(`🏆 Trophée débloqué : ${b[1]} ${b[2]} (${got.size}/10)`, 3000);
+    toast(`🏆 Trophée débloqué : ${b[1]} ${b[2]} (${got.size}/${BADGES.length})`, 3000);
     const sb = $("#shelfBtn"); sb.classList.remove("bump"); void sb.offsetWidth; sb.classList.add("bump");
     if (got.size === BADGES.length) setTimeout(() => toast("🎉 TOUS LES TROPHÉES ! Va voir la vitrine tout en bas", 3500), 3100);
   }
@@ -860,7 +1001,7 @@ footer a{color:var(--rose);font-weight:800}
 
   /* ================= 9. COOKIE ================= */
   (() => {
-    const F = ["Tu vas recevoir un bisou dans les 5 prochaines minutes. C'est une menace. 💋", "Un homme chauve et magnifique pense à toi en ce moment même.", "Ton chéri va faire une blague nulle aujourd'hui. Prépare-toi mentalement.", "Tu vas réussir tous tes examens. Le biscuit l'a dit, c'est scientifique. 🩺", "Les étoiles annoncent : McDo à 2h du matin ce week-end. 🍟", "Attention : niveau de hbila élevé détecté aujourd'hui. 👑", "Quelqu'un t'aime à 1000%. Indice : il porte un bracelet Tommy.", "Tu es la meilleure médecin de l'univers. Le biscuit confirme, le biscuit ne ment jamais.", "Dans 70 ans, il t'embêtera encore. Aucune échappatoire.", "Ton avenir : une grande maison, des petits monstres et beaucoup de câlins. 🏠", "Tu as le droit de te reposer aujourd'hui. Ordre du docteur Amour. 🛌"];
+    const F = ["Tu vas recevoir un bisou dans les 5 prochaines minutes. C'est une menace. 💋", "Un homme chauve et magnifique pense à toi en ce moment même.", "Ton chéri va faire une blague nulle aujourd'hui. Prépare-toi mentalement.", "Tu vas réussir tous tes examens. Le biscuit l'a dit, c'est scientifique. 🩺", "Les étoiles annoncent : McDo à 2h du matin pour la prochaine sortie. 🍟", "Attention : niveau de hbila élevé détecté aujourd'hui. 👑", "Quelqu'un t'aime à 1000%. Indice : il porte un bracelet Tommy.", "Tu es la meilleure médecin de l'univers. Le biscuit confirme, le biscuit ne ment jamais.", "Dans 70 ans, il t'embêtera encore. Aucune échappatoire.", "Ton avenir : une grande maison, des petits monstres et beaucoup de câlins. 🏠", "Tu as le droit de te reposer aujourd'hui. Ordre du docteur Amour. 🛌"];
     const st = $("#cookieStage"), ck = $("#ck"); let taps = 0, last = -1;
     ck.addEventListener("click", () => {
       if (st.classList.contains("cracked")) return;
@@ -887,6 +1028,159 @@ footer a{color:var(--rose);font-weight:800}
       if (LV[n]) { $("#kMsg").textContent = LV[n]; if (n >= 10) burstAt(him, 30); }
       if (n === 25) earn("kiss");
     });
+  })();
+
+  /* ================= HBILA-METRE ================= */
+  (() => {
+    const READS = [
+      ["127 %", ["Hbila : 127 % 👑", "Mignonnerie : 300 % 🥹", "Faim : 85 % (frites de ton chéri en danger 🍟)"]],
+      ["999 %", ["⚠️ Taquinerie hors de contrôle", "Niveau de « je suis pas fâchée » : suspect", "Câlins requis : immédiatement"]],
+      ["ERREUR", ["🚨 L'appareil a explosé", "Diagnostic : hbila légendaire, catégorie 5", "Le constructeur refuse de rembourser"]],
+      ["∞ %", ["L'appareil abandonne 🏳️", "Hbila officielle, CDI à vie, confirmé", "Il t'aime quand même (beaucoup)"]],
+    ];
+    let k = 0, busy = false;
+    $("#gBtn").addEventListener("click", () => {
+      if (busy) return; busy = true; const nd = $("#needle"), rd = $("#gRead");
+      rd.classList.remove("alarm"); rd.textContent = "calibrage…"; $("#gLog").innerHTML = "";
+      const seq = [-60, 10, -30, 45, 20, 70, 95];
+      seq.forEach((a, i) => setTimeout(() => { nd.style.transform = `rotate(${a}deg)`; S.tick(); }, i * 260));
+      setTimeout(() => {
+        const [v, lines] = READS[k % READS.length]; k++;
+        nd.style.transform = "rotate(100deg)"; rd.textContent = v; rd.classList.add("alarm"); S.bad(); setTimeout(S.win, 300);
+        lines.forEach((l, i) => setTimeout(() => { const d = document.createElement("div"); d.textContent = l; $("#gLog").appendChild(d); S.pop(); }, 400 + i * 450));
+        burstAt(rd, 30); earn("hbila");
+        $("#gBtn").textContent = "Remesurer (on sait jamais) 📏"; busy = false;
+      }, seq.length * 260 + 200);
+    });
+  })();
+
+  /* ================= TRADUCTEUR ================= */
+  (() => {
+    const T = [
+      ["Elle dit", "Je suis pas fâchée.", "Je suis fâchée. Devine pourquoi. Tu as 3 essais."],
+      ["Elle dit", "Fais ce que tu veux.", "Ne fais SURTOUT pas ça."],
+      ["Elle dit", "J'ai pas faim.", "Je vais manger la moitié de tes frites 🍟"],
+      ["Elle dit", "J'arrive dans 5 minutes.", "Prévois 45 minutes. Minimum. ⏳"],
+      ["Elle dit", "On mange quoi ? Je sais pas, et toi ?", "Propose. Je vais tout refuser. 😌"],
+      ["Lui dit", "J'ai une petite blague…", "Prépare-toi à souffrir. 🤡"],
+      ["Lui dit", "Je suis pas fatigué.", "Il dort dans 3 minutes devant le film. 😴"],
+      ["Lui dit", "Je regarde juste un truc vite fait.", "Il est perdu sur YouTube pour 2 heures. 📱"],
+    ];
+    let n = 0;
+    $("#trad").innerHTML = T.map(([w, a, b]) => `<button class="tcard"><div class="in3d"><div class="f"><small>${w} 🗣️</small><q>${a}</q></div><div class="b"><small>Traduction 🔍</small><q>${b}</q></div></div></button>`).join("");
+    $$(".tcard").forEach(c => c.addEventListener("click", () => {
+      const first = !c.dataset.seen; c.classList.toggle("on"); S.pop();
+      if (first) { c.dataset.seen = 1; n++; if (n === T.length) { $("#tMsg").textContent = "Traductrice officielle diplômée 🎓 (personne d'autre n'aurait réussi)"; earn("trad"); } }
+    }));
+  })();
+
+  /* ================= DIAGNOSTIC ================= */
+  (() => {
+    const SY = ["Sourit tout seul en regardant son téléphone 📱", "Dit « hbila » environ 40 fois par jour", "Accélération cardiaque quand tu arrives 💓", "Blagues nulles en continu, sans pause", "Envie irrésistible de McDo à 2h du matin 🍟", "Incapable d'enlever un bracelet Tommy 📿", "Pense à toi 24h/24 (même en dormant)"];
+    const DX = [["🤧 Grippe", "Non docteur. Il n'a pas de fièvre, il a juste chaud quand tu le regardes."], ["😴 Fatigue", "Non. Il a dormi 9 heures et il pense encore à toi."], ["🙄 Il fait semblant", "Le patient est vexé. Il ne fait pas semblant, il t'aime vraiment."], ["💘 Amour aigu", ""]];
+    $("#symp").innerHTML = shuffle(SY).slice(0, 4).map(s => `<li>${s}</li>`).join("");
+    $("#dx").innerHTML = DX.map(([d], i) => `<button data-i="${i}">${d}</button>`).join("");
+    $$("#dx button").forEach(b => b.addEventListener("click", () => {
+      const i = +b.dataset.i;
+      if (i < 3) { b.classList.remove("no"); void b.offsetWidth; b.classList.add("no"); S.bad(); $("#rxOut").textContent = "❌ " + DX[i][1]; return; }
+      b.classList.add("yes"); S.win(); burstAt(b, 40);
+      $("#rxOut").innerHTML = `<div class="paper">✅ Diagnostic confirmé : <b>amour aigu chronique, incurable.</b><br>Traitement : 3 bisous par jour, à vie. Câlins en cas de crise. Aucun effet secondaire, à part sourire bêtement.<br><span style="float:right">— Dr. Khadija 🩺</span><br style="clear:both"></div>`;
+      earn("diag");
+    }));
+  })();
+
+  /* ================= BLAGUE DU JOUR ================= */
+  (() => {
+    const J = [
+      ["Qu'est-ce qu'un crocodile qui surveille la pharmacie ?", "Un Lacoste garde 🐊"],
+      ["Pourquoi les plongeurs plongent-ils toujours en arrière ?", "Parce que sinon ils tombent dans le bateau 🤿"],
+      ["Quel est le sport le plus fruité ?", "La boxe : tu te prends une pêche et tu tombes dans les pommes 🍑🍎"],
+      ["Que dit une imprimante dans l'eau ?", "J'ai papier ! 🖨️"],
+      ["Pourquoi le livre de maths est triste ?", "Parce qu'il a trop de problèmes 📚"],
+      ["Docteur, j'ai mal partout quand je touche !", "C'est normal, vous avez le doigt cassé ☝️"],
+      ["Quel est le comble pour un chauve ?", "Avoir un cheveu sur la langue 👨‍🦲"],
+      ["Qu'est-ce qui est jaune et qui attend ?", "Jonathan 🟡"],
+      ["Que dit un oignon quand il se cogne ?", "Aïe ! (ail 🧄)"],
+      ["Pourquoi les poissons détestent l'ordinateur ?", "À cause du net 🐟"],
+      ["Comment appelle-t-on un chien qui n'a pas de pattes ?", "On ne l'appelle pas, on va le chercher 🐶"],
+      ["Quelle est la différence entre toi et un McDo à 2h du matin ?", "Aucune : vous êtes tous les deux irrésistibles 🍟❤️"],
+    ];
+    const R = [["Ok… celle-là je la garde pour nos enfants 😐", "Public difficile. J'aime ça."], ["Le roulement d'yeux, c'est un rire caché, je le sais 🙄", "Tu souris, je le vois d'ici."], ["J'AI GAGNÉ 😂😂 je suis le roi de l'humour", "Note : 10/10, je l'encadre."]];
+    let order = shuffle(J), i = 0, rated = 0;
+    const show = () => { const [q] = order[i % order.length]; $("#jQ").textContent = q; $("#jA").textContent = ""; $("#jA").classList.remove("show"); $("#jRate").classList.remove("show"); $("#jMsg").textContent = ""; $("#jReveal").style.display = "inline-flex"; $("#jReveal").innerHTML = "Révéler la chute 🥁"; };
+    $("#jReveal").addEventListener("click", () => {
+      const b = $("#jReveal"); b.disabled = true; b.innerHTML = '<span class="drum">🥁</span> roulement de tambour…';
+      let t = 0; const dr = setInterval(() => { S.tick(); if (++t > 12) clearInterval(dr); }, 70);
+      setTimeout(() => { b.disabled = false; b.style.display = "none"; $("#jA").textContent = order[i % order.length][1]; $("#jA").classList.add("show"); tone(220, .12, "square", .1); setTimeout(() => tone(180, .12, "square", .1), 140); setTimeout(() => tone(900, .25, "triangle", .08), 300); $("#jRate").classList.add("show"); }, 950);
+    });
+    $$("#jRate button").forEach(b => b.addEventListener("click", () => {
+      const r = +b.dataset.r; $("#jMsg").textContent = R[r][rated % 2]; rated++; r === 2 ? (S.good(), burstAt(b, 25)) : S.pop();
+      $("#jRate").classList.remove("show");
+      if (rated === 3) earn("joke");
+      setTimeout(() => { i++; show(); }, 1700);
+    }));
+    show();
+  })();
+
+  /* ================= GENERATEUR ================= */
+  (() => {
+    const A = ["ma petite brioche", "mon petit cookie", "ma petite crêpe", "mon petit marshmallow", "ma petite praline", "mon petit nuage", "ma petite patate", "mon petit nugget", "ma petite fraise", "mon petit croissant", "ma petite pizza", "mon petit ourson"];
+    const B = ["au chocolat", "à la vanille", "au caramel", "au miel", "aux frites du McDo", "au Nutella", "à la harissa", "à la fraise", "à la pistache"];
+    const C = ["d'amour", "de compétition", "en édition limitée", "de l'univers", "avec supplément bisous", "de mon cœur", "certifié hbila", "qui sent bon"];
+    const reels = [$("#r0"), $("#r1"), $("#r2")], lists = [A, B, C];
+    reels.forEach((r, i) => r.textContent = lists[i][0]);
+    let busy = false, first = true;
+    $("#nameBtn").addEventListener("click", () => {
+      if (busy) return; busy = true; $("#nameOut").textContent = "…";
+      const res = lists.map(l => pick(l));
+      reels.forEach((r, i) => {
+        r.classList.add("spin"); r.classList.remove("stop");
+        const iv = setInterval(() => { r.textContent = pick(lists[i]); S.tick(); }, 70);
+        setTimeout(() => { clearInterval(iv); r.textContent = res[i]; r.classList.remove("spin"); r.classList.add("stop"); S.pop();
+          if (i === 2) { const s = res.join(" "); $("#nameOut").textContent = s.charAt(0).toUpperCase() + s.slice(1) + " 💕"; S.good(); burstAt($("#nameOut"), 25); busy = false; if (first) { first = false; earn("names"); } }
+        }, 700 + i * 450);
+      });
+    });
+  })();
+
+  /* ================= FAKE ADS ================= */
+  $$(".ad-wrap").forEach(w => {
+    const btn = w.querySelector(".ad-skip"); let started = false;
+    const aio = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting || started) return; started = true; aio.disconnect();
+      let n = 4; const iv = setInterval(() => { n--; if (n > 0) btn.querySelector("b").textContent = n; else { clearInterval(iv); btn.disabled = false; btn.textContent = "Passer la pub ▶"; } }, 1000);
+    }), { threshold: .6 });
+    aio.observe(w);
+    btn.addEventListener("click", () => {
+      w.style.height = w.offsetHeight + "px"; void w.offsetHeight; w.classList.add("closing"); w.style.height = "0px"; w.style.paddingTop = w.style.paddingBottom = "0px";
+      toast("Merci d'avoir regardé notre partenaire officiel : ton chéri 😌"); S.pop();
+    });
+  });
+
+  /* ================= EASTER EGG ================= */
+  (() => {
+    let taps = 0; const f = $("#ferris");
+    f.addEventListener("click", () => {
+      taps++; S.tick();
+      if (taps === 5) { f.classList.remove("crazy"); void f.offsetWidth; f.classList.add("crazy"); S.win(); party(); toast("🥚 Easter egg trouvé ! Message secret : il t'aime. Beaucoup. Trop même.", 3500); taps = 0; }
+    });
+  })();
+
+  /* ================= SURPRISE JOKES WHILE SCROLLING ================= */
+  (() => {
+    const POP = ["Fun fact : ton chéri a souri 47 fois en codant ce site 🥹", "Rappel : tu es magnifique. C'est tout. Continue.", "Statistique : 98 % des chéris préfèrent leur hbila. Les 2 % restants mentent.", "Info trafic : bouchon de bisous en direction de ton cœur 🚗💋", "Alerte météo : 100 % de chances de câlins aujourd'hui ☀️", "Le saviez-vous ? Le McDo de Maârif est un monument historique (pour nous) 🍟", "Pause hydratation, docteur 💧 (et un bisou)", "Ce message s'autodétruira dans 5 secondes. Je t'aime. 💥"];
+    const el = document.createElement("div"); el.className = "joke-pop"; el.innerHTML = '<small>Message surprise</small><span></span><button aria-label="Fermer">✕</button>';
+    document.body.appendChild(el);
+    let i = 0, lastY = 0, acc = 0, hideT;
+    el.querySelector("button").addEventListener("click", () => el.classList.remove("show"));
+    addEventListener("scroll", () => {
+      if (document.body.classList.contains("locked")) return;
+      acc += Math.abs(scrollY - lastY); lastY = scrollY;
+      if (acc > innerHeight * 6) {
+        acc = 0; el.querySelector("span").textContent = POP[i++ % POP.length]; el.classList.add("show"); S.pop();
+        clearTimeout(hideT); hideT = setTimeout(() => el.classList.remove("show"), 5000);
+      }
+    }, { passive: true });
   })();
 })();
 </script>
