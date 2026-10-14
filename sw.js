@@ -38,7 +38,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET") return;
-  if (new URL(request.url).pathname.includes("/anniversaire/")) return;
+  if (/\/(anniversaire|jeux)\//.test(new URL(request.url).pathname)) return;
 
   event.respondWith(
     caches.match(request).then((cached) => {
