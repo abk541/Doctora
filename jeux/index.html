@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff5c8a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Parc d'Amour">
+<meta name="robots" content="noindex">
+<title>Parc d'Amour</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%A1%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --choco:#5b3a29; --choco-2:#7a4f38; --pink:#ff8fb1; --rose:#ff4f7e; --blush:#ffd6e3; --mallow:#fff5f8;
+  --gold:#ffc94d; --mint:#bff0dc; --sky:#d9ecff; --lav:#e7e0ff; --ink:#3b2418; --muted:#8a6a5a;
+  --shadow:0 14px 34px rgba(122,79,56,.18);
+  --display:"Fredoka","Arial Rounded MT Bold",system-ui,sans-serif; --body:"Nunito",system-ui,-apple-system,sans-serif; --hand:"Caveat",cursive;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--mallow);overflow-x:hidden;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+body.locked{overflow:hidden;height:100vh}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;border:0;background:none}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05}
+p{margin:0;line-height:1.5}
+.wrap{width:100%;max-width:640px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left)) 0 max(18px,env(safe-area-inset-right));position:relative;z-index:1}
+.scene{position:relative;padding:90px 0 80px;overflow:hidden}
+.center{text-align:center}
+.stack>*+*{margin-top:16px}
+.kicker{display:inline-block;font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);background:#fff;border-radius:999px;padding:6px 14px;box-shadow:var(--shadow)}
+.title{font-size:clamp(32px,8.6vw,54px);color:var(--choco)}
+.title em{font-style:normal;color:var(--rose)}
+.lead{font-size:clamp(16px,4.3vw,19px);color:var(--choco-2)}
+.small{font-size:14px;color:var(--muted)}
+.card{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-weight:600;font-size:18px;background:var(--rose);color:#fff;border-radius:999px;padding:13px 22px;box-shadow:0 10px 22px rgba(255,79,126,.35);transition:transform .15s}
+.btn:active{transform:scale(.93)}
+.btn.ghost{background:#fff;color:var(--rose);box-shadow:var(--shadow)}
+.btn.small{font-size:15px;padding:9px 16px}
+.av{border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 8px 20px rgba(122,79,56,.3);background:#fff;display:block}
+.num{position:absolute;top:30px;right:-10px;font-family:var(--display);font-weight:700;font-size:160px;line-height:1;color:transparent;-webkit-text-stroke:3px rgba(255,79,126,.18);z-index:0;pointer-events:none;will-change:transform}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--display);font-weight:600;color:var(--choco)}
+.hud b{color:var(--rose)}
+.result{font-family:var(--display);font-weight:600;font-size:19px;color:var(--choco);min-height:1.4em}
+
+[data-reveal]{opacity:0;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.9,.25,1.2);transition-delay:var(--d,0s)}
+[data-reveal].v-up{transform:translateY(50px)}
+[data-reveal].v-left{transform:translateX(-80px) rotate(-5deg)}
+[data-reveal].v-right{transform:translateX(80px) rotate(5deg)}
+[data-reveal].v-zoom{transform:scale(.5) rotate(-6deg)}
+[data-reveal].in{opacity:1;transform:none}
+.ch{display:inline-block;white-space:pre}.word{display:inline-block;white-space:nowrap}
+.title.in .ch{animation:chPop .7s cubic-bezier(.3,1.8,.5,1) backwards;animation-delay:calc(var(--ci)*26ms)}
+@keyframes chPop{0%{opacity:0;transform:translateY(50px) rotate(20deg) scale(.2)}}
+
+/* progress + trophies bar */
+#prog{position:fixed;top:0;left:0;right:0;height:calc(8px + env(safe-area-inset-top));z-index:40;pointer-events:none}
+#prog .fill{position:absolute;left:0;bottom:0;height:6px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#ff8fb1,#ff4f7e,#ffc94d)}
+#prog .runner{position:absolute;bottom:-14px;left:0;transform:translateX(-50%)}
+#prog .goal{position:absolute;bottom:-14px;right:4px}
+#prog .av{width:30px;height:30px;border-width:2px}
+#shelfBtn{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:45;background:var(--choco);color:#fff;font-family:var(--display);font-weight:600;font-size:16px;border-radius:999px;padding:10px 16px;box-shadow:0 10px 24px rgba(0,0,0,.25);transition:transform .3s}
+#shelfBtn.bump{animation:bump .6s}
+@keyframes bump{30%{transform:scale(1.35) rotate(-8deg)}60%{transform:scale(.9) rotate(6deg)}}
+#muteBtn{position:fixed;left:max(14px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));z-index:45;width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:var(--shadow);font-size:20px}
+.toast{position:fixed;left:50%;top:max(24px,calc(env(safe-area-inset-top) + 16px));transform:translate(-50%,-180%);visibility:hidden;background:#fff;color:var(--choco);font-weight:800;padding:12px 18px;border-radius:18px;z-index:70;max-width:90vw;text-align:center;transition:transform .45s cubic-bezier(.3,1.5,.5,1);box-shadow:0 14px 30px rgba(0,0,0,.2);border:3px solid var(--gold)}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:60}
+.trail{position:fixed;z-index:65;pointer-events:none;font-size:22px;animation:trail 1s ease-out forwards}
+@keyframes trail{to{opacity:0;transform:translateY(-60px) scale(1.6) rotate(30deg)}}
+.deco{position:absolute;z-index:0;pointer-events:none;opacity:.2;will-change:transform}
+
+/* gate ticket */
+#gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center;background:radial-gradient(circle at 50% 30%,#ffe8f0,#ff9ebd 60%,#ff5c8a);transition:opacity .7s,visibility .7s}
+#gate.gone{opacity:0;visibility:hidden}
+#gate h1{color:#fff;font-size:clamp(30px,8vw,44px);text-shadow:0 3px 0 rgba(122,79,56,.25)}
+#gate p{color:#fff;font-weight:700}
+.ticket{position:relative;display:flex;width:min(340px,88vw);height:150px;filter:drop-shadow(0 18px 24px rgba(122,79,56,.35));animation:tk 2s ease-in-out infinite}
+@keyframes tk{50%{transform:rotate(-3deg) translateY(-6px)}}
+.ticket .half{background:#fff8e7;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform .9s cubic-bezier(.3,1.3,.5,1),opacity .9s}
+.ticket .l{flex:1;border-radius:18px 0 0 18px;border-right:3px dashed #e5b9a0}
+.ticket .r{width:100px;border-radius:0 18px 18px 0;font-family:var(--display);font-weight:700;color:var(--rose);font-size:15px}
+.ticket .l b{font-family:var(--display);font-size:24px;color:var(--choco)}
+.ticket .l span{font-size:13px;color:var(--muted);font-weight:800}
+.ticket.torn{animation:none}
+.ticket.torn .l{transform:translateX(-30px) rotate(-12deg)}
+.ticket.torn .r{transform:translate(160px,-120px) rotate(40deg);opacity:0}
+
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:center;background:radial-gradient(circle at 50% 25%,#fff,var(--blush) 75%)}
+.ferris{font-size:120px;display:inline-block;will-change:transform}
+.hero-couple{display:flex;justify-content:center;align-items:center;gap:8px}
+.hero-couple .av{width:86px;height:86px}
+.hero-couple .l{animation:sway 1.6s ease-in-out infinite}.hero-couple .r{animation:sway 1.6s ease-in-out infinite reverse}
+@keyframes sway{50%{transform:translateX(8px) rotate(8deg)}}
+.map{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
+.map a{display:flex;align-items:center;gap:8px;background:#fff;border-radius:18px;padding:12px;box-shadow:var(--shadow);text-decoration:none;color:var(--choco);font-weight:800;font-size:14.5px;text-align:left}
+.map a span{font-size:24px}
+.map a.done{background:var(--mint)}
+
+/* marquee */
+.marquee{position:relative;z-index:2;overflow:hidden;padding:16px 0;background:var(--rose);rotate:-3deg;margin:-10px -20px;box-shadow:0 10px 30px rgba(255,79,126,.35)}
+.marquee.alt{background:var(--choco);rotate:2.5deg}
+.marquee .rail{display:flex;gap:26px;width:max-content;font-family:var(--display);font-weight:700;font-size:clamp(22px,6vw,32px);color:#fff;white-space:nowrap;will-change:transform}
+
+/* catch game */
+.arena{position:relative;width:100%;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#d9ecff,#ffe1ec);box-shadow:inset 0 0 0 3px #fff,var(--shadow);touch-action:none}
+.arena canvas{display:block;width:100%;touch-action:none}
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(255,245,248,.88);text-align:center;padding:20px;transition:opacity .3s}
+.overlay.hide{opacity:0;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-size:14px;font-weight:700}
+
+/* memory */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;perspective:800px}
+.mcard{aspect-ratio:3/4;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.mcard.on,.mcard.ok{transform:rotateY(180deg)}
+.mcard .f,.mcard .b{position:absolute;inset:0;border-radius:16px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:var(--shadow)}
+.mcard .f{background:linear-gradient(145deg,#ff9ebd,var(--rose));font-size:28px;color:#fff}
+.mcard .b{background:#fff;transform:rotateY(180deg);font-size:clamp(30px,9vw,44px)}
+.mcard.ok .b{background:var(--mint);animation:okpop .5s}
+@keyframes okpop{50%{transform:rotateY(180deg) scale(1.15)}}
+
+/* quiz */
+.qcard{text-align:left}
+.qprog{height:10px;border-radius:999px;background:var(--blush);overflow:hidden;margin-bottom:14px}
+.qprog b{display:block;height:100%;width:0;background:var(--rose);transition:width .4s}
+.qtext{font-family:var(--display);font-weight:600;font-size:clamp(20px,5.4vw,24px);color:var(--choco);margin-bottom:14px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--mallow);border:2px solid var(--blush);border-radius:16px;padding:13px 14px;font-weight:800;font-size:16px;transition:transform .15s,background .2s}
+.opt:active{transform:scale(.97)}
+.opt.good{background:var(--mint);border-color:#6fd3a8}
+.opt.bad{background:#ffe0e0;border-color:#ff9b9b;animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.qfeed{min-height:1.5em;margin-top:12px;font-weight:800;color:var(--choco-2)}
+
+/* whack */
+.holes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hole{position:relative;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 60%,#5b3a29 0 55%,#7a4f38 56% 100%);overflow:hidden;box-shadow:inset 0 8px 14px rgba(0,0,0,.35)}
+.mole{position:absolute;left:12%;width:76%;bottom:-90%;transition:bottom .18s ease-out}
+.mole img{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;border:3px solid #fff}
+.mole.up{bottom:8%}
+.mole.queen::after{content:"👑";position:absolute;top:-22%;left:50%;transform:translateX(-50%);font-size:clamp(18px,6vw,28px)}
+.bubble-joke{position:absolute;left:50%;top:6px;transform:translateX(-50%);background:#fff;border-radius:12px;padding:3px 7px;font-size:10.5px;font-weight:800;white-space:nowrap;box-shadow:0 4px 10px rgba(0,0,0,.2);z-index:2;opacity:0;transition:opacity .2s;pointer-events:none}
+.hole.talk .bubble-joke{opacity:1}
+.bonk{position:absolute;inset:0;display:grid;place-items:center;font-size:40px;animation:bonk .4s forwards;pointer-events:none;z-index:3}
+@keyframes bonk{0%{transform:rotate(-60deg) scale(.6)}50%{transform:rotate(10deg) scale(1.2)}100%{opacity:0}}
+
+/* love question */
+.love-arena{position:relative;height:260px;border-radius:24px;background:#fff;box-shadow:var(--shadow);overflow:hidden}
+.love-arena .q{position:absolute;top:22px;left:0;right:0;font-family:var(--display);font-weight:700;font-size:clamp(22px,6vw,28px);color:var(--choco)}
+#yesBtn{position:absolute;left:18%;top:120px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+#noBtn{position:absolute;left:58%;top:120px;transition:left .25s cubic-bezier(.3,1.6,.5,1),top .25s cubic-bezier(.3,1.6,.5,1),transform .25s}
+.hug{display:none;align-items:center;justify-content:center;gap:0;margin-top:14px}
+.hug.show{display:flex;animation:okpop .6s}
+.hug .av{width:90px;height:90px}
+.hug .l{transform:rotate(12deg) translateX(10px)}.hug .r{transform:rotate(-12deg) translateX(-10px)}
+
+/* commandments horizontal scroll */
+.hscroll{position:relative;background:var(--choco);color:#fff}
+.hscroll .sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.hscroll .head{padding:0 20px 18px;text-align:center}
+.hscroll .head .title{color:#fff}
+.htrack{display:flex;gap:18px;padding:0 9vw;will-change:transform}
+.cmd{flex:none;width:min(78vw,380px);min-height:300px;border-radius:28px;background:#fff;color:var(--choco);padding:24px;box-shadow:0 20px 40px rgba(0,0,0,.3);display:flex;flex-direction:column;gap:12px}
+.cmd .n{font-family:var(--display);font-weight:700;font-size:56px;color:var(--rose);line-height:1}
+.cmd h3{font-size:24px}
+.cmd p{color:var(--choco-2);font-size:16px}
+.cmd .e{font-size:44px;margin-top:auto}
+.hint{font-size:13px;color:rgba(255,255,255,.7);margin-top:16px;text-align:center}
+
+/* scratch */
+.coupons{display:grid;gap:14px}
+.coupon{position:relative;height:120px;border-radius:20px;overflow:hidden;background:repeating-linear-gradient(45deg,#fff 0 12px,#fff3f7 12px 24px);border:3px dashed var(--pink);display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 16px}
+.coupon .txt{font-family:var(--display);font-weight:600;font-size:clamp(17px,4.6vw,20px);color:var(--choco)}
+.coupon .txt small{display:block;font-family:var(--body);font-size:12.5px;color:var(--muted);font-weight:700;margin-top:4px}
+.coupon canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;transition:opacity .5s}
+.coupon.done canvas{opacity:0;pointer-events:none}
+
+/* bubbles */
+.bubbles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.bub{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff 0 14%,rgba(255,255,255,.4) 15% 30%,rgba(190,225,255,.7) 60%,rgba(150,200,255,.9));box-shadow:inset -4px -6px 10px rgba(80,140,220,.25),0 6px 12px rgba(80,140,220,.2);position:relative;display:grid;place-items:center;font-size:10.5px;font-weight:800;color:var(--choco);transition:transform .15s}
+.bub:active{transform:scale(.9)}
+.bub span{opacity:0;transform:scale(.4);transition:all .3s;text-align:center;line-height:1.05;padding:2px}
+.bub.popped{background:var(--blush);box-shadow:inset 0 3px 8px rgba(0,0,0,.12)}
+.bub.popped span{opacity:1;transform:none}
+
+/* wheel */
+.wheel-box{position:relative;width:min(320px,82vw);aspect-ratio:1;margin:0 auto}
+.pointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:38px;z-index:3;filter:drop-shadow(0 4px 4px rgba(0,0,0,.2))}
+.wheel{position:absolute;inset:0;border-radius:50%;border:8px solid #fff;box-shadow:var(--shadow);transition:transform 4.2s cubic-bezier(.12,.75,.15,1)}
+.seg{position:absolute;left:50%;top:50%;width:46%;height:24px;margin-top:-12px;transform-origin:0 50%;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;font-weight:800;font-size:clamp(10px,3vw,12.5px);color:var(--choco)}
+.seg span{display:inline-block}.seg.flip span{transform:rotate(180deg)}
+.hub{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px;border-radius:50%;background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;font-size:28px;z-index:2}
+
+/* cookie */
+.cookie-stage{position:relative;height:220px;display:flex;align-items:center;justify-content:center}
+.ck{font-size:120px;position:absolute;transition:transform .6s cubic-bezier(.3,1.5,.5,1),opacity .6s;cursor:pointer}
+.ck.wob{animation:wob .5s}
+@keyframes wob{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.ck-l,.ck-r{font-size:90px;position:absolute;opacity:0;pointer-events:none;transition:all .6s cubic-bezier(.3,1.5,.5,1)}
+.cracked .ck{opacity:0;transform:scale(1.4)}
+.cracked .ck-l{opacity:1;transform:translateX(-90px) rotate(-30deg)}
+.cracked .ck-r{opacity:1;transform:translateX(90px) rotate(30deg) scaleX(-1)}
+.fortune{position:absolute;pointer-events:none;width:min(300px,78vw);background:#fff;border-radius:6px;padding:14px;box-shadow:0 10px 20px rgba(0,0,0,.15);font-family:var(--hand);font-size:24px;line-height:1.1;color:var(--choco);transform:scaleX(0);transition:transform .5s .25s cubic-bezier(.3,1.5,.5,1);z-index:2}
+.cracked .fortune{transform:scaleX(1)}
+
+/* kiss machine */
+.kiss-stage{position:relative;height:200px;border-radius:24px;background:linear-gradient(180deg,#fff,#ffe1ec);box-shadow:var(--shadow);overflow:hidden}
+.kiss-stage .me{position:absolute;left:14px;bottom:20px}
+.kiss-stage .him{position:absolute;right:14px;bottom:20px;transition:transform .2s,filter .3s}
+.kiss-stage .av{width:90px;height:90px}
+.kiss-stage .him.hit{transform:scale(1.15) rotate(-6deg)}
+.blush .av{box-shadow:0 0 0 6px #ff9ebd,0 0 40px #ff4f7e}
+.flykiss{position:absolute;left:90px;bottom:70px;font-size:30px;animation:fly .7s ease-in forwards;pointer-events:none}
+@keyframes fly{to{transform:translate(calc(var(--w) - 210px),-30px) rotate(25deg) scale(1.3)}}
+.kcount{font-family:var(--display);font-weight:700;font-size:58px;color:var(--rose);line-height:1}
+
+/* trophies */
+.trophies{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.tro{aspect-ratio:1;border-radius:18px;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px;filter:grayscale(1);opacity:.45;transition:all .4s}
+.tro small{font-size:9.5px;font-weight:800;color:var(--muted);text-align:center;line-height:1.05;margin-top:2px;padding:0 3px}
+.tro.got{filter:none;opacity:1;background:#fff8e1;animation:okpop .6s}
+.grand{display:none}
+.grand.show{display:block;animation:okpop .7s}
+.voucher{border:3px dashed var(--rose);border-radius:20px;padding:18px;background:repeating-linear-gradient(45deg,#fff 0 14px,#fff0f5 14px 28px)}
+.voucher h3{font-size:26px;color:var(--rose)}
+footer{padding:30px 0 calc(90px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:14px}
+footer a{color:var(--rose);font-weight:800}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.deco{display:none}}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate">
+  <div class="ticket" id="ticket" aria-hidden="true">
+    <div class="half l"><b>PARC D'AMOUR 🎡</b><span>ENTRÉE VIP · KHADIJA</span><span>Valable à vie · non remboursable</span></div>
+    <div class="half r">ADMIT<br>ONE<br>❤️</div>
+  </div>
+  <h1>Bienvenue au Parc d'Amour</h1>
+  <p>10 attractions · 10 trophées · 1 grand prix</p>
+  <button class="btn" id="enter">Déchirer le ticket 🎟️</button>
+</div>
+
+<div id="prog" aria-hidden="true"><div class="fill"></div><span class="runner"><img class="av" src="../anniversaire/img/lui.png" alt=""></span><span class="goal"><img class="av" src="../anniversaire/img/elle.png" alt=""></span></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button id="muteBtn" aria-label="Son">🔊</button>
+<button id="shelfBtn">🏆 <span id="shelfN">0</span>/10</button>
+
+<main>
+<!-- HERO -->
+<section class="scene hero center" id="top">
+  <div class="wrap stack">
+    <div data-reveal><span class="ferris" id="ferris">🎡</span></div>
+    <div data-reveal><span class="kicker">Ouvert 24h/24 pour toi</span></div>
+    <h1 class="title" data-reveal>Le Parc d'Amour de <em>Khadija</em></h1>
+    <div class="hero-couple" data-reveal><img class="av l" src="../anniversaire/img/lui.png" alt="Lui"><span style="font-size:30px">🎢</span><img class="av r" src="../anniversaire/img/elle.png" alt="Khadija"></div>
+    <p class="lead" data-reveal>Règlement : tu joues, tu gagnes des trophées, tu rigoles. Si tu perds, c'est la faute du jeu, jamais la tienne. 😌</p>
+    <div class="map" id="map" data-reveal></div>
+    <p class="small" data-reveal>Descends pour commencer ↓</p>
+  </div>
+</section>
+
+<!-- 1 CATCH -->
+<section class="scene" id="g-catch">
+  <div class="num">01</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 1 · Pluie de bonbons</span></div>
+    <h2 class="title center" data-reveal>Attrape les <em>douceurs</em></h2>
+    <p class="lead center" data-reveal>Glisse ton doigt pour bouger. Attrape les bonnes choses, évite les révisions et le réveil de garde. Bonus : ton chéri tombe du ciel (+5).</p>
+    <div class="legend" data-reveal><span>🍫🍬🍟☕💋 +1</span><span>🧑 chéri +5</span><span>📚⏰🥦 −2</span></div>
+    <div class="hud" data-reveal><span>Score : <b id="cScore">0</b></span><span>⏱ <b id="cTime">30</b>s</span></div>
+    <div class="arena" id="cArena" data-reveal>
+      <canvas id="cCan"></canvas>
+      <div class="overlay" id="cOver"><div style="font-size:54px">🧺</div><p class="result" id="cMsg">Prête, docteur ?</p><button class="btn" id="cStart">Jouer</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="rail" data-dir="-1"></div></div>
+
+<!-- 2 MEMORY -->
+<section class="scene" id="g-memory">
+  <div class="num">02</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 2 · Memory de nous</span></div>
+    <h2 class="title center" data-reveal>Retrouve nos <em>souvenirs</em></h2>
+    <p class="lead center" data-reveal>Retourne les cartes par paires. Chaque paire = un souvenir.</p>
+    <div class="hud" data-reveal><span>Coups : <b id="mMoves">0</b></span><span>Paires : <b id="mPairs">0</b>/6</span><button class="btn small ghost" id="mReset">Mélanger</button></div>
+    <div class="mem" id="mem" data-reveal></div>
+    <p class="result center" id="mMsg"></p>
+  </div>
+</section>
+
+<!-- 3 QUIZ -->
+<section class="scene" id="g-quiz" style="background:linear-gradient(180deg,#fff,#f3ecff)">
+  <div class="num">03</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 3 · Le grand quiz</span></div>
+    <h2 class="title center" data-reveal>Tu nous <em>connais</em> ?</h2>
+    <div class="card qcard" data-reveal>
+      <div class="qprog"><b id="qBar"></b></div>
+      <div class="small" id="qNum">Question 1/8</div>
+      <div class="qtext" id="qText"></div>
+      <div class="opts" id="qOpts"></div>
+      <div class="qfeed" id="qFeed"></div>
+      <div class="center" style="margin-top:10px"><button class="btn small" id="qNext" style="display:none">Suivante →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMANDMENTS horizontal -->
+<section class="hscroll" id="cmds">
+  <div class="sticky">
+    <div class="head"><span class="kicker" style="background:#7a4f38;color:var(--gold)">Pause entre deux attractions</span><h2 class="title" style="margin-top:12px">Les 8 commandements du couple</h2></div>
+    <div class="htrack" id="htrack">
+      <div class="cmd"><span class="n">I</span><h3>Tu ne remplaceras point ta hbila</h3><p>Le poste est pourvu à vie. Aucun CV ne sera accepté.</p><span class="e">📢</span></div>
+      <div class="cmd"><span class="n">II</span><h3>Le McDo à 2h du matin est sacré</h3><p>C'est là que tout a commencé. On le respecte.</p><span class="e">🍟</span></div>
+      <div class="cmd"><span class="n">III</span><h3>Tu ne gagneras pas la couleur du mur</h3><p>Lui non plus. Enfin si, toi. Tu gagnes toujours.</p><span class="e">🎨</span></div>
+      <div class="cmd"><span class="n">IV</span><h3>Les blagues nulles sont obligatoires</h3><p>Minimum 3 par jour. C'est contractuel.</p><span class="e">🤡</span></div>
+      <div class="cmd"><span class="n">V</span><h3>Le bracelet ne quitte jamais le poignet</h3><p>Jamais de dar de smail. Jamais.</p><span class="e">📿</span></div>
+      <div class="cmd"><span class="n">VI</span><h3>Tu ne casseras point les cacahuètes</h3><p>…sauf un peu. Pour le fun.</p><span class="e">🥜</span></div>
+      <div class="cmd"><span class="n">VII</span><h3>Les câlins ne se refusent pas</h3><p>Même quand tu es fatiguée. Surtout quand tu es fatiguée.</p><span class="e">🤗</span></div>
+      <div class="cmd"><span class="n">VIII</span><h3>On reste une équipe</h3><p>Pas deux personnes qui veulent gagner. Une équipe. Pour 70 ans.</p><span class="e">💞</span></div>
+    </div>
+    <div class="hint">continue à descendre, les cartes glissent →</div>
+  </div>
+</section>
+
+<!-- 4 WHACK -->
+<section class="scene" id="g-whack">
+  <div class="num">04</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 4 · Tape-chéri</span></div>
+    <h2 class="title center" data-reveal>Tape quand il fait une <em>blague nulle</em></h2>
+    <p class="lead center" data-reveal>Il sort des trous avec ses blagues. Bonk ! Mais attention : si c'est toi qui sors (👑), ne tape pas la reine.</p>
+    <div class="hud" data-reveal><span>Bonks : <b id="wScore">0</b></span><span>⏱ <b id="wTime">25</b>s</span><button class="btn small" id="wStart">Jouer</button></div>
+    <div class="holes" id="holes" data-reveal></div>
+    <p class="result center" id="wMsg"></p>
+  </div>
+</section>
+
+<div class="marquee alt" aria-hidden="true"><div class="rail" data-dir="1"></div></div>
+
+<!-- 5 LOVE -->
+<section class="scene center" id="g-love">
+  <div class="num">05</div>
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Attraction 5 · Question piège</span></div>
+    <h2 class="title" data-reveal>Une question <em>très simple</em></h2>
+    <div class="love-arena" id="loveArena" data-reveal>
+      <div class="q">Est-ce que tu m'aimes ? 🥺</div>
+      <button class="btn" id="yesBtn">Oui 💖</button>
+      <button class="btn ghost" id="noBtn">Non</button>
+    </div>
+    <div class="hug" id="hug"><img class="av l" src="../anniversaire/img/lui.png" alt=""><span style="font-size:40px;z-index:2">💞</span><img class="av r" src="../anniversaire/img/elle.png" alt=""></div>
+    <p class="result" id="loveMsg"></p>
+  </div>
+</section>
+
+<!-- 6 SCRATCH -->
+<section class="scene" id="g-scratch" style="background:linear-gradient(180deg,#fff,#fff0d9)">
+  <div class="num">06</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 6 · Tickets à gratter</span></div>
+    <h2 class="title center" data-reveal>Gratte, <em>tu as gagné</em></h2>
+    <p class="lead center" data-reveal>Gratte avec ton doigt. Les bons sont valables à vie, sur présentation d'un bisou.</p>
+    <div class="coupons" id="coupons" data-reveal></div>
+    <p class="result center" id="sMsg"></p>
+  </div>
+</section>
+
+<!-- 7 BUBBLES -->
+<section class="scene" id="g-bubble">
+  <div class="num">07</div>
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Attraction 7 · Papier bulle anti-stress</span></div>
+    <h2 class="title center" data-reveal>Éclate <em>tout</em></h2>
+    <p class="lead center" data-reveal>Spécial journées de garde. Chaque bulle cache un petit mot.</p>
+    <div class="hud" data-reveal><span>Éclatées : <b id="bN">0</b>/30</span><button class="btn small ghost" id="bReset">Nouveau papier</button></div>
+    <div class="bubbles" id="bubbles" data-reveal></div>
+    <p class="result center" id="bMsg"></p>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="rail" data-dir="-1"></div></div>
+
+<!-- 8 WHEEL -->
+<section class="scene center" id="g-wheel">
+  <div class="num">08</div>
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Attraction 8 · La roue des rendez-vous</span></div>
+    <h2 class="title" data-reveal>Où on va <em>ce week-end</em> ?</h2>
+    <p class="lead" data-reveal>La roue décide. La roue est neutre. (La roue est peut-être un peu truquée.)</p>
+    <div class="wheel-box" data-reveal><div class="pointer">🔻</div><div class="wheel" id="wheel"></div><div class="hub">💗</div></div>
+    <div data-reveal><button class="btn" id="spin">Tourner la roue 🎡</button></div>
+    <p class="result" id="wheelMsg"></p>
+  </div>
+</section>
+
+<!-- 9 COOKIE -->
+<section class="scene center" id="g-cookie" style="background:linear-gradient(180deg,#fff,#fff5e6)">
+  <div class="num">09</div>
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Attraction 9 · Biscuit de la fortune</span></div>
+    <h2 class="title" data-reveal>Ton <em>avenir</em> en un biscuit</h2>
+    <p class="lead" data-reveal>Tape sur le biscuit pour l'ouvrir.</p>
+    <div class="cookie-stage" id="cookieStage" data-reveal>
+      <span class="ck" id="ck">🥠</span><span class="ck-l">🥠</span><span class="ck-r">🥠</span>
+      <div class="fortune" id="fortune"></div>
+    </div>
+    <div><button class="btn small ghost" id="ckAgain" style="visibility:hidden">Un autre biscuit</button></div>
+  </div>
+</section>
+
+<!-- 10 KISS -->
+<section class="scene center" id="g-kiss">
+  <div class="num">10</div>
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Attraction 10 · Machine à bisous</span></div>
+    <h2 class="title" data-reveal>Envoie-lui des <em>bisous</em></h2>
+    <p class="lead" data-reveal>Il est en manque. C'est une urgence médicale, docteur.</p>
+    <div class="kiss-stage" id="kissStage" data-reveal>
+      <span class="me"><img class="av" src="../anniversaire/img/elle.png" alt=""></span>
+      <span class="him" id="him"><img class="av" src="../anniversaire/img/lui.png" alt=""></span>
+    </div>
+    <div class="kcount" id="kN" data-reveal>0</div>
+    <p class="result" id="kMsg">bisous envoyés</p>
+    <div data-reveal><button class="btn" id="kissBtn">Envoyer un bisou 💋</button></div>
+  </div>
+</section>
+
+<!-- TROPHIES -->
+<section class="scene center" id="trophees" style="background:radial-gradient(circle at 50% 20%,#fff,#ffe1ec)">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">La vitrine</span></div>
+    <h2 class="title" data-reveal>Tes <em>trophées</em></h2>
+    <p class="lead" data-reveal>Débloque les 10 pour gagner le grand prix.</p>
+    <div class="trophies" id="trophies" data-reveal></div>
+    <div class="grand card" id="grand">
+      <div class="voucher stack">
+        <div style="font-size:54px">🏆</div>
+        <h3>GRAND PRIX DÉBLOQUÉ</h3>
+        <p style="font-weight:800">Bon pour : 1 vrai McDo à 2h du matin + 1 câlin de 10 minutes + 1000 bisous</p>
+        <p class="small">À réclamer auprès de ton chéri. Valable à vie. Il n'a pas le droit de dire non (il ne dirait jamais non).</p>
+        <button class="btn" id="claim">Réclamer mon prix 🎉</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Fait avec amour (et beaucoup de blagues nulles) · <a href="../anniversaire/">revoir ma lettre 💌</a></footer>
+</main>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const LUI = "../anniversaire/img/lui.png", ELLE = "../anniversaire/img/elle.png";
+
+  /* ---------- sound (Web Audio, starts on first tap) ---------- */
+  let AC = null, muted = false;
+  try { muted = localStorage.getItem("parc-muted") === "1"; } catch (e) {}
+  $("#muteBtn").textContent = muted ? "🔇" : "🔊";
+  const tone = (f, d = .09, type = "sine", v = .12, slide = 0) => {
+    if (muted || !AC) return;
+    const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t); if (slide) o.frequency.exponentialRampToValueAtTime(f * slide, t + d);
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+    o.connect(g).connect(AC.destination); o.start(t); o.stop(t + d + .02);
+  };
+  const S = {
+    pop: () => tone(rnd(500, 900), .08, "sine", .14, .4),
+    good: () => { tone(660, .08, "triangle"); setTimeout(() => tone(990, .1, "triangle"), 70); },
+    bad: () => tone(180, .25, "sawtooth", .07, .6),
+    bonk: () => tone(140, .12, "square", .1, .5),
+    kiss: () => tone(1200, .12, "sine", .1, .5),
+    win: () => [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => tone(f, .18, "triangle", .12), i * 110)),
+    tick: () => tone(1500, .02, "square", .04),
+  };
+  $("#muteBtn").addEventListener("click", () => { muted = !muted; $("#muteBtn").textContent = muted ? "🔇" : "🔊"; try { localStorage.setItem("parc-muted", muted ? "1" : "0"); } catch (e) {} });
+
+  /* ---------- toast ---------- */
+  let tT; const toast = (m, ms = 2400) => { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tT); tT = setTimeout(() => t.classList.remove("show"), ms); };
+
+  /* ---------- confetti ---------- */
+  const cv = $("#fx"), ctx = cv.getContext("2d"); let parts = [], raf = null;
+  const size = () => { const d = devicePixelRatio || 1; cv.width = innerWidth * d; cv.height = innerHeight * d; cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px"; ctx.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener("resize", size);
+  const COL = ["#ff4f7e", "#ff8fb1", "#ffc94d", "#bff0dc", "#7a4f38", "#fff"], EMO = ["❤️", "💕", "🍫", "🍬", "✨", "💖"];
+  function burst(x, y, n = 70) {
+    if (reduce) return;
+    for (let i = 0; i < n; i++) { const a = Math.random() * 6.28, s = rnd(4, 12); parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: Math.random() * 6, vr: rnd(-.3, .3), c: COL[i % 6], w: rnd(6, 12), life: 0, max: rnd(80, 140), e: i % 3 === 0 ? EMO[i % 6] : null }); }
+    if (!raf) loop();
+  }
+  function loop() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight); parts = parts.filter(p => p.life < p.max);
+    for (const p of parts) { p.life++; p.vy += .28; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; ctx.save(); ctx.globalAlpha = 1 - p.life / p.max; ctx.translate(p.x, p.y); ctx.rotate(p.r); if (p.e) { ctx.font = "22px serif"; ctx.fillText(p.e, -11, 8); } else { ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.w / 4, p.w, p.w / 2); } ctx.restore(); }
+    raf = parts.length ? requestAnimationFrame(loop) : (ctx.clearRect(0, 0, innerWidth, innerHeight), null);
+  }
+  const party = () => { burst(innerWidth * .2, innerHeight * .6, 80); setTimeout(() => burst(innerWidth * .8, innerHeight * .6, 80), 180); setTimeout(() => burst(innerWidth / 2, innerHeight * .35, 100), 380); };
+  const burstAt = (el, n = 40) => { const r = el.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, n); };
+
+  /* ---------- trophies ---------- */
+  const BADGES = [
+    ["catch", "🧺", "Attrapeuse pro", "g-catch"], ["memory", "🧠", "Mémoire d'éléphant", "g-memory"], ["quiz", "🎓", "Experte de nous", "g-quiz"],
+    ["whack", "🔨", "Anti-blagues", "g-whack"], ["love", "💘", "A dit OUI", "g-love"], ["scratch", "🎟️", "Gratteuse", "g-scratch"],
+    ["bubble", "🫧", "Éclateuse", "g-bubble"], ["wheel", "🎡", "Reine de la roue", "g-wheel"], ["cookie", "🥠", "Voyante", "g-cookie"], ["kiss", "💋", "Machine à bisous", "g-kiss"],
+  ];
+  let got = new Set();
+  try { got = new Set(JSON.parse(localStorage.getItem("parc-badges") || "[]")); } catch (e) {}
+  function renderBadges() {
+    $("#trophies").innerHTML = BADGES.map(([id, e, n]) => `<div class="tro ${got.has(id) ? "got" : ""}"><span>${got.has(id) ? e : "❓"}</span><small>${n}</small></div>`).join("");
+    $("#map").innerHTML = BADGES.map(([id, e, n, a], i) => `<a href="#${a}" class="${got.has(id) ? "done" : ""}"><span>${got.has(id) ? "✅" : e}</span>${i + 1}. ${n}</a>`).join("");
+    $("#shelfN").textContent = got.size;
+    $("#grand").classList.toggle("show", got.size === BADGES.length);
+  }
+  function earn(id) {
+    if (got.has(id)) return;
+    got.add(id); try { localStorage.setItem("parc-badges", JSON.stringify([...got])); } catch (e) {}
+    const b = BADGES.find(x => x[0] === id);
+    renderBadges(); S.win(); party();
+    toast(`🏆 Trophée débloqué : ${b[1]} ${b[2]} (${got.size}/10)`, 3000);
+    const sb = $("#shelfBtn"); sb.classList.remove("bump"); void sb.offsetWidth; sb.classList.add("bump");
+    if (got.size === BADGES.length) setTimeout(() => toast("🎉 TOUS LES TROPHÉES ! Va voir la vitrine tout en bas", 3500), 3100);
+  }
+  renderBadges();
+  $("#shelfBtn").addEventListener("click", () => $("#trophees").scrollIntoView({ behavior: "smooth" }));
+  $("#claim").addEventListener("click", () => { party(); setTimeout(party, 600); toast("Prix réclamé ! Montre cet écran à ton chéri 😌", 3500); });
+
+  /* ---------- gate ---------- */
+  $("#enter").addEventListener("click", () => {
+    try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+    $("#ticket").classList.add("torn"); S.pop(); setTimeout(S.win, 200); party();
+    setTimeout(() => { $("#gate").classList.add("gone"); document.body.classList.remove("locked"); startReveal(); }, 900);
+  });
+
+  /* ---------- reveal + split titles ---------- */
+  const seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter("fr", { granularity: "grapheme" }) : null;
+  const gr = (t) => seg ? [...seg.segment(t)].map(x => x.segment) : Array.from(t);
+  if (!reduce) $$(".title").forEach(el => {
+    let ci = 0;
+    const walk = (node) => [...node.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const f = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) return f.appendChild(document.createTextNode(" ")); const w = document.createElement("span"); w.className = "word"; gr(p).forEach(g => { const c = document.createElement("span"); c.className = "ch"; c.textContent = g; c.style.setProperty("--ci", ci++); w.appendChild(c); }); f.appendChild(w); });
+        n.replaceWith(f);
+      } else if (n.nodeType === 1) walk(n);
+    });
+    walk(el);
+  });
+  const V = ["v-up", "v-left", "v-right", "v-zoom"];
+  $$("[data-reveal]").forEach((el, i) => el.classList.add(el.classList.contains("title") ? "v-up" : V[i % 4]));
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -10% 0px" });
+  function startReveal() { $$("[data-reveal]").forEach(el => io.observe(el)); }
+
+  /* ---------- marquees, decos, scroll engine ---------- */
+  const MQ = ["🎡 Parc d'Amour", "🍟 McDo 2h", "💋 bisous", "🐝 Bumble", "📿 Tommy", "👑 hbila officielle", "🩺 Dr. Khadija", "☕ pause café"];
+  $$(".marquee .rail").forEach(r => r.innerHTML = Array(4).fill(MQ.map(x => `<span>${x}</span>`).join("")).join(""));
+  const DE = ["🍫", "🍬", "☁️", "💗", "🍓", "🧁", "🍪", "✨", "🎈", "🍭"];
+  $$(".scene").forEach((s, i) => { for (let k = 0; k < 2; k++) { const d = document.createElement("span"); d.className = "deco"; d.textContent = DE[(i * 2 + k) % DE.length]; d.style.fontSize = rnd(60, 130) + "px"; d.style.left = (k ? rnd(65, 85) : rnd(-5, 15)) + "%"; d.style.top = rnd(10, 75) + "%"; d.dataset.s = rnd(.15, .4) * (k ? -1 : 1); s.prepend(d); } });
+  const decos = $$(".deco"), nums = $$(".num"), rails = $$(".marquee .rail");
+  const fill = $("#prog .fill"), runner = $("#prog .runner"), ferris = $("#ferris");
+  const hs = $("#cmds"), track = $("#htrack");
+  const sizeH = () => { hs.style.height = (innerHeight + Math.max(0, track.scrollWidth - innerWidth) + innerHeight * .2) + "px"; };
+  sizeH(); addEventListener("resize", sizeH);
+  let tick = false;
+  function frame() {
+    tick = false;
+    const y = scrollY, H = innerHeight, max = document.documentElement.scrollHeight - H, p = max > 0 ? Math.min(1, y / max) : 0;
+    fill.style.transform = `scaleX(${p})`; runner.style.left = `calc(${p * 100}% * .92)`;
+    if (reduce) return;
+    ferris.style.transform = `rotate(${y * .4}deg)`;
+    const r = hs.getBoundingClientRect(), dist = hs.offsetHeight - H;
+    const hp = Math.max(0, Math.min(1, -r.top / dist));
+    track.style.transform = `translateX(${-hp * Math.max(0, track.scrollWidth - innerWidth)}px)`;
+    rails.forEach(rl => { const w = rl.scrollWidth / 4, dir = +rl.dataset.dir; rl.style.transform = `translateX(${dir < 0 ? -((y * .5) % w) : ((y * .5) % w) - w}px)`; });
+    decos.forEach(d => { const b = d.parentElement.getBoundingClientRect(); if (b.bottom < -200 || b.top > H + 200) return; const off = b.top + b.height / 2 - H / 2; d.style.transform = `translate3d(0,${off * d.dataset.s}px,0) rotate(${off * .05}deg)`; });
+    nums.forEach(n => { const b = n.parentElement.getBoundingClientRect(); if (b.bottom < 0 || b.top > H) return; n.style.transform = `translate3d(${(b.top) * .25}px,${-b.top * .15}px,0)`; });
+  }
+  addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
+  frame();
+
+  /* finger trail */
+  const TR = ["💗", "✨", "💕", "⭐"]; let lt = 0, ti = 0;
+  addEventListener("touchmove", e => { if (reduce || e.target.closest(".arena,.coupon")) return; const now = performance.now(); if (now - lt < 50) return; lt = now; const t = e.touches[0], s = document.createElement("span"); s.className = "trail"; s.textContent = TR[ti++ % 4]; s.style.left = t.clientX - 11 + "px"; s.style.top = t.clientY - 11 + "px"; document.body.appendChild(s); setTimeout(() => s.remove(), 1000); }, { passive: true });
+
+  /* ================= 1. CATCH ================= */
+  (() => {
+    const can = $("#cCan"), c = can.getContext("2d"), arena = $("#cArena");
+    const imgE = new Image(), imgL = new Image(); imgE.src = ELLE; imgL.src = LUI;
+    let W, Hh, dpr, px, items, score, time, run = false, last, spawnT, timerI;
+    const GOOD = ["🍫", "🍬", "🍟", "☕", "💋", "🍓", "🧁"], BAD = ["📚", "⏰", "🥦"];
+    const fit = () => { dpr = devicePixelRatio || 1; W = arena.clientWidth; Hh = Math.min(460, Math.round(W * 1.15)); can.width = W * dpr; can.height = Hh * dpr; can.style.height = Hh + "px"; c.setTransform(dpr, 0, 0, dpr, 0, 0); if (px == null) px = W / 2; draw(); };
+    const circleImg = (img, x, y, r) => { c.save(); c.beginPath(); c.arc(x, y, r, 0, 6.28); c.closePath(); c.clip(); if (img.complete) c.drawImage(img, x - r, y - r, r * 2, r * 2); c.restore(); c.beginPath(); c.arc(x, y, r, 0, 6.28); c.lineWidth = 3; c.strokeStyle = "#fff"; c.stroke(); };
+    function draw() {
+      c.clearRect(0, 0, W, Hh);
+      if (items) for (const it of items) {
+        if (it.t === "lui") circleImg(imgL, it.x, it.y, 22);
+        else { c.font = "32px serif"; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(it.e, it.x, it.y); }
+      }
+      if (items) for (const f of floats) { c.globalAlpha = Math.max(0, f.a); c.font = "bold 20px Fredoka, sans-serif"; c.fillStyle = f.col; c.textAlign = "center"; c.fillText(f.txt, f.x, f.y); c.globalAlpha = 1; }
+      c.font = "40px serif"; c.textAlign = "center"; c.fillText("🧺", px, Hh - 22);
+      circleImg(imgE, px, Hh - 64, 24);
+    }
+    let floats = [];
+    function step(t) {
+      if (!run) return;
+      const dt = Math.min(40, t - last) / 16.67; last = t;
+      spawnT -= dt;
+      const speedUp = 1 + (30 - time) / 22;
+      if (spawnT <= 0) {
+        const r = Math.random(), it = { x: rnd(24, W - 24), y: -20, v: rnd(2.2, 3.6) * speedUp };
+        if (r < .07) it.t = "lui"; else if (r < .32) { it.t = "bad"; it.e = pick(BAD); } else { it.t = "good"; it.e = pick(GOOD); }
+        items.push(it); spawnT = rnd(14, 26) / speedUp;
+      }
+      for (const it of items) {
+        it.y += it.v * dt;
+        if (!it.hit && it.y > Hh - 90 && it.y < Hh - 30 && Math.abs(it.x - px) < 42) {
+          it.hit = true;
+          const pts = it.t === "lui" ? 5 : it.t === "bad" ? -2 : 1;
+          score = Math.max(0, score + pts); $("#cScore").textContent = score;
+          floats.push({ x: it.x, y: it.y, a: 1, txt: (pts > 0 ? "+" : "") + pts, col: pts > 0 ? "#ff4f7e" : "#555" });
+          pts > 0 ? (pts > 1 ? S.good() : S.pop()) : S.bad();
+          if (it.t === "bad") { arena.animate([{ transform: "translateX(-8px)" }, { transform: "translateX(8px)" }, { transform: "none" }], { duration: 250 }); }
+        }
+      }
+      items = items.filter(it => !it.hit && it.y < Hh + 30);
+      floats.forEach(f => { f.y -= 1.2 * dt; f.a -= .025 * dt; }); floats = floats.filter(f => f.a > 0);
+      draw(); requestAnimationFrame(step);
+    }
+    const move = (e) => { const r = can.getBoundingClientRect(); px = Math.max(26, Math.min(W - 26, (e.touches ? e.touches[0].clientX : e.clientX) - r.left)); if (!run) draw(); };
+    can.addEventListener("pointermove", move); can.addEventListener("pointerdown", move);
+    can.addEventListener("touchmove", e => { e.preventDefault(); move(e); }, { passive: false });
+    function end() {
+      run = false; clearInterval(timerI);
+      const msg = score >= 30 ? "LÉGENDE ABSOLUE 👑" : score >= 18 ? "Attrapeuse de cœurs certifiée 💘" : score >= 10 ? "Pas mal du tout, docteur 😎" : score >= 5 ? "Mignonne mais affamée 🍫" : "Les bonbons ont gagné cette fois 😅";
+      $("#cMsg").innerHTML = `${score} points<br><span class="small">${msg}</span>`; $("#cStart").textContent = "Rejouer"; $("#cOver").classList.remove("hide");
+      if (score >= 10) earn("catch"); else toast("Fais 10 points pour le trophée 🏆");
+    }
+    $("#cStart").addEventListener("click", () => {
+      items = []; floats = []; score = 0; time = 30; spawnT = 0; $("#cScore").textContent = 0; $("#cTime").textContent = 30;
+      $("#cOver").classList.add("hide"); run = true; last = performance.now(); requestAnimationFrame(step);
+      timerI = setInterval(() => { time--; $("#cTime").textContent = time; if (time <= 5) S.tick(); if (time <= 0) end(); }, 1000);
+    });
+    addEventListener("resize", fit); imgE.onload = draw; fit();
+  })();
+
+  /* ================= 2. MEMORY ================= */
+  (() => {
+    const PAIRS = [["🍟", "McDo à 2h du matin !"], ["📿", "Le bracelet Tommy, toujours au poignet"], ["🐝", "Bumble : le swipe le plus important de ma vie"], ["☕", "Nos pauses café sur notre banc"], ["🎳", "Journée bowling : STRIKE"], ["💋", "Le premier bisou 🥹"]];
+    let first = null, lock = false, moves = 0, pairs = 0;
+    function deal() {
+      first = null; lock = false; moves = 0; pairs = 0; $("#mMoves").textContent = 0; $("#mPairs").textContent = 0; $("#mMsg").textContent = "";
+      const deck = shuffle([...PAIRS, ...PAIRS]);
+      $("#mem").innerHTML = deck.map(([e]) => `<button class="mcard" data-e="${e}" aria-label="Carte"><div class="f">💗</div><div class="b">${e}</div></button>`).join("");
+      $$(".mcard").forEach(cd => cd.addEventListener("click", () => flip(cd)));
+    }
+    function flip(cd) {
+      if (lock || cd.classList.contains("on") || cd.classList.contains("ok")) return;
+      cd.classList.add("on"); S.pop();
+      if (!first) { first = cd; return; }
+      moves++; $("#mMoves").textContent = moves;
+      if (first.dataset.e === cd.dataset.e) {
+        [first, cd].forEach(x => { x.classList.remove("on"); x.classList.add("ok"); });
+        pairs++; $("#mPairs").textContent = pairs; S.good(); burstAt(cd, 20);
+        $("#mMsg").textContent = PAIRS.find(p => p[0] === cd.dataset.e)[1];
+        first = null;
+        if (pairs === 6) { setTimeout(() => { $("#mMsg").textContent = `Gagné en ${moves} coups ! Presque aussi forte que ma mémoire de toi 🧠💕`; earn("memory"); }, 500); }
+      } else {
+        lock = true; const a = first; first = null;
+        setTimeout(() => { a.classList.remove("on"); cd.classList.remove("on"); lock = false; }, 800);
+      }
+    }
+    $("#mReset").addEventListener("click", deal); deal();
+  })();
+
+  /* ================= 3. QUIZ ================= */
+  (() => {
+    const Q = [
+      ["Notre premier rendez-vous, c'était où ?", ["Un restaurant étoilé à Paris", "Le McDo de Maârif à 2h du matin", "Chez ta tante", "Sur la Lune"], 1, "Le luxe absolu. 🍟✨", "Non madame. McDo. 2h. Du. Matin. 🍟"],
+      ["On s'est rencontrés sur quelle app ?", ["LinkedIn", "Doctolib", "Bumble", "Google Maps"], 2, "Bzzz 🐝 le meilleur swipe de l'histoire", "Doctolib 😂 j'avais pris rendez-vous ou quoi ?"],
+      ["Juste avant de te matcher, j'allais…", ["Supprimer l'application", "Partir vivre au Japon", "Devenir moine", "Me raser la barbe"], 0, "Oui ! Imagine la catastrophe 😱", "Non, j'allais SUPPRIMER L'APP. Frissons."],
+      ["Quel cadeau je porte TOUJOURS ?", ["Une Rolex en or", "Le bracelet Tommy", "Un collier de nouilles", "Mon pyjama préféré"], 1, "Toujours. Jamais de dar de smail 📿", "Le bracelet Tommy, voyons ! 📿"],
+      ["Quel poste occupes-tu à vie ?", ["Stagiaire", "Ministre des finances", "Hbila officielle", "Cheffe de la télécommande"], 2, "Poste pourvu à vie. CDI. 👑", "Officiellement : HBILA. Le contrat est signé."],
+      ["Où on prenait nos pauses café ?", ["Sur notre banc à Nearshore", "Au Starbucks de New York", "Dans un avion", "En cachette au cinéma"], 0, "Avec nos deux cafés ☕☕ 🥹", "Sur NOTRE banc, à Nearshore ☕"],
+      ["Combien de bébés on va avoir ?", ["1", "3", "12", "On verra… sans devenir fous"], 3, "Réponse officielle validée 😂", "La bonne réponse : on verra sans devenir fous 😂"],
+      ["Pendant combien d'années je compte t'embêter ?", ["2", "10", "70 (minimum)", "Jusqu'à demain"], 2, "70 ans d'embêtements, chargés à 100% ✅", "Non. 70 ans. Minimum. Prépare-toi 😌"],
+    ];
+    let i = 0, score = 0;
+    function show() {
+      const [q, o] = Q[i];
+      $("#qNum").textContent = `Question ${i + 1}/${Q.length}`; $("#qBar").style.width = (i / Q.length * 100) + "%";
+      $("#qText").textContent = q; $("#qFeed").textContent = ""; $("#qNext").style.display = "none";
+      $("#qOpts").innerHTML = o.map((t, k) => `<button class="opt" data-k="${k}">${t}</button>`).join("");
+      $$(".opt").forEach(b => b.addEventListener("click", () => answer(+b.dataset.k)));
+    }
+    function answer(k) {
+      const [, , ok, yes, no] = Q[i]; const bs = $$(".opt");
+      if (bs.some(b => b.disabled)) return;
+      bs.forEach(b => b.disabled = true); bs[ok].classList.add("good");
+      if (k === ok) { score++; $("#qFeed").textContent = "✅ " + yes; S.good(); burstAt(bs[ok], 18); }
+      else { bs[k].classList.add("bad"); $("#qFeed").textContent = "❌ " + no; S.bad(); }
+      $("#qNext").style.display = "inline-flex"; $("#qNext").textContent = i === Q.length - 1 ? "Voir mon score 🎓" : "Suivante →";
+    }
+    let finished = false;
+    $("#qNext").addEventListener("click", () => {
+      if (finished) { finished = false; i = 0; score = 0; return show(); }
+      i++;
+      if (i < Q.length) return show();
+      finished = true; $("#qBar").style.width = "100%";
+      const m = score === 8 ? "8/8 !!! Tu nous connais par cœur 😍" : score >= 6 ? `${score}/8 — Experte certifiée 🎓` : score >= 4 ? `${score}/8 — Pas mal, mais je vais te réviser ça 😏` : `${score}/8 — On va devoir refaire un McDo à 2h pour réviser 🍟`;
+      $("#qText").textContent = m; $("#qOpts").innerHTML = ""; $("#qFeed").textContent = ""; $("#qNum").textContent = "Résultat";
+      $("#qNext").textContent = "Rejouer 🔁"; earn("quiz");
+    });
+    show();
+  })();
+
+  /* ================= 4. WHACK ================= */
+  (() => {
+    const JOKES = ["J'ai une blague…", "C'est l'histoire d'un pingouin…", "Hbila !", "T'as vu mon jeu de mots ?", "Je suis drôle hein ?", "Toc toc…", "Bébé écoute celle-là", "Pourquoi les poissons… ?"];
+    const holes = $("#holes");
+    holes.innerHTML = Array(9).fill(0).map(() => `<div class="hole"><span class="bubble-joke"></span><button class="mole" aria-label="Taper"><img alt=""></button></div>`).join("");
+    const H = $$(".hole");
+    let score = 0, time = 0, run = false, tm, popT;
+    H.forEach(h => h.querySelector(".mole").addEventListener("pointerdown", (e) => {
+      e.preventDefault(); const m = h.querySelector(".mole"); if (!run || !m.classList.contains("up") || m.dataset.hit) return;
+      m.dataset.hit = "1"; const b = document.createElement("span"); b.className = "bonk";
+      if (m.classList.contains("queen")) { score = Math.max(0, score - 2); b.textContent = "😱"; S.bad(); toast("On ne tape pas la reine 👑 (−2)", 1400); }
+      else { score++; b.textContent = "🔨💥"; S.bonk(); }
+      h.appendChild(b); setTimeout(() => b.remove(), 400);
+      $("#wScore").textContent = score; m.classList.remove("up"); h.classList.remove("talk");
+    }));
+    function pop() {
+      if (!run) return;
+      const free = H.filter(h => !h.querySelector(".mole").classList.contains("up"));
+      if (free.length) {
+        const h = pick(free), m = h.querySelector(".mole"), queen = Math.random() < .2;
+        m.querySelector("img").src = queen ? ELLE : LUI; m.classList.toggle("queen", queen); delete m.dataset.hit;
+        h.querySelector(".bubble-joke").textContent = queen ? "C'est moi 👑" : pick(JOKES);
+        m.classList.add("up"); h.classList.add("talk");
+        const stay = Math.max(550, 1100 - (25 - time) * 20);
+        setTimeout(() => { m.classList.remove("up"); h.classList.remove("talk"); }, stay);
+      }
+      popT = setTimeout(pop, Math.max(380, 750 - (25 - time) * 15));
+    }
+    $("#wStart").addEventListener("click", () => {
+      if (run) return; score = 0; time = 25; run = true; $("#wScore").textContent = 0; $("#wTime").textContent = 25; $("#wMsg").textContent = ""; $("#wStart").textContent = "…";
+      pop(); tm = setInterval(() => {
+        time--; $("#wTime").textContent = time; if (time <= 5) S.tick();
+        if (time <= 0) {
+          run = false; clearInterval(tm); clearTimeout(popT); $("#wStart").textContent = "Rejouer";
+          H.forEach(h => { h.querySelector(".mole").classList.remove("up"); h.classList.remove("talk"); });
+          $("#wMsg").textContent = score >= 15 ? `${score} bonks ! Il ne fera plus jamais de blague nulle (si, il en fera) 😂` : score >= 10 ? `${score} bonks. Justice est faite 🔨` : `${score} bonks… il continue ses blagues 😏 (10 pour le trophée)`;
+          if (score >= 10) earn("whack");
+        }
+      }, 1000);
+    });
+  })();
+
+  /* ================= 5. LOVE ================= */
+  (() => {
+    const no = $("#noBtn"), yes = $("#yesBtn"), arena = $("#loveArena");
+    const NO = ["T'es sûre ? 🤨", "Réfléchis bien…", "Erreur 404", "Bouton en grève", "Non n'existe pas ici", "Essaie encore 😏", "Ok il s'enfuit"];
+    let n = 0, done = false;
+    const flee = (e) => {
+      if (done) return; e && e.preventDefault();
+      n++; S.pop();
+      const aw = arena.clientWidth, ah = arena.clientHeight;
+      no.style.left = rnd(4, aw - no.offsetWidth - 4) + "px"; no.style.top = rnd(70, ah - no.offsetHeight - 6) + "px";
+      no.textContent = n >= 8 ? "Oui aussi 💖" : NO[(n - 1) % NO.length];
+      no.style.transform = `scale(${Math.max(.55, 1 - n * .06)})`;
+      yes.style.transform = `scale(${Math.min(1.9, 1 + n * .12)})`;
+    };
+    no.addEventListener("pointerdown", (e) => { if (n >= 8) return sayYes(); flee(e); });
+    no.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && n < 8) flee(e); });
+    function sayYes() {
+      if (done) return; done = true; S.win(); party();
+      $("#hug").classList.add("show"); $("#loveMsg").textContent = n ? `Je le savais 😌 (et tu as essayé de dire non ${n} fois, je note)` : "Je le savais 😌💖";
+      yes.textContent = "OUI 💖💖"; earn("love");
+    }
+    yes.addEventListener("click", sayYes);
+  })();
+
+  /* ================= 6. SCRATCH ================= */
+  (() => {
+    const ALL = [["Bon pour 1 McDo à 2h du matin 🍟", "comme au premier jour"], ["Bon pour 1 massage de 15 min 💆‍♀️", "négociable à 10, soyons honnêtes"], ["Bon pour gagner 1 dispute sans discuter 🏳️", "il dira « oui bébé tu as raison »"], ["Bon pour 1 câlin illimité 🤗", "aucune date d'expiration"], ["Bon pour choisir le resto 🍝", "sans « je sais pas, et toi ? »"], ["Bon pour 1 journée sans blague nulle 🤐", "il va souffrir"], ["Bon pour 1 pause café surprise ☕", "deux cafés, un banc, nous"]];
+    const picks = shuffle(ALL).slice(0, 3); let doneN = 0;
+    $("#coupons").innerHTML = picks.map(([t, s]) => `<div class="coupon"><div class="txt">${t}<small>${s}</small></div><canvas></canvas></div>`).join("");
+    $$(".coupon").forEach(cp => {
+      const can = cp.querySelector("canvas"), c = can.getContext("2d"); let w, h, dpr, drawing = false, done = false, moves = 0;
+      const paint = () => {
+        dpr = devicePixelRatio || 1; w = cp.clientWidth; h = cp.clientHeight; can.width = w * dpr; can.height = h * dpr; c.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const g = c.createLinearGradient(0, 0, w, h); g.addColorStop(0, "#c9b8ae"); g.addColorStop(.5, "#efe3dc"); g.addColorStop(1, "#b9a497");
+        c.fillStyle = g; c.fillRect(0, 0, w, h);
+        c.fillStyle = "#7a4f38"; c.font = "bold 18px Fredoka, sans-serif"; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText("✨ GRATTE ICI ✨", w / 2, h / 2);
+        c.globalCompositeOperation = "destination-out";
+      };
+      paint();
+      const at = (e) => { const r = can.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; return [p.clientX - r.left, p.clientY - r.top]; };
+      const scratch = (e) => { if (!drawing || done) return; e.preventDefault(); const [x, y] = at(e); c.beginPath(); c.arc(x, y, 22, 0, 6.28); c.fill(); if (++moves % 8 === 0) { S.tick(); check(); } };
+      const check = () => {
+        const d = c.getImageData(0, 0, can.width, can.height).data; let clear = 0, tot = 0;
+        for (let i = 3; i < d.length; i += 4 * 40) { tot++; if (d[i] === 0) clear++; }
+        if (clear / tot > .5 && !done) { done = true; cp.classList.add("done"); S.good(); burstAt(cp, 30); doneN++; if (doneN === 3) { $("#sMsg").textContent = "3 bons gagnés ! Fais une capture d'écran, c'est contractuel 📸"; earn("scratch"); } }
+      };
+      can.addEventListener("pointerdown", (e) => { drawing = true; scratch(e); });
+      can.addEventListener("pointermove", scratch);
+      addEventListener("pointerup", () => drawing = false);
+      can.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
+    });
+  })();
+
+  /* ================= 7. BUBBLES ================= */
+  (() => {
+    const WORDS = ["belle", "drôle", "hbila", "kbidti", "omri", "géniale", "docteur", "mignonne", "forte", "unique", "taquine", "douce", "loyale", "brillante", "ma vie", "perle", "reine", "bébé", "chérie", "tendre", "parfaite", "folle", "à moi", "rare", "pure", "magique", "top", "wow", "❤️", "💍"];
+    let n = 0;
+    const build = () => {
+      n = 0; $("#bN").textContent = 0; $("#bMsg").textContent = "";
+      $("#bubbles").innerHTML = shuffle(WORDS).map(w => `<button class="bub" aria-label="Bulle"><span>${w}</span></button>`).join("");
+      $$(".bub").forEach(b => b.addEventListener("pointerdown", () => {
+        if (b.classList.contains("popped")) return; b.classList.add("popped"); n++; $("#bN").textContent = n; S.pop();
+        if (n === 30) { $("#bMsg").textContent = "Stress éliminé à 100%. Tu es tout ça, et plus encore 💕"; earn("bubble"); }
+      }));
+    };
+    $("#bReset").addEventListener("click", build); build();
+  })();
+
+  /* ================= 8. WHEEL ================= */
+  (() => {
+    const SEG = [["🍟 McDo 2h", "#ffd6e3"], ["🎳 Bowling", "#fff1c2"], ["🦒 Zoo", "#d6f5e5"], ["☕ Pause café", "#e7e0ff"], ["🎬 Ciné", "#d9ecff"], ["🥞 Crêpes", "#ffe1d1"], ["🌊 Corniche", "#cfeffa"], ["🛋️ Netflix", "#f6d7ff"]];
+    const N = SEG.length, deg = 360 / N;
+    const wheel = $("#wheel");
+    wheel.style.background = `conic-gradient(${SEG.map(([, c], i) => `${c} ${i * deg}deg ${(i + 1) * deg}deg`).join(",")})`;
+    wheel.innerHTML = SEG.map(([t], i) => { const a = i * deg + deg / 2 - 90, flip = a > 90 && a < 270; return `<div class="seg${flip ? " flip" : ""}" style="transform:rotate(${a}deg)"><span>${t}</span></div>`; }).join("");
+    const NOTES = { 0: "Évidemment. Le destin a parlé 🍟", 1: "STRIKE en vue 🎳", 2: "Les girafes t'attendent 🦒", 3: "Deux cafés, un banc, nous ☕", 4: "Je prends le pop-corn, tu prends ma main 🍿", 5: "Crêpe au chocolat pour ma crêpe au chocolat 🥞", 6: "Balade main dans la main 🌊", 7: "Plaid + câlins + on s'endort à l'épisode 2 🛋️" };
+    let rot = 0, spins = 0, busy = false;
+    $("#spin").addEventListener("click", () => {
+      if (busy) return; busy = true; spins++;
+      const target = spins % 3 === 0 ? 0 : Math.floor(Math.random() * N);
+      const want = 360 - (target * deg + deg / 2);
+      rot += 360 * 5 + ((want - (rot % 360)) + 360) % 360;
+      wheel.style.transform = `rotate(${rot}deg)`;
+      let k = 0; const tk = setInterval(() => { S.tick(); if (++k > 26) clearInterval(tk); }, 140);
+      $("#wheelMsg").textContent = "…";
+      setTimeout(() => {
+        busy = false; S.good(); burstAt($(".wheel-box"), 40);
+        $("#wheelMsg").textContent = `${SEG[target][0]} — ${NOTES[target]}${spins % 3 === 0 ? " (la roue est un peu truquée, chut)" : ""}`;
+        earn("wheel");
+      }, 4300);
+    });
+  })();
+
+  /* ================= 9. COOKIE ================= */
+  (() => {
+    const F = ["Tu vas recevoir un bisou dans les 5 prochaines minutes. C'est une menace. 💋", "Un homme chauve et magnifique pense à toi en ce moment même.", "Ton chéri va faire une blague nulle aujourd'hui. Prépare-toi mentalement.", "Tu vas réussir tous tes examens. Le biscuit l'a dit, c'est scientifique. 🩺", "Les étoiles annoncent : McDo à 2h du matin ce week-end. 🍟", "Attention : niveau de hbila élevé détecté aujourd'hui. 👑", "Quelqu'un t'aime à 1000%. Indice : il porte un bracelet Tommy.", "Tu es la meilleure médecin de l'univers. Le biscuit confirme, le biscuit ne ment jamais.", "Dans 70 ans, il t'embêtera encore. Aucune échappatoire.", "Ton avenir : une grande maison, des petits monstres et beaucoup de câlins. 🏠", "Tu as le droit de te reposer aujourd'hui. Ordre du docteur Amour. 🛌"];
+    const st = $("#cookieStage"), ck = $("#ck"); let taps = 0, last = -1;
+    ck.addEventListener("click", () => {
+      if (st.classList.contains("cracked")) return;
+      taps++; ck.classList.remove("wob"); void ck.offsetWidth; ck.classList.add("wob"); S.tick();
+      if (taps >= 3) {
+        let i; do { i = Math.floor(Math.random() * F.length); } while (i === last); last = i;
+        $("#fortune").textContent = F[i]; st.classList.add("cracked"); S.pop(); setTimeout(S.good, 200); burstAt(st, 30);
+        $("#ckAgain").style.visibility = "visible"; earn("cookie");
+      }
+    });
+    $("#ckAgain").addEventListener("click", () => { st.classList.remove("cracked"); taps = 0; $("#ckAgain").style.visibility = "hidden"; });
+  })();
+
+  /* ================= 10. KISS ================= */
+  (() => {
+    let n = 0; const stage = $("#kissStage"), him = $("#him");
+    const LV = { 5: "Il rougit 🥹", 10: "Il est tout mou 🫠", 25: "Overdose de bisous ! 💘", 50: "Il a besoin d'un médecin. Heureusement t'es là 🩺", 100: "Il est officiellement fondu. Merci docteur 💖" };
+    $("#kissBtn").addEventListener("click", () => {
+      n++; $("#kN").textContent = n; S.kiss();
+      const k = document.createElement("span"); k.className = "flykiss"; k.textContent = pick(["💋", "😘", "💗", "💕"]);
+      k.style.setProperty("--w", stage.clientWidth + "px"); stage.appendChild(k);
+      setTimeout(() => { k.remove(); him.classList.add("hit"); setTimeout(() => him.classList.remove("hit"), 180); }, 680);
+      if (n >= 5) him.classList.add("blush");
+      if (LV[n]) { $("#kMsg").textContent = LV[n]; if (n >= 10) burstAt(him, 30); }
+      if (n === 25) earn("kiss");
+    });
+  })();
+})();
+</script>
+</body>
+</html>
