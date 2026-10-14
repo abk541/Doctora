@@ -151,6 +151,12 @@ main{position:relative;z-index:1}
 .check{display:flex;align-items:center;gap:12px;font-weight:800;font-size:17px}
 .check i{font-style:normal;width:34px;height:34px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none}
 
+.tommy-wrap{position:relative;width:min(340px,84vw);margin:0 auto}
+.tommy{width:100%;display:block;filter:drop-shadow(0 22px 26px rgba(31,59,115,.35));animation:tfloat 3.4s ease-in-out infinite}
+@keyframes tfloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+.tw{position:absolute;font-size:26px;animation:twk 2s ease-in-out infinite}
+.tw1{top:-6px;left:8%}.tw2{top:10%;right:-2%;animation-delay:.6s}.tw3{bottom:4%;left:46%;animation-delay:1.2s}
+@keyframes twk{0%,100%{transform:scale(.4);opacity:0}50%{transform:scale(1.2);opacity:1}}
 /* ---------- memories ---------- */
 .mem-grid{display:grid;gap:16px}
 .mem{position:relative;overflow:hidden;text-align:left}
@@ -400,6 +406,7 @@ footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center
   <div class="wrap stack">
     <div data-reveal><span class="kicker">Chapitre 3 · Le bracelet</span></div>
     <h2 class="title" data-reveal style="--d:.1s">Hbibti, je le mets <em>toujours</em></h2>
+    <div class="tommy-wrap" data-reveal style="--d:.15s"><img class="tommy" src="img/tommy.png" alt="La boîte du bracelet Tommy Hilfiger"><span class="tw tw1">✨</span><span class="tw tw2">💖</span><span class="tw tw3">✨</span></div>
     <div class="ring-stage" data-reveal style="--d:.2s" aria-hidden="true"><div class="ring" id="ring"></div></div>
     <div data-reveal style="--d:.25s"><span class="tag"><span>TOM</span><span>MY</span><span>❤</span></span></div>
     <p class="lead" data-reveal style="--d:.3s">C'est pas juste un bracelet. C'est un petit morceau de notre histoire que je porte avec moi : nos débuts, cette nuit, ce premier bisou.</p>
