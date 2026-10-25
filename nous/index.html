@@ -219,6 +219,95 @@ input[type=range]{width:100%;accent-color:var(--rose);height:34px}
 footer{padding:30px 0 calc(90px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:14px}
 footer a{color:var(--rose);font-weight:800}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.deco,.floaty{display:none}}
+/* ===== v2 additions ===== */
+.langrow{display:flex;align-items:center;gap:10px;margin:10px 0}
+.langrow .av{width:36px;height:36px;flex:none}
+.lbar{flex:1;display:flex;height:30px;border-radius:999px;overflow:hidden;background:#eee}
+.lbar i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:800;color:#fff;width:0;white-space:nowrap;overflow:hidden;transition:width 1.2s cubic-bezier(.2,.9,.25,1)}
+.in .lbar i,.lbar.in i{width:var(--w)}
+.vs{display:grid;gap:10px}
+.vrow{background:#fff;border-radius:18px;padding:12px 14px;box-shadow:var(--shadow)}
+.vrow .vl{font-weight:800;font-size:14.5px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
+.vrow .vl small{color:var(--muted);font-weight:700}
+.vbars{display:grid;grid-template-columns:28px 1fr auto;gap:6px 8px;align-items:center;font-weight:800;font-size:13px}
+.vbars .av{width:26px;height:26px;border-width:2px}
+.vbars .t{height:12px;border-radius:999px;background:#eee;overflow:hidden}
+.vbars .t i{display:block;height:100%;width:0;border-radius:999px;transition:width 1.2s cubic-bezier(.2,.9,.25,1)}
+.radar-card{padding:14px}
+#radar{width:100%;max-width:380px;display:block;margin:0 auto}
+#radar text{font-family:var(--body);font-weight:800;font-size:11px;fill:#5b3a29}
+#radar .poly{transform:scale(0);transform-origin:0 0;transition:transform 1.4s cubic-bezier(.3,1.4,.5,1)}
+#radar.on .poly{transform:scale(1)}
+.tabs{display:flex;background:#fff;border-radius:999px;padding:5px;box-shadow:var(--shadow)}
+.tab{flex:1;border-radius:999px;padding:10px 8px;font-weight:800;font-size:14px;color:var(--muted)}
+.tab.on{background:var(--rose);color:#fff}
+.gestes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.geste{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:14px 10px;text-align:center;position:relative;animation:okpop .4s}
+.geste .ge{font-size:30px}
+.geste b{display:block;font-family:var(--display);font-size:26px;color:var(--rose);line-height:1.1;margin-top:4px}
+.geste p{font-size:13px;font-weight:700;color:var(--choco-2);line-height:1.3;margin-top:4px}
+.geste .mer{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--rose);background:var(--mallow);border-radius:999px;padding:6px 10px}
+.geste.thanked .mer{background:var(--rose);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+.chip{background:var(--mallow);border:2px solid var(--blush);border-radius:999px;padding:8px 12px;font-weight:800;font-size:13.5px}
+.chip.on{background:var(--rose);border-color:var(--rose);color:#fff}
+.small-months{height:150px}
+.months .m.gap .b{background:repeating-linear-gradient(45deg,#ddd 0 6px,#f5f5f5 6px 12px);height:100%!important;opacity:.7}
+.months .m.gap .lbl{font-size:13px;writing-mode:horizontal-tb;transform:none;height:34px}
+.peace{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.peace>div{background:var(--mallow);border-radius:16px;padding:12px;text-align:center;font-size:13.5px}
+.peace .av{width:42px;height:42px;margin:0 auto 4px}
+.peace span{display:block;font-weight:700;line-height:1.6;margin-top:4px}
+.swipe-zone{position:relative;height:260px;margin:6px auto 0;max-width:380px}
+.scard{position:absolute;inset:0;background:#fff;color:var(--ink);border-radius:26px;box-shadow:0 18px 40px rgba(0,0,0,.25);padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;touch-action:none;transition:transform .35s,opacity .35s;user-select:none;-webkit-user-select:none}
+.scard .sq{font-family:var(--display);font-weight:600;font-size:clamp(19px,5.2vw,23px);color:var(--choco)}
+.scard .sn{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:10px}
+.scard .sbtns{display:flex;gap:12px;margin-top:16px}
+.scard .sbtns button{border-radius:999px;padding:10px 18px;font-weight:800}
+.scard .sf{background:#ffe0e0;color:#c0392b}.scard .sv{background:var(--mint);color:#1e8a5a}
+.scard .stamp{position:absolute;top:18px;font-family:var(--display);font-weight:700;font-size:26px;padding:2px 12px;border:4px solid;border-radius:10px;opacity:0}
+.scard .stamp.v{left:18px;color:#1e8a5a;transform:rotate(-12deg)}.scard .stamp.f{right:18px;color:#c0392b;transform:rotate(12deg)}
+.sres{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;gap:10px}
+.rules{display:grid;gap:10px}
+.rule{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:20px;padding:14px;box-shadow:var(--shadow);text-align:left;width:100%}
+.rule .ri{font-size:28px;flex:none}
+.rule b{display:block;font-family:var(--display);font-size:17px;color:var(--choco)}
+.rule p{font-size:14px;color:var(--choco-2);margin-top:3px;line-height:1.4}
+.rule .ck{margin-left:auto;flex:none;width:30px;height:30px;border-radius:50%;border:3px solid var(--blush);display:grid;place-items:center;font-size:16px;color:transparent}
+.rule.on{background:#effcf6}
+.rule.on .ck{background:#2fbf71;border-color:#2fbf71;color:#fff}
+.cult{display:grid;gap:12px;text-align:left}
+.akhti{max-height:0;overflow:hidden;transition:max-height .6s;font-weight:800;color:var(--rose);font-size:12px;line-height:1.3;word-break:break-all}
+.akhti.on{max-height:260px;overflow-y:auto}
+.wordle{display:grid;grid-template-rows:repeat(6,1fr);gap:6px;max-width:300px;margin:0 auto}
+.wrow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.wcell{aspect-ratio:1;border-radius:10px;border:2px solid #e8d9df;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:26px;color:var(--choco);background:#fff;text-transform:uppercase}
+.wcell.full{border-color:#c9aab6;animation:okpop .15s}
+.wcell.g{background:#2fbf71;border-color:#2fbf71;color:#fff}.wcell.y{background:#ffc94d;border-color:#ffc94d;color:#fff}.wcell.x{background:#b9a9b0;border-color:#b9a9b0;color:#fff}
+.wcell.flip{animation:wflip .5s}
+@keyframes wflip{50%{transform:rotateX(90deg)}}
+.wrow.bad{animation:shake .4s}
+.kb{display:grid;gap:6px;max-width:440px;margin:0 auto}
+.kbr{display:flex;gap:4px;justify-content:center}
+.key{flex:1;max-width:40px;height:46px;border-radius:8px;background:#f0e4ea;font-weight:800;font-size:15px;color:var(--choco)}
+.key.wide{max-width:64px;font-size:13px}
+.key.g{background:#2fbf71;color:#fff}.key.y{background:#ffc94d;color:#fff}.key.x{background:#b9a9b0;color:#fff}
+.order{display:grid;gap:10px}
+.ob{background:#fff;border-radius:18px;padding:13px 14px;box-shadow:var(--shadow);font-weight:800;font-size:15px;text-align:left;display:flex;align-items:center;gap:10px}
+.ob .on{width:30px;height:30px;border-radius:50%;background:var(--blush);display:grid;place-items:center;flex:none;font-family:var(--display);color:var(--rose)}
+.ob.ok{background:var(--mint)}.ob.ok .on{background:#2fbf71;color:#fff}
+.ob.bad{animation:shake .4s;background:#ffe0e0}
+.ob small{display:block;font-weight:700;color:var(--muted);font-size:12px}
+.fries{font-size:44px;letter-spacing:6px}
+.fries span{filter:grayscale(1);opacity:.3;transition:all .4s}
+.fries span.got{filter:none;opacity:1;animation:okpop .5s}
+.secret{display:none}.secret.show{display:block;animation:okpop .6s}
+.hidden-fry{position:absolute;z-index:3;font-size:15px;opacity:.55;padding:6px;cursor:pointer;animation:frywig 3s ease-in-out infinite}
+.hidden-fry.found{animation:fryGone .6s forwards;pointer-events:none}
+@keyframes frywig{50%{transform:rotate(18deg)}}
+@keyframes fryGone{to{transform:scale(3) rotate(40deg);opacity:0}}
+#prog .runner{pointer-events:auto;cursor:pointer}
+.pct-out{display:flex;justify-content:space-between;font-weight:800;color:var(--muted);font-size:13px}
 </style>
 </head>
 <body class="locked">
@@ -422,6 +511,27 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
+<!-- STYLE -->
+<section class="scene t-sky" id="s-style">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Comment on se parle</span></div>
+    <h2 class="title center" data-reveal>Nos deux façons <em>d'écrire</em></h2>
+    <p class="lead center" data-reveal>Analysé sur 1,5 million de mots. Même nos claviers ont une personnalité.</p>
+    <div class="guess" data-reveal data-guess="lang"></div>
+    <div class="card" data-reveal>
+      <p class="small" style="font-weight:800;margin-bottom:6px">Les langues qu'on utilise (part des mots reconnus)</p>
+      <div class="langrow"><img class="av" src="../anniversaire/img/lui.png" alt=""><div class="lbar"><i style="--w:49%;background:#4f8bff">FR 49%</i><i style="--w:50%;background:#2fbf71">Darija 50%</i><i style="--w:1%;background:#ffc94d"></i></div></div>
+      <div class="langrow"><img class="av" src="../anniversaire/img/elle.png" alt=""><div class="lbar"><i style="--w:73%;background:#4f8bff">FR 73%</i><i style="--w:25%;background:#2fbf71">Darija 25%</i><i style="--w:2%;background:#ffc94d"></i></div></div>
+      <p class="small" style="margin-top:8px">Il te parle en darija, tu lui réponds en français. Et ça marche parfaitement depuis 2 ans 😂</p>
+    </div>
+    <div class="vs" data-reveal id="vsStyle"></div>
+    <div class="card" data-reveal>
+      <p><b>🤫 Easter egg :</b> en 438 201 messages, vous avez utilisé un point d'exclamation… <b>93 fois</b>. Au total. En deux ans. Pas besoin de « ! », vous avez « bebeeeeee ».</p>
+    </div>
+    <div class="guess" data-reveal data-pct="late"></div>
+  </div>
+</section>
+
 <!-- WHO WRITES LIKE THAT -->
 <section class="scene t-plum center" id="s-spell">
   <div class="wrap stack">
@@ -442,6 +552,41 @@ footer a{color:var(--rose);font-weight:800}
   </div>
 </section>
 
+<!-- LOVE LANGUAGES -->
+<section class="scene t-plum center" id="s-lovelang">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#7a4f8a;color:#fff">Les langages de l'amour</span></div>
+    <h2 class="title" data-reveal>Comment chacun <em style="color:var(--gold)">dit je t'aime</em></h2>
+    <p class="lead" data-reveal>Mots doux, soin, temps ensemble, câlins, aide, cadeaux : j'ai classé des milliers de messages dans les 6 façons d'aimer.</p>
+    <div class="guess" data-reveal data-guess="llher"></div>
+    <div class="card radar-card" data-reveal>
+      <svg viewBox="-160 -150 320 300" id="radar" aria-label="Radar des langages de l'amour"></svg>
+      <div class="legend2" style="color:var(--ink)"><span><i style="background:var(--him)"></i>Lui</span><span><i style="background:var(--her)"></i>Elle</span></div>
+    </div>
+    <div class="card" data-reveal style="text-align:left">
+      <p><b>Elle 🩺 :</b> après les mots doux, son langage n°2 c'est le <b>soin</b> (25 % de ses gestes) : « repose-toi » 298 fois, « courage » 155 fois, 190 conseils médicaux. Elle t'aime comme un médecin : en prenant soin de toi.</p>
+      <p style="margin-top:10px"><b>Lui 💬 :</b> les <b>mots</b> d'abord (47 %), puis les <b>câlins et bisous</b> (15 %) et le <b>temps ensemble</b> (14 %). Il t'aime en le disant, en te serrant fort, et en voulant te voir.</p>
+    </div>
+  </div>
+</section>
+
+<!-- APPRECIATION -->
+<section class="scene" id="s-thanks">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Ce qu'on fait l'un pour l'autre</span></div>
+    <h2 class="title center" data-reveal>Les petites choses <em>qu'on ne remarque pas</em></h2>
+    <p class="lead center" data-reveal>Parce que l'amour, c'est aussi des milliers de petits gestes. Touche une carte pour dire merci 💌</p>
+    <div class="tabs" data-reveal><button class="tab on" data-tab="him">Ce qu'il fait pour toi</button><button class="tab" data-tab="her">Ce que tu fais pour lui</button></div>
+    <div class="gestes" id="gestes" data-reveal></div>
+    <div class="card center" data-reveal>
+      <p style="font-weight:800">💌 Ton carnet de gratitude</p>
+      <p class="small">Sélectionne ce que tu apprécies le plus chez lui, puis envoie-lui directement sur WhatsApp.</p>
+      <div class="chips" id="chips"></div>
+      <button class="btn" id="sendThanks" style="margin-top:12px">Lui envoyer sur WhatsApp 💬</button>
+    </div>
+  </div>
+</section>
+
 <!-- MORE GUESSES -->
 <section class="scene t-mint center" id="s-habits">
   <div class="wrap stack">
@@ -451,6 +596,64 @@ footer a{color:var(--rose);font-weight:800}
     <div class="guess" data-reveal data-guess="night"></div>
     <div class="guess" data-reveal data-guess="hbila"></div>
     <div class="guess" data-reveal data-guess="morning"></div>
+  </div>
+</section>
+
+<!-- FIGHTS -->
+<section class="scene t-choco" id="s-fights">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker" style="background:#7a4f38;color:var(--gold)">Disputes & réconciliations</span></div>
+    <h2 class="title center" data-reveal>Même les meilleurs <em style="color:var(--gold)">se chamaillent</em></h2>
+    <p class="lead center" data-reveal>J'ai cherché les moments de tension (mots d'énervement, reproches…) et surtout <b>comment on en sort</b>. Pas pour compter les points : pour apprendre à mieux s'aimer.</p>
+    <div class="statgrid" data-reveal>
+      <div class="st"><b data-count="151">0</b><span>moments de tension en 2 ans (≈ 1 tous les 5 jours)</span></div>
+      <div class="st"><b>−39 %</b><span>de tensions en année 2 (par rapport au nombre de messages) 📉</span></div>
+      <div class="st"><b>10 min</b><span>durée typique avant le premier geste de paix</span></div>
+      <div class="st"><b>0</b><span>dispute jamais réparée dans les 24h 🤝</span></div>
+    </div>
+    <div class="card" data-reveal><p class="small" style="font-weight:800;margin-bottom:6px;color:var(--ink)">Tensions par mois (normal qu'au début on apprenne à se connaître)</p><div class="months small-months" id="fightMonths"></div></div>
+    <div class="guess" data-reveal data-guess="repairer"></div>
+    <div class="card" data-reveal style="text-align:left">
+      <div class="duel" data-duel-auto>
+        <p style="font-weight:800;color:var(--ink)">Qui exprime le malaise en premier</p>
+        <div class="row"><img class="av" src="../anniversaire/img/elle.png" alt=""><div class="track"><div class="bar her" data-w="102"></div></div><div class="num her-c">102</div></div>
+        <div class="row"><img class="av" src="../anniversaire/img/lui.png" alt=""><div class="track"><div class="bar him" data-w="49"></div></div><div class="num him-c">49</div></div>
+        <p class="small" style="color:var(--muted)">Elle met des mots sur ce qui ne va pas, tout de suite. C'est une force : pas de non-dits. Lui garde plus pour lui… puis écrit un pavé (record : 119 messages d'affilée 😅).</p>
+        <p style="font-weight:800;color:var(--ink);margin-top:14px">Qui tend la main en premier</p>
+        <div class="row"><img class="av" src="../anniversaire/img/lui.png" alt=""><div class="track"><div class="bar him" data-w="77"></div></div><div class="num him-c">77</div></div>
+        <div class="row"><img class="av" src="../anniversaire/img/elle.png" alt=""><div class="track"><div class="bar her" data-w="74"></div></div><div class="num her-c">74</div></div>
+        <p class="small" style="color:var(--muted)">Égalité presque parfaite. Et dans <b>56 %</b> des cas, c'est celui qui n'a <b>pas</b> commencé qui fait la paix. C'est rare, et c'est beau.</p>
+      </div>
+    </div>
+    <div class="card" data-reveal style="text-align:left;color:var(--ink)">
+      <p style="font-weight:800">🕊️ Vos façons de faire la paix</p>
+      <div class="peace"><div><img class="av" src="../anniversaire/img/lui.png" alt=""><b>Lui</b><span>💗 mots doux (« kbida… ») : 41<br>🙏 excuses : 23<br>🤝 « je comprends » : 13</span></div><div><img class="av" src="../anniversaire/img/elle.png" alt=""><b>Elle</b><span>🤝 « je comprends / t'as raison » : 33<br>🙏 excuses : 26<br>💗 mots doux : 15</span></div></div>
+      <p class="small">Les trois marchent pareil : 9 à 11 minutes. Et après la paix, un mot doux revient en <b>2 minutes</b> en moyenne. 🥹</p>
+    </div>
+    <div class="statgrid" data-reveal>
+      <div class="st"><b>1h du mat</b><span>l'heure n°1 des tensions (43 % entre 23h et 4h)</span></div>
+      <div class="st"><b>Vendredi</b><span>le jour le plus calme (13 tensions, mardi : 27)</span></div>
+      <div class="st"><b>36 %</b><span>réglées en moins de 5 minutes ⚡</span></div>
+      <div class="st"><b>77 %</b><span>réglées en moins de 30 minutes</span></div>
+    </div>
+    <div class="card" data-reveal style="color:var(--ink)">
+      <p style="font-weight:800">🔍 Mythes démontés par les données</p>
+      <p class="small" style="margin-top:6px">❌ « On se dispute quand on est fatigués » : les mots de fatigue sont même un peu <b>moins</b> fréquents juste avant une tension (×0,76).<br>❌ « On se dispute quand on a faim » : presque aucun effet (×0,94). La faim est innocente. 🍟</p>
+    </div>
+    <h3 class="center" data-reveal style="color:#fff;font-size:24px;margin-top:20px">Vrai ou faux ? Glisse la carte 👉 vrai / 👈 faux</h3>
+    <div class="swipe-zone" id="swipe" data-reveal></div>
+    <p class="small center" data-reveal>Méthode : détection automatique par mots-clés dans les deux langues, donc approximative. Les chiffres montrent des tendances, pas un tribunal 😌</p>
+  </div>
+</section>
+
+<!-- GUIDE -->
+<section class="scene t-mint" id="s-guide">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Le mode d'emploi de notre couple</span></div>
+    <h2 class="title center" data-reveal>8 règles <em>tirées de nos messages</em></h2>
+    <p class="lead center" data-reveal>Pas des conseils au hasard : chaque règle vient d'un chiffre. Coche celles qu'on s'engage à suivre ✅</p>
+    <div class="rules" id="rules" data-reveal></div>
+    <div class="center" data-reveal><button class="btn" id="sendRules">Envoyer nos engagements sur WhatsApp 💬</button></div>
   </div>
 </section>
 
@@ -471,6 +674,67 @@ footer a{color:var(--rose);font-weight:800}
     <h2 class="title" data-reveal>Fun facts <em>classés top secret</em></h2>
     <p class="lead" data-reveal>Touche une carte pour la retourner.</p>
     <div class="facts" id="facts" data-reveal></div>
+  </div>
+</section>
+
+<!-- CULT MOMENTS -->
+<section class="scene t-gold center" id="s-cult">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Les moments cultes</span></div>
+    <h2 class="title" data-reveal>Le musée de <em style="color:var(--plum)">nos bêtises</em></h2>
+    <div class="cult" data-reveal>
+      <div class="card"><p style="font-weight:800">📢 26 février 2025, 14h25</p><p class="small">Il a envoyé un mot. 566 fois. En 2 minutes. Lequel ?</p><button class="btn small" id="akhtiBtn">Révéler 😱</button><div class="akhti" id="akhti"></div></div>
+      <div class="card"><p style="font-weight:800">📸 25 février 2025</p><p class="small">La grande bataille de photos : 104 photos de lui, puis 117 photos d'elle. 221 photos en quelques minutes. Personne n'a gagné.</p></div>
+      <div class="card"><p style="font-weight:800">📱💀 L'ère de l'iPhone</p><p class="small">Juillet → septembre 2025 : il est passé sur iPhone… et 75 jours de messages ont disparu. On ne parle plus jamais de cet iPhone. Paix à ses données.</p></div>
+      <div class="card"><p style="font-weight:800">⏱️ La toute première réponse</p><p class="small">Le 14 octobre 2024, elle a répondu à son « Reeee » dans la même minute. Elle dit qu'elle n'était pas pressée. Les données disent autre chose 😌</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORDLE -->
+<section class="scene center" id="s-wordle">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Mini-jeu · Le mot du couple</span></div>
+    <h2 class="title" data-reveal>Trouve le mot <em>en 6 essais</em></h2>
+    <p class="lead" data-reveal>5 lettres. Un mot qu'il a écrit plus de 2 600 fois. 🟩 bonne place · 🟨 mauvaise place</p>
+    <div class="wordle" id="wordle" data-reveal></div>
+    <div class="kb" id="kb" data-reveal></div>
+    <p class="result" id="wMsg"></p>
+  </div>
+</section>
+
+<!-- TIMELINE ORDER -->
+<section class="scene t-sky center" id="s-order">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Mini-jeu · Notre chronologie</span></div>
+    <h2 class="title" data-reveal>Remets notre histoire <em>dans l'ordre</em></h2>
+    <p class="lead" data-reveal>Touche les moments du plus ancien au plus récent.</p>
+    <div class="order" id="order" data-reveal></div>
+    <p class="result" id="oMsg"></p>
+  </div>
+</section>
+
+<!-- DUELS -->
+<section class="scene t-pink center" id="s-duels">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Mini-jeu · Qui est le plus… ?</span></div>
+    <h2 class="title" data-reveal>Le grand <em>face-à-face</em></h2>
+    <p class="lead" data-reveal>10 duels. Touche celui ou celle qui gagne.</p>
+    <div class="round-card" id="duels" data-reveal></div>
+  </div>
+</section>
+
+<!-- FRIES HUNT RESULT -->
+<section class="scene center" id="s-fries">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Chasse au trésor</span></div>
+    <h2 class="title" data-reveal>As-tu trouvé les <em>5 frites cachées</em> ? 🍟</h2>
+    <p class="lead" data-reveal>Elles sont cachées un peu partout dans la page, toutes petites. Remonte et cherche bien… (indice : regarde dans les coins)</p>
+    <div class="fries" id="friesBar" data-reveal>🍟🍟🍟🍟🍟</div>
+    <div class="card secret" id="friesSecret">
+      <p style="font-weight:800">🔓 Message secret débloqué</p>
+      <p class="hand" style="font-family:var(--hand);font-size:28px;color:var(--plum)">Tu as tout trouvé, comme tu m'as trouvé sur Bumble le jour où j'allais le supprimer. Le meilleur hasard de ma vie. Je t'aime, ma kbidti. 🍟❤️</p>
+    </div>
   </div>
 </section>
 
@@ -525,7 +789,7 @@ footer a{color:var(--rose);font-weight:800}
 
   /* ---------- score ---------- */
   let score = 0, played = 0;
-  const MAX = 30 + 13 * 10 + 8 * 5 + 10 * 5 + 6 * 5;
+  const MAX = 460;
   const addScore = (n) => { score += n; $("#scoreN").textContent = score; const b = $("#scoreBtn"); b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); updateFinal(); };
   $("#scoreBtn").addEventListener("click", () => toast(`⭐ ${score} points sur ${MAX} possibles. Continue !`));
   function updateFinal() {
@@ -632,6 +896,15 @@ footer a{color:var(--rose);font-weight:800}
       g.after && g.after();
     }));
   }
+  Object.assign(G, {
+    lang: { tag: "Devinette", q: "Qui écrit le plus en darija ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 0, two: 1,
+      rev: "<b>Lui</b> : la moitié de ses mots sont en darija. Elle écrit à 73 % en français. Deux langues, un seul couple. 🇲🇦🇫🇷" },
+    llher: { tag: "Devinette", q: "Après les mots doux, quel est le langage d'amour n°2 d'elle ?", opts: [["🤗 Les câlins"], ["🩺 Prendre soin"], ["🎁 Les cadeaux"], ["📅 Le temps ensemble"]], ok: 1, four: 1,
+      rev: "<b>Prendre soin</b> : 525 messages de soin (repose-toi, courage, t'as mangé…). Normal, c'est une docteure. Lui, son n°2, ce sont les câlins et les bisous. 🫶", after: () => drawRadar() },
+    repairer: { tag: "Devinette", q: "Qui fait le premier pas pour se réconcilier le plus souvent ?", opts: [[avL + "Lui"], [avE + "Elle"], ["🤝 Presque égalité"]], ok: 2,
+      rev: "<b>Presque égalité !</b> 77 fois lui, 74 fois elle. Personne ne laisse l'autre seul dans une dispute. 🥹", after: () => $$("[data-duel-auto]").forEach(d => animDuel(d)) },
+  });
+
   $$("[data-guess]").forEach(el => buildGuess(el, el.dataset.guess));
 
   /* slider guess (log scale 1k → 2M) */
@@ -672,12 +945,12 @@ footer a{color:var(--rose);font-weight:800}
 
   /* months chart */
   (() => {
-    const M = [["2024-10", 6041, 4670], ["2024-11", 8607, 9440], ["2024-12", 14221, 17899], ["2025-01", 18143, 20179], ["2025-02", 16091, 20891], ["2025-03", 11765, 17365], ["2025-04", 14280, 22366], ["2025-05", 12823, 18896], ["2025-06", 6531, 9518], ["2025-07", 3845, 5834], ["2025-10", 6755, 8143], ["2025-11", 5552, 6596], ["2025-12", 2351, 2405], ["2026-01", 2958, 4044], ["2026-02", 1530, 1935], ["2026-03", 3626, 4197], ["2026-04", 7336, 10912], ["2026-05", 8835, 11409], ["2026-06", 7564, 10815], ["2026-07", 7363, 10395], ["2026-08", 8322, 11471], ["2026-09", 10320, 12086], ["2026-10", 5272, 6598]];
+    const M = [["2024-10", 6041, 4670], ["2024-11", 8607, 9440], ["2024-12", 14221, 17899], ["2025-01", 18143, 20179], ["2025-02", 16091, 20891], ["2025-03", 11765, 17365], ["2025-04", 14280, 22366], ["2025-05", 12823, 18896], ["2025-06", 6531, 9518], ["2025-07", 3845, 5834], ["gap", 0, 0], ["2025-10", 6755, 8143], ["2025-11", 5552, 6596], ["2025-12", 2351, 2405], ["2026-01", 2958, 4044], ["2026-02", 1530, 1935], ["2026-03", 3626, 4197], ["2026-04", 7336, 10912], ["2026-05", 8835, 11409], ["2026-06", 7564, 10815], ["2026-07", 7363, 10395], ["2026-08", 8322, 11471], ["2026-09", 10320, 12086], ["2026-10", 5272, 6598]];
     const MO = ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"];
     const mx = Math.max(...M.map(m => m[1] + m[2])), box = $("#months");
-    box.innerHTML = M.map(([k, a, b]) => { const [y, mo] = k.split("-"); const t = a + b; return `<div class="m${t === mx ? " peak" : ""}" data-h="${t / mx * 100}"><span class="tip">${MO[+mo - 1]} ${y.slice(2)} · ${fmt(t)}</span><div class="b"></div><span class="lbl">${MO[+mo - 1]} ${y.slice(2)}</span></div>`; }).join("");
+    box.innerHTML = M.map(([k, a, b]) => { if (k === "gap") return '<div class="m gap" data-h="100"><span class="tip">📱💀 iPhone : messages perdus</span><div class="b"></div><span class="lbl">📱</span></div>'; const [y, mo] = k.split("-"); const t = a + b; return `<div class="m${t === mx ? " peak" : ""}" data-h="${t / mx * 100}"><span class="tip">${MO[+mo - 1]} ${y.slice(2)} · ${fmt(t)}</span><div class="b"></div><span class="lbl">${MO[+mo - 1]} ${y.slice(2)}</span></div>`; }).join("");
     whenSeen(box.closest("[data-reveal]"), () => $$(".m", box).forEach((m, i) => setTimeout(() => $(".b", m).style.height = m.dataset.h + "%", i * 50)));
-    $$(".m", box).forEach(m => m.addEventListener("click", () => { $$(".m", box).forEach(x => x.classList.remove("on")); m.classList.add("on"); S.tick(); }));
+    $$(".m", box).forEach(m => m.addEventListener("click", () => { $$(".m", box).forEach(x => x.classList.remove("on")); m.classList.add("on"); S.tick(); if (m.classList.contains("gap")) toast("📱💀 Juillet → septembre 2025 : il avait un iPhone et les messages ont disparu. On ne parle plus jamais de cet iPhone.", 4000); }));
   })();
 
   /* heatmap */
@@ -740,7 +1013,7 @@ footer a{color:var(--rose);font-weight:800}
         $$(".hl-c", box).forEach((c, j) => { $(".v", c).textContent = fmt([a, b][j][2]); c.classList.add(j === win ? "good" : "bad"); });
         if (ok) { sc++; addScore(5); S.good(); } else S.bad();
         $(".rfeed", box).textContent = ok ? "✅ Bien vu !" : "❌ Eh non !";
-        if (i === 4) $(".rfeed", box).textContent += " Elle l'appelle « mon frère » plus qu'il ne l'appelle « ma sœur ». 😂";
+        if (i === 4) $(".rfeed", box).textContent += " Et 566 de ses « akhti » ont été envoyés en 2 minutes, le 26 février 2025. 😂";
         setTimeout(() => { delete box.dataset.lock; i++; show(); }, 2400);
       }));
     };
@@ -762,6 +1035,189 @@ footer a{color:var(--rose);font-weight:800}
     HEAT.forEach((row, d) => { h += `<span class="hl">${D[d]}</span>` + row.map((v, k) => `<span class="c" style="opacity:${(.08 + .92 * Math.pow(v / mx, .8)).toFixed(2)};transition-delay:${(k * 20 + d * 30)}ms"></span>`).join(""); });
     box.innerHTML = h;
   })();
+
+
+  /* ================= V2 : STYLE VS ================= */
+  (() => {
+    const V = [["✍️ Mots par message", 4.64, 2.94, "en moyenne", 2], ["📚 Vocabulaire", 25645, 19994, "mots différents", 0], ["💬 Messages en rafale", 53, 64, "% du temps à double-texter", 0], ["🎀 Mots étirés (bebeeee)", 4748, 8024, "messages", 0], ["🙏 « Merci »", 601, 801, "fois", 0], ["🤝 « Je comprends »", 609, 1103, "fois", 0], ["✅ « T'as raison »", 137, 212, "fois", 0], ["❓ Questions posées", 14790, 12854, "messages avec un ?", 0], ["😀 Messages avec emoji", 3.0, 4.6, "%", 1], ["🔠 MESSAGES EN MAJUSCULES", 163, 190, "cris de joie (ou pas)", 0]];
+    const box = $("#vsStyle");
+    box.innerHTML = V.map(([l, h, f, u, d]) => { const mx = Math.max(h, f); const f2 = (x) => d ? x.toFixed(d).replace(".", ",") : fmt(x); return `<div class="vrow"><div class="vl"><span>${l}</span><small>${u}</small></div><div class="vbars">${avL}<div class="t"><i data-w="${h / mx * 100}" style="background:var(--him)"></i></div><span class="him-c">${f2(h)}</span>${avE}<div class="t"><i data-w="${f / mx * 100}" style="background:var(--her)"></i></div><span class="her-c">${f2(f)}</span></div></div>`; }).join("");
+    whenSeen(box, () => $$("i", box).forEach((i, k) => setTimeout(() => i.style.width = i.dataset.w + "%", k * 40)));
+  })();
+
+  /* ================= V2 : PERCENT GUESS ================= */
+  (() => {
+    const P = { late: { q: "Quel pourcentage de nos messages est envoyé entre 23h et 4h du matin ?", ans: 38, rev: "<b>38 %</b> : presque 4 messages sur 10 en pleine nuit. Nos meilleures conversations ont lieu quand tout le monde dort. 🌙" } };
+    $$("[data-pct]").forEach(el => {
+      const p = P[el.dataset.pct];
+      el.innerHTML = `<span class="tag">Devinette % · 10 pts</span><div class="gq">${p.q}</div><div class="slider-val"><span>50</span> %</div><input type="range" min="0" max="100" value="50" aria-label="Pourcentage"><div class="pct-out"><span>0 %</span><span>100 %</span></div><div class="center" style="margin-top:8px"><button class="btn small">Valider 🔒</button></div><div class="greveal"></div>`;
+      const r = $("input", el), v = $(".slider-val span", el), b = $("button", el);
+      r.addEventListener("input", () => { v.textContent = r.value; S.tick(); });
+      b.addEventListener("click", () => { if (r.disabled) return; r.disabled = true; b.style.display = "none"; const d = Math.abs(+r.value - p.ans), pts = d <= 5 ? 10 : d <= 12 ? 5 : 0; addScore(pts); pts ? S.good() : S.bad(); if (pts === 10) burstAt(el, 30); const rv = $(".greveal", el); rv.innerHTML = `Ta réponse : <b>${r.value} %</b> (+${pts} pts)<br>` + p.rev; rv.classList.add("show"); });
+    });
+  })();
+
+  /* ================= V2 : RADAR ================= */
+  const LL = { labels: ["💬 Mots doux", "🩺 Soin", "📅 Temps", "🤗 Câlins", "🛠️ Aide", "🎁 Cadeaux"], him: [1186, 335, 337, 361, 164, 113], her: [862, 525, 259, 201, 153, 78] };
+  function drawRadar() {
+    const svg = $("#radar"); if (!svg || svg.dataset.done) return; svg.dataset.done = 1;
+    const pct = (a) => { const s = a.reduce((x, y) => x + y, 0); return a.map(x => x / s); };
+    const H = pct(LL.him), F = pct(LL.her), mx = Math.max(...H, ...F), R = 110, n = 6;
+    const pt = (i, r) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [Math.cos(a) * r, Math.sin(a) * r]; };
+    let g = "";
+    [.25, .5, .75, 1].forEach(k => g += `<polygon points="${Array.from({ length: n }, (_, i) => pt(i, R * k).join(",")).join(" ")}" fill="none" stroke="#eadde3" stroke-width="1"/>`);
+    for (let i = 0; i < n; i++) { const [x, y] = pt(i, R); g += `<line x1="0" y1="0" x2="${x}" y2="${y}" stroke="#eadde3"/>`; const [lx, ly] = pt(i, R + 22); g += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${LL.labels[i]}</text>`; }
+    const poly = (v, c) => `<polygon class="poly" points="${v.map((x, i) => pt(i, R * Math.sqrt(x / mx)).join(",")).join(" ")}" fill="${c}" fill-opacity=".28" stroke="${c}" stroke-width="3" stroke-linejoin="round"/>`;
+    g += poly(H, "#4f8bff") + poly(F, "#ff4f7e");
+    svg.innerHTML = g; requestAnimationFrame(() => setTimeout(() => svg.classList.add("on"), 50));
+  }
+  whenSeen($("#radar").closest("[data-reveal]"), drawRadar);
+
+  /* ================= V2 : GESTES + GRATITUDE ================= */
+  (() => {
+    const GE = {
+      him: [["💬", "1 186", "compliments et mots doux (« belle », « magnifique », « fier de toi »…)"], ["🏆", "282", "« fier de toi », « bravo »"], ["📚", "185", "messages sur tes examens, gardes, concours et stages"], ["📱", "1 app", "codée rien que pour tes études (et 53 messages pour en parler)"], ["🍽️", "81", "« t'as mangé ? »"], ["🚗", "55", "« bien rentrée ? », « 3la slamtek »"], ["🤗", "361", "câlins et bisous envoyés par message"], ["📅", "337", "« on se voit ? », « on s'appelle ? », « on sort ? »"], ["💍", "270", "messages sur le mariage… et 107 sur nos futurs enfants 👶"], ["🙏", "601", "« merci »"]],
+      her: [["🩺", "190", "conseils médicaux : ton médecin perso, 24h/24, gratuit"], ["😴", "298", "« repose-toi », « va dormir »"], ["💪", "155", "« courage », « ça va aller », « tu vas réussir »"], ["🤝", "1 103", "« je comprends »"], ["✅", "212", "« t'as raison » (elle te donne raison plus souvent que l'inverse 😌)"], ["🏆", "299", "« fière de toi », « bravo »"], ["🙏", "801", "« merci »"], ["🏠", "110", "messages sur notre future maison, et 278 sur le mariage 💍"], ["🍽️", "84", "« t'as mangé ? »"], ["⚽", "64", "messages sur le foot… rien que pour te faire plaisir"]],
+    };
+    let tab = "him", thanks = 0;
+    const render = () => {
+      $("#gestes").innerHTML = GE[tab].map(([e, n, d], i) => `<button class="geste" style="animation-delay:${i * .05}s"><div class="ge">${e}</div><b>${n}</b><p>${d}</p><div class="mer">${tab === "him" ? "Merci mon chéri ❤️" : "Merci ma docteure ❤️"}</div></button>`).join("");
+      $$(".geste").forEach(g => g.addEventListener("click", () => { if (g.classList.contains("thanked")) return; g.classList.add("thanked"); thanks++; S.pop(); burstAt(g, 14); $(".mer", g).textContent = "Merci envoyé 💌"; if (thanks === 10) toast("💌 10 mercis ! Vous êtes adorables tous les deux"); }));
+    };
+    $$(".tab").forEach(t => t.addEventListener("click", () => { $$(".tab").forEach(x => x.classList.remove("on")); t.classList.add("on"); tab = t.dataset.tab; render(); S.tick(); }));
+    render();
+    const CH = ["tes mots doux", "ton soutien pour mes études", "l'app que tu m'as codée", "tes câlins", "tes « bien rentrée ? »", "ta patience", "tes blagues nulles", "nos McDo à 2h du matin", "tu fais toujours la paix", "nos projets d'avenir", "tu me fais rire", "tu me rassures"];
+    const sel = new Set();
+    $("#chips").innerHTML = CH.map((c, i) => `<button class="chip" data-i="${i}">${c}</button>`).join("");
+    $$(".chip").forEach(c => c.addEventListener("click", () => { const i = +c.dataset.i; sel.has(i) ? sel.delete(i) : sel.add(i); c.classList.toggle("on"); S.pop(); }));
+    $("#sendThanks").addEventListener("click", () => {
+      if (!sel.size) return toast("Choisis au moins une chose 🥹");
+      const txt = `Mon amour ❤️ Merci pour ${[...sel].map(i => CH[i]).join(", ")}. Je t'aime 🥹 (envoyé depuis Nous Wrapped)`;
+      location.href = "https://wa.me/?text=" + encodeURIComponent(txt);
+    });
+  })();
+
+  /* ================= V2 : FIGHT MONTHS ================= */
+  (() => {
+    const F = [["2024-10", 4], ["2024-11", 12], ["2024-12", 19], ["2025-01", 17], ["2025-02", 11], ["2025-03", 9], ["2025-04", 17], ["2025-05", 9], ["2025-06", 5], ["2025-07", 3], ["gap", 0], ["2025-10", 2], ["2025-11", 3], ["2025-12", 2], ["2026-01", 0], ["2026-02", 2], ["2026-03", 2], ["2026-04", 8], ["2026-05", 2], ["2026-06", 6], ["2026-07", 6], ["2026-08", 5], ["2026-09", 4], ["2026-10", 3]];
+    const MO = ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"], box = $("#fightMonths"), mx = 19;
+    box.innerHTML = F.map(([k, v]) => { if (k === "gap") return `<div class="m gap" data-h="100"><span class="tip">📱💀 iPhone</span><div class="b"></div><span class="lbl">📱</span></div>`; const [y, mo] = k.split("-"); return `<div class="m" data-h="${Math.max(2, v / mx * 100)}"><span class="tip">${MO[+mo - 1]} ${y.slice(2)} · ${v}</span><div class="b" style="background:linear-gradient(180deg,#ffc94d,#ff8a5c)"></div><span class="lbl">${MO[+mo - 1]} ${y.slice(2)}</span></div>`; }).join("");
+    whenSeen(box.closest("[data-reveal]"), () => $$(".m", box).forEach((m, i) => setTimeout(() => $(".b", m).style.height = m.dataset.h + "%", i * 40)));
+    $$(".m", box).forEach(m => m.addEventListener("click", () => { $$(".m", box).forEach(x => x.classList.remove("on")); m.classList.add("on"); if (m.classList.contains("gap")) toast("📱💀 L'ère de l'iPhone : messages perdus. Paix à ses données."); }));
+  })();
+
+  /* ================= V2 : SWIPE VRAI / FAUX ================= */
+  (() => {
+    const Q = [["Il y a eu moins de tensions en année 2 qu'en année 1.", 1, "−39 % ! On apprend à se comprendre. 📉"], ["La plupart de nos tensions durent plus de 3 heures.", 0, "Seulement 9 %. 77 % sont réglées en moins de 30 min."], ["On se dispute surtout quand on a faim.", 0, "La faim est innocente (×0,94). 🍟"], ["Le vendredi est notre jour le plus calme.", 1, "13 tensions le vendredi, contre 27 le mardi."], ["C'est toujours la même personne qui fait la paix.", 0, "77 lui, 74 elle. Une vraie équipe."], ["Pendant les tensions, elle écrit plus de messages que lui.", 1, "60 % des messages pendant les tensions sont les siens… mais lui fait des pavés."], ["Il a déjà écrit 119 messages d'affilée pendant une discussion.", 1, "Le record du pavé. Personne n'a pu en placer une. 😅"], ["Après une réconciliation, il faut des heures pour qu'un mot doux revienne.", 0, "2 minutes en moyenne. 🥹"], ["Il fait la paix surtout avec des mots doux.", 1, "41 fois avec un « kbida », « mon amour »…"], ["Elle fait la paix surtout avec « je comprends » ou « t'as raison ».", 1, "33 fois. L'empathie, c'est son super-pouvoir."]];
+    const zone = $("#swipe"); let i = 0, sc = 0;
+    const show = () => {
+      if (i >= Q.length) { zone.innerHTML = `<div class="sres"><div class="final-score" style="font-size:64px">${sc}/${Q.length}</div><p style="font-weight:800">${sc >= 8 ? "Experte en réconciliation 🕊️" : "Maintenant tu sais tout 😌"}</p><button class="btn small" id="swAgain">Rejouer</button></div>`; $("#swAgain").onclick = () => { i = 0; sc = 0; show(); }; return; }
+      zone.innerHTML = `<div class="scard"><span class="stamp v">VRAI</span><span class="stamp f">FAUX</span><div class="sn">${i + 1}/${Q.length} · 5 pts</div><div class="sq">${Q[i][0]}</div><div class="sbtns"><button class="sf">👈 Faux</button><button class="sv">Vrai 👉</button></div></div>`;
+      const c = $(".scard", zone); let x0 = null, dx = 0, done = false;
+      const decide = (v) => {
+        if (done) return; done = true; const ok = v === Q[i][1]; if (ok) { sc++; addScore(5); S.good(); } else S.bad();
+        c.style.transform = `translateX(${v ? 140 : -140}%) rotate(${v ? 25 : -25}deg)`; c.style.opacity = 0;
+        toast((ok ? "✅ " : "❌ ") + Q[i][2], 2600); setTimeout(() => { i++; show(); }, 450);
+      };
+      $(".sv", c).onclick = () => decide(1); $(".sf", c).onclick = () => decide(0);
+      c.addEventListener("pointerdown", e => { if (e.target.closest("button")) return; x0 = e.clientX; c.setPointerCapture(e.pointerId); c.style.transition = "none"; });
+      c.addEventListener("pointermove", e => { if (x0 == null) return; dx = e.clientX - x0; c.style.transform = `translateX(${dx}px) rotate(${dx / 14}deg)`; $(".stamp.v", c).style.opacity = Math.max(0, dx / 100); $(".stamp.f", c).style.opacity = Math.max(0, -dx / 100); });
+      c.addEventListener("pointerup", () => { if (x0 == null) return; x0 = null; c.style.transition = ""; if (Math.abs(dx) > 80) decide(dx > 0 ? 1 : 0); else { c.style.transform = ""; $$(".stamp", c).forEach(s => s.style.opacity = 0); } dx = 0; });
+    };
+    show();
+  })();
+
+  /* ================= V2 : RULES ================= */
+  (() => {
+    const RU = [["🌙", "La règle de 1h du matin", "Les tensions arrivent surtout vers 1h. Après minuit, les sujets sérieux attendent demain : un bisou, et on en reparle au réveil."], ["🤝", "Celui qui n'a pas commencé tend la main", "C'est déjà vrai 56 % du temps. On vise 100 %."], ["💗", "Parler la langue de l'autre", "Lui se calme avec un « je comprends ». Elle fond devant un « kbida ». Les deux marchent en ~10 minutes."], ["📞", "L'alerte pavé", "Au-delà de 10 messages d'affilée pendant une tension (elle : 132 rafales, lui : record de 119 d'un coup), on passe en vocal ou en appel."], ["🩺", "Se laisser soigner", "25 % de ses gestes d'amour à elle sont du soin. Quand elle dit « repose-toi », il répond « oui docteur »… et il le fait."], ["🫶", "Rendre chaque câlin", "Ses gestes d'amour à lui : les mots doux et les câlins. Chaque « bisou » mérite son bisou retour."], ["💌", "Le défi kbida quotidien", "En année 2, moins de mots doux par message (on se voit plus en vrai 😌) mais 20 % de discussions d'avenir en plus. Défi : un mot doux surprise par jour."], ["😴", "Le rituel bonne nuit", "Seulement 38 % des journées finissent par « bonne nuit / dodo ». Objectif : 100 %, même avec un simple « tsbhi 3la khir »."]];
+    let on = new Set(); try { on = new Set(JSON.parse(localStorage.getItem("nous-rules") || "[]")); } catch (e) {}
+    $("#rules").innerHTML = RU.map(([e, t, d], i) => `<button class="rule${on.has(i) ? " on" : ""}" data-i="${i}"><span class="ri">${e}</span><span><b>${t}</b><p>${d}</p></span><span class="ck">✓</span></button>`).join("");
+    $$(".rule").forEach(r => r.addEventListener("click", () => { const i = +r.dataset.i; on.has(i) ? on.delete(i) : on.add(i); r.classList.toggle("on"); S.pop(); try { localStorage.setItem("nous-rules", JSON.stringify([...on])); } catch (e) {} if (on.size === RU.length) { toast("📜 Toutes les règles signées ! Contrat d'amour validé"); party(); } }));
+    $("#sendRules").addEventListener("click", () => { if (!on.size) return toast("Coche au moins une règle ✅"); location.href = "https://wa.me/?text=" + encodeURIComponent("📜 Nos engagements (Nous Wrapped) :\n" + [...on].sort().map(i => `${RU[i][0]} ${RU[i][1]}`).join("\n") + "\nSigné : ta kbida ❤️"); });
+  })();
+
+  /* ================= V2 : AKHTI ================= */
+  $("#akhtiBtn").addEventListener("click", () => {
+    const el = $("#akhti"); if (el.classList.contains("on")) return; el.classList.add("on"); let k = 0;
+    const iv = setInterval(() => { for (let j = 0; j < 9 && k < 566; j++, k++) el.textContent += "akhti "; if (k % 27 === 0) S.tick(); if (k >= 566) { clearInterval(iv); el.insertAdjacentHTML("beforeend", "<br><br>…566 fois. En 2 minutes. Pourquoi ? Personne ne sait. 😂"); burstAt(el, 40); } }, 30);
+  });
+
+  /* ================= V2 : WORDLE ================= */
+  (() => {
+    const ANS = "KBIDA", grid = $("#wordle"), kbBox = $("#kb"); let row = 0, cur = "", over = false; const st = {};
+    grid.innerHTML = Array.from({ length: 6 }, () => `<div class="wrow">${'<div class="wcell"></div>'.repeat(5)}</div>`).join("");
+    const rows = ["AZERTYUIOP", "QSDFGHJKLM", "⏎WXCVBN⌫"];
+    kbBox.innerHTML = rows.map(r => `<div class="kbr">${[...r].map(k => `<button class="key${k === "⏎" || k === "⌫" ? " wide" : ""}" data-k="${k}">${k === "⏎" ? "OK" : k}</button>`).join("")}</div>`).join("");
+    const paint = () => { const cells = $$(".wcell", $$(".wrow", grid)[row]); cells.forEach((c, i) => { c.textContent = cur[i] || ""; c.classList.toggle("full", !!cur[i]); }); };
+    const submit = () => {
+      if (cur.length < 5) { $$(".wrow", grid)[row].classList.remove("bad"); void grid.offsetWidth; $$(".wrow", grid)[row].classList.add("bad"); return toast("5 lettres ! 🙄"); }
+      const res = Array(5).fill("x"), pool = {};
+      for (let i = 0; i < 5; i++) { if (cur[i] === ANS[i]) res[i] = "g"; else pool[ANS[i]] = (pool[ANS[i]] || 0) + 1; }
+      for (let i = 0; i < 5; i++) if (res[i] !== "g" && pool[cur[i]]) { res[i] = "y"; pool[cur[i]]--; }
+      const cells = $$(".wcell", $$(".wrow", grid)[row]), word = cur;
+      cells.forEach((c, i) => setTimeout(() => { c.classList.add("flip", res[i]); S.tick(); }, i * 180));
+      [...word].forEach((ch, i) => { const rank = { x: 0, y: 1, g: 2 }; if ((rank[res[i]]) > (rank[st[ch]] ?? -1)) st[ch] = res[i]; });
+      setTimeout(() => {
+        $$(".key", kbBox).forEach(k => { const s = st[k.dataset.k]; if (s) { k.classList.remove("g", "y", "x"); k.classList.add(s); } });
+        if (word === ANS) { over = true; const pts = Math.max(5, 25 - row * 4); addScore(Math.min(20, pts)); S.win(); party(); $("#wMsg").innerHTML = `KBIDA ! 🫀 Trouvé en ${row + 1} essai${row ? "s" : ""}. Il l'a écrit 2 645 fois… toi 317 fois 😌`; }
+        else if (row === 5) { over = true; $("#wMsg").textContent = "C'était KBIDA 🫀 (son petit nom préféré pour toi !)"; S.bad(); }
+        else { row++; cur = ""; }
+      }, 1000);
+    };
+    kbBox.addEventListener("click", e => { const k = e.target.closest(".key"); if (!k || over) return; const v = k.dataset.k; if (v === "⌫") cur = cur.slice(0, -1); else if (v === "⏎") return submit(); else if (cur.length < 5) cur += v; S.pop(); paint(); });
+  })();
+
+  /* ================= V2 : ORDER ================= */
+  (() => {
+    const EV = [["💬", "« Reeee » : le tout premier message", "14 oct. 2024"], ["🌹", "Son premier « mon amour »", "16 oct. 2024"], ["🫶", "« Safi ana wlit kanbghik »", "26 oct. 2024"], ["🍟", "« Descend 😌 » : le premier rendez-vous", "11 déc. 2024"], ["📢", "« akhti » × 566", "26 févr. 2025"], ["📈", "Record : 4 612 messages en un jour", "5 mai 2025"], ["💌", "La lettre des 2 ans", "14 oct. 2026"]];
+    const box = $("#order"); let next = 0, err = 0;
+    const order = shuffle(EV.map((_, i) => i));
+    box.innerHTML = order.map(i => `<button class="ob" data-i="${i}"><span class="on">?</span><span>${EV[i][0]} ${EV[i][1]}<small></small></span></button>`).join("");
+    $$(".ob", box).forEach(b => b.addEventListener("click", () => {
+      if (b.classList.contains("ok") || next >= EV.length) return; const i = +b.dataset.i;
+      if (i === next) { b.classList.add("ok"); $(".on", b).textContent = next + 1; $("small", b).textContent = EV[i][2]; next++; S.good(); if (next === EV.length) { const pts = Math.max(0, 20 - err * 4); addScore(pts); party(); $("#oMsg").textContent = `Parfait ! ${err ? err + " erreur" + (err > 1 ? "s" : "") + " · " : ""}+${pts} pts. Notre histoire, dans l'ordre. 🥹`; } }
+      else { err++; b.classList.remove("bad"); void b.offsetWidth; b.classList.add("bad"); S.bad(); }
+    }));
+    function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  })();
+
+  /* ================= V2 : DUELS ================= */
+  (() => {
+    const D = [["dit le plus « merci »", 601, 801], ["pose le plus de questions", 14790, 12854], ["dit le plus « courage / ça va aller »", 40, 155], ["dit le plus « repose-toi / va dormir »", 177, 298], ["parle le plus de nos futurs enfants", 107, 36], ["parle le plus de notre future maison", 85, 110], ["parle le plus de foot ⚽", 341, 64], ["parle le plus de sushi 🍣", 21, 58], ["dit le plus « fier/fière de toi, bravo »", 282, 299], ["étire le plus les mots (bebeeeee)", 4748, 8024]];
+    let i = 0, sc = 0; const box = $("#duels");
+    const show = () => {
+      if (i >= D.length) { box.innerHTML = `<div class="rq">${sc}/${D.length} 🥊</div><p class="rfeed">${sc >= 8 ? "Tu nous as cernés 😍" : "Il y a des surprises, hein ? 😂"}</p><button class="btn small" id="duAgain">Rejouer</button>`; $("#duAgain").onclick = () => { i = 0; sc = 0; show(); }; return; }
+      const [q, h, f] = D[i];
+      box.innerHTML = `<div class="rnum">Duel ${i + 1}/${D.length} · 5 pts</div><div class="rq">Qui ${q} ?</div><div class="gopts two"><button class="gopt" data-a="0">${avL}Lui</button><button class="gopt" data-a="1">${avE}Elle</button></div><div class="rfeed"></div>`;
+      $$(".gopt", box).forEach(b => b.addEventListener("click", () => {
+        if (box.dataset.lock) return; box.dataset.lock = 1; const win = h > f ? 0 : 1, ok = +b.dataset.a === win;
+        b.classList.add(ok ? "good" : "bad"); if (ok) { sc++; addScore(5); S.good(); } else S.bad();
+        $(".rfeed", box).textContent = `${ok ? "✅" : "❌"} Lui ${fmt(h)} · Elle ${fmt(f)}`;
+        setTimeout(() => { delete box.dataset.lock; i++; show(); }, 2000);
+      }));
+    };
+    show();
+  })();
+
+  /* ================= V2 : FRIES HUNT ================= */
+  (() => {
+    const spots = [["#s-first", "8%", "92%"], ["#s-records", "90%", "6%"], ["#s-emoji", "88%", "93%"], ["#s-thanks", "4%", "4%"], ["#s-guide", "92%", "50%"]];
+    let got = new Set(); try { got = new Set(JSON.parse(localStorage.getItem("nous-fries") || "[]")); } catch (e) {}
+    const bar = $("#friesBar"); bar.innerHTML = spots.map((_, i) => `<span class="${got.has(i) ? "got" : ""}">🍟</span>`).join("");
+    const check = () => { if (got.size === spots.length) { $("#friesSecret").classList.add("show"); } };
+    spots.forEach(([sel, x, y], i) => {
+      const s = $(sel); if (!s || got.has(i)) return;
+      const f = document.createElement("button"); f.className = "hidden-fry"; f.textContent = "🍟"; f.setAttribute("aria-label", "Frite cachée");
+      f.style.left = x; f.style.top = y; s.appendChild(f);
+      f.addEventListener("click", () => { got.add(i); try { localStorage.setItem("nous-fries", JSON.stringify([...got])); } catch (e) {} f.classList.add("found"); S.win(); burstAt(f, 30); $$("span", bar)[i].classList.add("got"); toast(`🍟 Frite trouvée ! ${got.size}/5`); if (got.size === 5) { setTimeout(() => toast("🔓 Toutes les frites ! Va voir la chasse au trésor en bas 🍟", 3500), 2500); check(); } });
+    });
+    check();
+  })();
+
+  /* ================= V2 : RUNNER EASTER EGG ================= */
+  (() => { let t = 0; $("#prog .runner").addEventListener("click", () => { t++; S.tick(); if (t === 5) { t = 0; toast("🏃‍♂️ Il court vers toi depuis le 14 octobre 2024. Il ne compte pas s'arrêter. 💞", 3500); party(); } }); })();
+
+  whenSeen($("[data-duel-auto]").closest("[data-reveal]"), () => $$("[data-duel-auto]").forEach(d => animDuel(d)));
 
   /* final reveal */
   whenSeen($("#finalN").closest("[data-reveal]"), () => { updateFinal(); if (score > 0) { S.win(); party(); } });
