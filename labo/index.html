@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f6f6b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Le Labo du Couple">
+<meta name="robots" content="noindex">
+<title>Le Labo du Couple</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%AC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#1f6f6b; --teal-2:#2a9d8f; --mint:#d8f3ec; --mint-2:#bfe9dd; --cream:#f7fbfa; --ink:#1f2d2b; --muted:#5f7471;
+  --rose:#ff4f7e; --pink:#ff8fb1; --blush:#ffe1ea; --gold:#ffc94d; --amber:#ffb347; --plum:#3b2a63;
+  --him:#4f8bff; --her:#ff4f7e; --good:#2fbf71; --warn:#f4a23b;
+  --shadow:0 14px 34px rgba(31,111,107,.14);
+  --display:"Fredoka","Arial Rounded MT Bold",system-ui,sans-serif; --body:"Nunito",system-ui,-apple-system,sans-serif; --hand:"Caveat",cursive;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--cream);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden;height:100vh}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;border:0;background:none}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.08}
+p{margin:0;line-height:1.55}
+.wrap{width:100%;max-width:660px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left)) 0 max(18px,env(safe-area-inset-right));position:relative;z-index:1}
+.scene{position:relative;padding:84px 0 72px;overflow:hidden}
+.full{min-height:100vh;min-height:100svh;display:flex;align-items:center}
+.center{text-align:center}
+.stack>*+*{margin-top:16px}
+.kicker{display:inline-block;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:#fff;border-radius:999px;padding:6px 14px;box-shadow:var(--shadow)}
+.title{font-size:clamp(29px,8vw,48px);color:var(--teal)}
+.title em{font-style:normal;color:var(--rose)}
+.lead{font-size:clamp(16px,4.2vw,18.5px);color:var(--muted)}
+.small{font-size:13.5px;color:var(--muted)}
+.card{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-weight:600;font-size:17px;background:var(--teal);color:#fff;border-radius:999px;padding:13px 22px;box-shadow:0 10px 22px rgba(31,111,107,.3);transition:transform .15s}
+.btn:active{transform:scale(.94)}
+.btn.rose{background:var(--rose);box-shadow:0 10px 22px rgba(255,79,126,.3)}
+.btn.small{font-size:14.5px;padding:9px 16px}
+.av{border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.18);background:#fff;display:block}
+.him-c{color:var(--him)} .her-c{color:var(--her)}
+.t-teal{background:linear-gradient(160deg,#2a9d8f,#1f6f6b);color:#fff}
+.t-teal .title,.t-teal .lead,.t-teal .title em{color:#fff}
+.t-teal .small{color:rgba(255,255,255,.8)}
+.t-plum{background:linear-gradient(160deg,#5b3a8a,#2b1f4d);color:#fff}
+.t-plum .title,.t-plum .lead{color:#fff}.t-plum .title em{color:var(--gold)}
+.t-plum .small{color:rgba(255,255,255,.75)}
+.t-mint{background:linear-gradient(180deg,#e9f8f3,#f7fbfa)}
+.t-blush{background:linear-gradient(180deg,#fff0f4,#f7fbfa)}
+.t-amber{background:linear-gradient(180deg,#fff6e6,#f7fbfa)}
+
+[data-reveal]{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.9,.25,1.15);transition-delay:var(--d,0s)}
+[data-reveal].in{opacity:1;transform:none}
+.ch{display:inline-block;white-space:pre}.word{display:inline-block;white-space:nowrap}
+.title.in .ch{animation:chPop .7s cubic-bezier(.3,1.8,.5,1) backwards;animation-delay:calc(var(--ci)*22ms)}
+@keyframes chPop{0%{opacity:0;transform:translateY(40px) rotate(16deg) scale(.3)}}
+@keyframes okpop{50%{transform:scale(1.1)}}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+
+#prog{position:fixed;top:0;left:0;right:0;height:calc(6px + env(safe-area-inset-top));z-index:40;pointer-events:none}
+#prog i{position:absolute;left:0;bottom:0;height:5px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--him),var(--teal-2),var(--her))}
+#scoreBtn{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:45;background:var(--teal);color:#fff;font-family:var(--display);font-weight:600;font-size:15px;border-radius:999px;padding:10px 15px;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+#scoreBtn.bump{animation:okpop .5s}
+#muteBtn{position:fixed;left:max(14px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));z-index:45;width:44px;height:44px;border-radius:50%;background:#fff;box-shadow:var(--shadow);font-size:19px}
+.toast{position:fixed;left:50%;top:max(22px,calc(env(safe-area-inset-top) + 14px));transform:translate(-50%,-180%);visibility:hidden;background:#fff;color:var(--ink);font-weight:800;padding:12px 18px;border-radius:18px;z-index:70;max-width:90vw;text-align:center;transition:transform .45s cubic-bezier(.3,1.5,.5,1);box-shadow:0 14px 30px rgba(0,0,0,.2);border:3px solid var(--teal-2)}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+/* gate */
+#gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;background:radial-gradient(circle at 50% 30%,#2a9d8f,#123f3d);color:#fff;transition:opacity .7s,visibility .7s}
+#gate.gone{opacity:0;visibility:hidden}
+.folder{position:relative;width:min(300px,80vw);height:200px;filter:drop-shadow(0 20px 30px rgba(0,0,0,.35));animation:fl 2.4s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-8px) rotate(-1.5deg)}}
+.folder .back{position:absolute;inset:16px 0 0;background:#e9c46a;border-radius:10px 14px 14px 14px}
+.folder .tabf{position:absolute;top:0;left:0;width:42%;height:30px;background:#e9c46a;border-radius:10px 10px 0 0}
+.folder .paper{position:absolute;left:16px;right:16px;top:28px;bottom:14px;background:#fff;border-radius:6px;padding:16px;color:var(--ink);text-align:left;font-size:13px;font-weight:700;line-height:1.6;transition:transform .8s cubic-bezier(.3,1.4,.5,1)}
+.folder .front{position:absolute;inset:60px 0 0;background:#f4d58d;border-radius:12px;transform-origin:bottom;transition:transform .8s cubic-bezier(.3,1.2,.5,1)}
+.folder .stamp{position:absolute;right:14px;bottom:18px;font-family:var(--display);font-weight:700;color:#c0392b;border:3px solid #c0392b;border-radius:8px;padding:2px 8px;transform:rotate(-10deg);font-size:15px}
+.folder.open .front{transform:rotateX(70deg)}
+.folder.open .paper{transform:translateY(-60px)}
+#gate h1{font-size:clamp(32px,9vw,50px)}
+
+/* chat */
+.phone{max-width:440px;margin:0 auto;border-radius:26px;overflow:hidden;box-shadow:0 22px 46px rgba(0,0,0,.2);background:#efe7dd}
+.phone .bar{display:flex;align-items:center;gap:10px;background:#075e54;color:#fff;padding:11px 14px;font-weight:800}
+.phone .bar .av{width:36px;height:36px;border-width:2px}
+.phone .bar small{display:block;font-weight:600;font-size:12px;opacity:.8}
+.msgs{display:flex;flex-direction:column;gap:6px;padding:14px 12px 16px;min-height:180px}
+.date-chip{align-self:center;background:#e1f2fb;color:#54656f;font-size:12px;font-weight:800;border-radius:8px;padding:4px 10px;margin:4px 0}
+.bub{max-width:84%;padding:7px 10px 18px;border-radius:12px;font-size:15px;line-height:1.35;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.12);animation:bubIn .35s cubic-bezier(.3,1.5,.5,1);color:#111}
+.bub time{position:absolute;right:8px;bottom:3px;font-size:10.5px;color:#667781}
+.bub.her{align-self:flex-start;background:#fff;border-top-left-radius:2px}
+.bub.him{align-self:flex-end;background:#d9fdd3;border-top-right-radius:2px}
+@keyframes bubIn{from{opacity:0;transform:translateY(14px) scale(.85)}}
+.typing{align-self:flex-start;background:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:4px}
+.typing.him{align-self:flex-end;background:#d9fdd3}
+.typing i{width:7px;height:7px;border-radius:50%;background:#999;animation:dot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{transform:translateY(-4px);opacity:.4}}
+
+/* promise vs reality */
+.pvr{display:grid;gap:12px}
+.pv{background:#fff;border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.pv .top{display:flex;gap:10px;align-items:center;padding:14px 14px 10px}
+.pv .top .av{width:40px;height:40px;flex:none}
+.pv .q{font-family:var(--hand);font-size:24px;line-height:1.1;color:var(--plum)}
+.pv .res{padding:12px 14px 14px;background:var(--mint);font-size:14.5px;font-weight:700;line-height:1.45;display:none}
+.pv .res.warn{background:#fff3df}
+.pv.open .res{display:block;animation:okpop .4s}
+.pv .tapme{display:block;width:100%;padding:10px;font-weight:800;font-size:13.5px;color:var(--teal);border-top:1px dashed #d6e7e3}
+.pv.open .tapme{display:none}
+
+/* profiles */
+.prof{display:grid;gap:14px}
+.pcard{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:18px;text-align:left}
+.phead{display:flex;gap:12px;align-items:center}
+.phead .av{width:62px;height:62px}
+.phead h3{font-size:22px;color:var(--ink)}
+.phead .arch{font-family:var(--hand);font-size:24px;line-height:1}
+.ptags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ptags span{font-size:12.5px;font-weight:800;border-radius:999px;padding:5px 10px;background:var(--mint);color:var(--teal)}
+.traits{display:grid;gap:10px}
+.trait .tl{display:flex;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:4px}
+.trait .tl small{color:var(--muted);font-weight:700}
+.trait .tb{display:grid;grid-template-columns:22px 1fr 54px;gap:4px 8px;align-items:center;font-size:12.5px;font-weight:800}
+.trait .tb .av{width:22px;height:22px;border-width:2px}
+.trait .tt{height:11px;border-radius:999px;background:#e8f0ee;overflow:hidden}
+.trait .tt i{display:block;height:100%;width:0;border-radius:999px;transition:width 1.2s cubic-bezier(.2,.9,.25,1)}
+.trait .tt.h i{background:var(--him)}.trait .tt.f i{background:var(--her)}
+
+/* manual */
+.tabs{display:flex;background:#fff;border-radius:999px;padding:5px;box-shadow:var(--shadow)}
+.tab{flex:1;border-radius:999px;padding:10px 8px;font-weight:800;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
+.tab .av{width:24px;height:24px;border-width:2px}
+.tab.on{background:var(--teal);color:#fff}
+.manual{display:grid;gap:10px}
+.mi{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:14px;display:flex;gap:12px;text-align:left;animation:okpop .35s}
+.mi .e{font-size:28px;flex:none}
+.mi b{display:block;font-family:var(--display);font-size:17px;color:var(--ink)}
+.mi p{font-size:14px;color:var(--muted);margin-top:3px}
+.mi .ev{display:inline-block;margin-top:6px;font-size:12px;font-weight:800;background:var(--mint);color:var(--teal);border-radius:8px;padding:3px 8px}
+
+/* loop */
+.loop-wrap{position:relative;max-width:420px;margin:0 auto}
+#loop{width:100%;display:block}
+#loop .node{cursor:pointer}
+#loop .node circle{transition:transform .3s;transform-box:fill-box;transform-origin:center}
+#loop .node.on circle{transform:scale(1.12)}
+#loop text{font-family:var(--body);font-weight:800}
+.loop-tip{min-height:110px}
+
+/* strengths & growth */
+.sg{display:grid;gap:12px}
+.sgc{background:#fff;border-radius:22px;box-shadow:var(--shadow);text-align:left;overflow:hidden}
+.sgc .h{display:flex;gap:10px;align-items:center;padding:14px}
+.sgc .h .e{font-size:26px;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none}
+.sgc.good .h .e{background:#e3f8ec}.sgc.work .h .e{background:#fff1dc}
+.sgc .h b{display:block;font-family:var(--display);font-size:17px}
+.sgc .h .n{font-size:12.5px;font-weight:800;color:var(--muted)}
+.sgc .h .chev{margin-left:auto;font-size:18px;color:var(--muted);transition:transform .3s}
+.sgc.open .chev{transform:rotate(180deg)}
+.sgc .body{display:none;padding:0 14px 14px;font-size:14.2px;line-height:1.5}
+.sgc.open .body{display:block;animation:okpop .3s}
+.sgc .body .row{margin-top:8px}
+.sgc .body .lbl{display:block;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sgc .body .try{background:#effaf5;border-radius:12px;padding:10px 12px;font-weight:700;color:#1e6b46}
+.sgc .body .try em{font-style:normal;font-family:var(--hand);font-size:21px;color:var(--teal)}
+.who-pill{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px;border-radius:999px;padding:4px 10px 4px 4px;background:#fff;box-shadow:var(--shadow)}
+.who-pill .av{width:24px;height:24px;border-width:2px}
+
+/* translator */
+.trans{display:grid;gap:12px}
+.tr{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:14px;text-align:left}
+.tr .said{font-family:var(--display);font-weight:600;font-size:19px;color:var(--ink);display:flex;gap:8px;align-items:center}
+.tr .said .av{width:28px;height:28px;border-width:2px}
+.tr .steps{display:grid;gap:6px;margin-top:10px}
+.tr .st{display:none;border-radius:12px;padding:9px 12px;font-size:14px;font-weight:700}
+.tr .st.s1{background:#fff3df;color:#8a5a12}.tr .st.s2{background:#e3f8ec;color:#1e6b46}
+.tr .st.show{display:block;animation:okpop .35s}
+.tr .nx{margin-top:10px;font-weight:800;font-size:13.5px;color:var(--teal)}
+
+/* scenarios */
+.scen{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:20px;text-align:left;color:var(--ink)}
+.scen .sn{font-size:12.5px;font-weight:800;color:var(--muted)}
+.scen .sq{font-family:var(--display);font-weight:600;font-size:clamp(19px,5.2vw,23px);margin:8px 0 14px;color:var(--ink)}
+.scen .so{display:grid;gap:9px}
+.scen .o{text-align:left;background:var(--cream);border:2px solid #dbe9e6;border-radius:16px;padding:12px 13px;font-weight:700;font-size:15px}
+.scen .o.good{background:#e3f8ec;border-color:#7fd6a6;animation:okpop .4s}
+.scen .o.bad{background:#ffe7e7;border-color:#ffb3b3;animation:shake .4s}
+.scen .fb{display:none;margin-top:12px;font-weight:700;line-height:1.5;color:var(--muted)}
+.scen .fb.show{display:block}
+
+/* stats from previous */
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stb{background:#fff;color:var(--ink);border-radius:20px;padding:15px 11px;text-align:center;box-shadow:var(--shadow)}
+.stb b{display:block;font-family:var(--display);font-size:clamp(24px,7vw,34px);color:var(--teal);line-height:1.05}
+.stb span{font-size:12.8px;font-weight:800;color:var(--muted)}
+#radar{width:100%;max-width:360px;display:block;margin:0 auto}
+#radar text{font-family:var(--body);font-weight:800;font-size:11px;fill:#1f2d2b}
+#radar .poly{transform:scale(0);transform-origin:0 0;transition:transform 1.4s cubic-bezier(.3,1.4,.5,1)}
+#radar.on .poly{transform:scale(1)}
+.legend2{display:flex;justify-content:center;gap:18px;font-weight:800;font-size:14px}
+.legend2 span{display:inline-flex;align-items:center;gap:6px}
+.legend2 i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.rules{display:grid;gap:10px}
+.rule{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:20px;padding:14px;box-shadow:var(--shadow);text-align:left;width:100%}
+.rule .ri{font-size:26px;flex:none}
+.rule b{display:block;font-family:var(--display);font-size:16.5px;color:var(--ink)}
+.rule p{font-size:13.8px;color:var(--muted);margin-top:3px;line-height:1.4}
+.rule .ck{margin-left:auto;flex:none;width:28px;height:28px;border-radius:50%;border:3px solid #cfe3de;display:grid;place-items:center;font-size:15px;color:transparent}
+.rule.on{background:#effcf6}.rule.on .ck{background:var(--good);border-color:var(--good);color:#fff}
+
+/* timeline */
+.tl{position:relative;padding-left:34px}
+.tl::before{content:"";position:absolute;left:14px;top:6px;bottom:6px;width:4px;border-radius:4px;background:linear-gradient(180deg,var(--him),var(--teal-2),var(--her))}
+.ev{position:relative;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:12px;text-align:left}
+.ev .dot{position:absolute;left:-34px;top:12px;width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;font-size:16px}
+.ev .d{font-size:12px;font-weight:800;color:var(--teal);letter-spacing:.04em;text-transform:uppercase}
+.ev b{display:block;font-family:var(--display);font-size:16.5px;margin-top:2px}
+.ev p{font-size:13.8px;color:var(--muted);margin-top:3px}
+.ev.big{background:linear-gradient(135deg,#fff,#fff0f4)}
+.tl-filter{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.tl-filter button{font-size:13px;font-weight:800;border-radius:999px;padding:7px 12px;background:#fff;box-shadow:var(--shadow);color:var(--muted)}
+.tl-filter button.on{background:var(--teal);color:#fff}
+
+/* 30 day */
+.ring{width:150px;height:150px;margin:0 auto;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .rv{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:30px;color:var(--teal)}
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.day{aspect-ratio:1;border-radius:14px;background:#fff;box-shadow:var(--shadow);font-family:var(--display);font-weight:700;font-size:17px;color:var(--teal);position:relative}
+.day.on{background:var(--good);color:#fff}
+.day.on::after{content:"✓";position:absolute;top:2px;right:6px;font-size:11px}
+.dayinfo{min-height:72px}
+
+/* reflection */
+.refl{display:grid;gap:8px;text-align:left}
+.rc{display:flex;gap:10px;align-items:center;background:#fff;border-radius:16px;padding:11px 12px;box-shadow:var(--shadow);font-weight:700;font-size:14.5px;width:100%;text-align:left}
+.rc .bx{flex:none;width:24px;height:24px;border-radius:7px;border:3px solid #cfe3de;display:grid;place-items:center;font-size:13px;color:transparent}
+.rc.on{background:#effcf6}.rc.on .bx{background:var(--teal);border-color:var(--teal);color:#fff}
+
+.disclaimer{background:#fff;border:2px dashed #cfe3de;border-radius:18px;padding:14px;font-size:13.5px;color:var(--muted);text-align:left}
+footer{padding:30px 0 calc(90px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:14px}
+footer a{color:var(--teal);font-weight:800}
+a.btn{text-decoration:none}
+.end-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate">
+  <div class="folder" id="folder" aria-hidden="true">
+    <div class="tabf"></div><div class="back"></div>
+    <div class="paper">DOSSIER N° 14-10-2024<br>Sujets : K. & A.<br>Messages analysés : 438 201<br>Conclusion : très amoureux 💞</div>
+    <div class="front"><span class="stamp">CONFIDENTIEL</span></div>
+  </div>
+  <h1>Le Labo du Couple 🔬</h1>
+  <p style="font-weight:700;opacity:.9;max-width:420px">L'analyse la plus complète jamais faite sur nous deux : personnalités, habitudes, forces, choses à travailler… et comment s'aimer encore mieux.</p>
+  <button class="btn rose" id="enter">Ouvrir le dossier 📂</button>
+</div>
+
+<div id="prog" aria-hidden="true"><i></i></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button id="muteBtn" aria-label="Son">🔊</button>
+<button id="scoreBtn">🧠 <span id="scoreN">0</span> pts</button>
+
+<main>
+
+<!-- INTRO / METHOD -->
+<section class="scene full t-teal center" id="s-intro">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Avant de lire</span></div>
+    <h2 class="title" data-reveal>Les 3 règles <em>de ce rapport</em></h2>
+    <div class="card" data-reveal style="text-align:left;color:var(--ink)">
+      <p><b>1. Pas de coupable.</b> Chaque chose à travailler existe des deux côtés. Elle a les siennes, il a les siennes. Même nombre.</p>
+      <p style="margin-top:10px"><b>2. Que des chiffres.</b> 438 201 messages, 1,5 million de mots, 742 jours. Et pour être juste, tout est calculé « pour 1 000 messages » (elle écrit plus, donc on compare des proportions, pas des totaux).</p>
+      <p style="margin-top:10px"><b>3. Le but : se rapprocher.</b> Ce n'est pas un procès. C'est un mode d'emploi pour s'aimer encore mieux pendant les 70 prochaines années. 😌</p>
+    </div>
+    <p class="small" data-reveal>Un vrai rapport de labo, en version câline : il y a aussi des jeux, des scénarios et un défi de 30 jours.</p>
+  </div>
+</section>
+
+<!-- DAY 1 PACT -->
+<section class="scene t-mint" id="s-pact">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce à conviction n°1 · 14 octobre 2024, 20h39</span></div>
+    <h2 class="title center" data-reveal>Le jour 1, on a fait un <em>test de personnalité</em></h2>
+    <p class="lead center" data-reveal>Le soir même du premier message. Lui : <b>INTJ-T</b>, « l'Architecte » (lui qui deviendra… architecte informatique 😂). Elle a envoyé son résultat en capture. Et là, sans le savoir, on a écrit les règles de notre couple :</p>
+    <div class="phone" data-reveal><div class="bar"><img class="av" src="../anniversaire/img/elle.png" alt=""><div>Khadija Roumanie<small>14 octobre 2024</small></div></div><div class="msgs" id="chat-pact"></div></div>
+    <h3 class="center" data-reveal style="font-size:22px;color:var(--teal);margin-top:26px">Promesses du jour 1 vs 2 ans de données</h3>
+    <p class="small center" data-reveal>Touche chaque promesse pour voir le verdict.</p>
+    <div class="pvr" id="pvr" data-reveal></div>
+  </div>
+</section>
+
+<!-- PROFILES -->
+<section class="scene" id="s-prof">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°2 · Nos profils</span></div>
+    <h2 class="title center" data-reveal>Deux personnalités, <em>un duo</em></h2>
+    <p class="lead center" data-reveal>Pas de signe astro : uniquement ce que disent nos messages.</p>
+    <div class="prof" data-reveal>
+      <div class="pcard"><div class="phead"><img class="av" src="../anniversaire/img/elle.png" alt=""><div><h3>Khadija</h3><div class="arch her-c">La Soignante Expressive 🩺</div></div></div>
+        <div class="ptags"><span>💬 dit ce qu'elle ressent</span><span>🩺 aime en prenant soin</span><span>🤝 empathique</span><span>🙄 expressive</span><span>⚡ réagit vite</span></div>
+        <p class="small" style="margin-top:10px">Elle envoie plus de messages (57 %), plus courts, plus d'emojis et de cœurs. Elle met des mots sur ses émotions (« je me sens », « j'ai besoin » : presque 2× plus que lui) et elle soigne : « repose-toi », « courage », conseils médicaux.</p></div>
+      <div class="pcard"><div class="phead"><img class="av" src="../anniversaire/img/lui.png" alt=""><div><h3>Abdelkader</h3><div class="arch him-c">Le Romantique Architecte 💬</div></div></div>
+        <div class="ptags"><span>🧠 INTJ-T</span><span>💗 champion des petits noms</span><span>❓ curieux</span><span>🔮 se projette</span><span>🔁 revient toujours</span></div>
+        <p class="small" style="margin-top:10px">Il écrit moins de messages mais plus longs (4,6 mots contre 2,9), pose plus de questions, parle d'avenir (et d'enfants 3× plus qu'elle), relance la conversation après un silence 360 fois, et place un « bebe / kbida / hbiba » à chaque phrase.</p></div>
+    </div>
+    <div class="card" data-reveal><p style="font-weight:800;margin-bottom:10px">📊 Les 10 traits mesurés (pour 1 000 messages)</p><div class="traits" id="traits"></div></div>
+  </div>
+</section>
+
+<!-- MANUAL -->
+<section class="scene t-blush" id="s-manual">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°3 · Mode d'emploi</span></div>
+    <h2 class="title center" data-reveal>Comprendre <em>ce qui se passe dans sa tête</em></h2>
+    <p class="lead center" data-reveal>Pas « les femmes » ni « les hommes » : <b>elle</b> et <b>lui</b>. Ce que nos messages disent de nos besoins.</p>
+    <div class="tabs" data-reveal><button class="tab on" data-m="her"><img class="av" src="../anniversaire/img/elle.png" alt="">Comprendre Khadija</button><button class="tab" data-m="him"><img class="av" src="../anniversaire/img/lui.png" alt="">Comprendre Abdelkader</button></div>
+    <div class="manual" id="manual" data-reveal></div>
+  </div>
+</section>
+
+<!-- LOOP -->
+<section class="scene t-plum center" id="s-loop">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#4a3576;color:var(--gold)">Pièce n°4 · La boucle à casser</span></div>
+    <h2 class="title" data-reveal>Notre cercle <em>vicieux</em> (et comment le couper)</h2>
+    <p class="lead" data-reveal>Beaucoup de couples ont ce schéma : l'un poursuit, l'autre se retire, et chacun pousse l'autre à faire plus de ce qu'il déteste. Le nôtre, en chiffres. Touche chaque étape ✂️</p>
+    <div class="loop-wrap" data-reveal><svg id="loop" viewBox="-170 -170 340 340"></svg></div>
+    <div class="card loop-tip" id="loopTip" data-reveal style="color:var(--ink);text-align:left"><p style="font-weight:800">👆 Touche une étape du cercle.</p></div>
+  </div>
+</section>
+
+<!-- STRENGTHS -->
+<section class="scene t-mint" id="s-strengths">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°5 · Nos forces</span></div>
+    <h2 class="title center" data-reveal>Ce qu'on fait <em>déjà très bien</em></h2>
+    <p class="lead center" data-reveal>On commence par le meilleur. Touche une carte pour les détails.</p>
+    <div class="center" data-reveal><span class="who-pill"><img class="av" src="../anniversaire/img/elle.png" alt="">Les forces de Khadija</span></div>
+    <div class="sg" id="sg-her-good" data-reveal></div>
+    <div class="center" data-reveal style="margin-top:24px"><span class="who-pill"><img class="av" src="../anniversaire/img/lui.png" alt="">Les forces d'Abdelkader</span></div>
+    <div class="sg" id="sg-him-good" data-reveal></div>
+  </div>
+</section>
+
+<!-- GROWTH -->
+<section class="scene t-amber" id="s-growth">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°6 · Nos chantiers</span></div>
+    <h2 class="title center" data-reveal>Ce qu'on peut <em>travailler</em></h2>
+    <p class="lead center" data-reveal>Des habitudes qu'on a tous les deux, souvent pour se protéger, et qui peuvent blesser l'autre sans le vouloir. 5 chacun, promis, pas un de plus. Pour chacune : le chiffre, ce que l'autre peut ressentir, et quoi essayer à la place.</p>
+    <div class="center" data-reveal><span class="who-pill"><img class="av" src="../anniversaire/img/elle.png" alt="">Les chantiers de Khadija</span></div>
+    <div class="sg" id="sg-her-work" data-reveal></div>
+    <div class="center" data-reveal style="margin-top:24px"><span class="who-pill"><img class="av" src="../anniversaire/img/lui.png" alt="">Les chantiers d'Abdelkader</span></div>
+    <div class="sg" id="sg-him-work" data-reveal></div>
+    <div class="center" data-reveal style="margin-top:24px"><span class="who-pill">🤝 Les chantiers communs</span></div>
+    <div class="sg" id="sg-both-work" data-reveal></div>
+    <div class="guess-like card" data-reveal id="selfq"></div>
+  </div>
+</section>
+
+<!-- TRANSLATOR -->
+<section class="scene" id="s-trans">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°7 · Le traducteur</span></div>
+    <h2 class="title center" data-reveal>Ce qu'on écrit, ce qu'on veut dire, <em>ce qu'on pourrait dire</em></h2>
+    <p class="lead center" data-reveal>Nos phrases réflexes pendant les tensions. Touche « traduire » deux fois.</p>
+    <div class="trans" id="trans" data-reveal></div>
+  </div>
+</section>
+
+<!-- SCENARIOS -->
+<section class="scene t-teal center" id="s-scen">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Pièce n°8 · Simulateur</span></div>
+    <h2 class="title" data-reveal>Et toi, <em>tu ferais quoi ?</em></h2>
+    <p class="lead" data-reveal>10 situations tirées de nos vraies disputes. Choisis la meilleure réaction, et découvre pourquoi.</p>
+    <div class="scen" id="scen" data-reveal></div>
+  </div>
+</section>
+
+<!-- RECAP FROM PREVIOUS -->
+<section class="scene t-blush" id="s-recap">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°9 · Rappel des faits</span></div>
+    <h2 class="title center" data-reveal>Disputes, réconciliations <em>et langages d'amour</em></h2>
+    <div class="statgrid" data-reveal>
+      <div class="stb"><b data-count="151">0</b><span>moments de tension en 2 ans</span></div>
+      <div class="stb"><b>−39 %</b><span>de tensions en année 2 📉</span></div>
+      <div class="stb"><b>10 min</b><span>avant le 1er geste de paix (médiane)</span></div>
+      <div class="stb"><b>56 %</b><span>des paix faites par celui qui n'avait pas commencé</span></div>
+      <div class="stb"><b>77 / 74</b><span>premiers pas vers la paix (lui / elle)</span></div>
+      <div class="stb"><b>2 min</b><span>pour qu'un mot doux revienne après la paix 🥹</span></div>
+      <div class="stb"><b>1h du mat</b><span>l'heure n°1 des tensions</span></div>
+      <div class="stb"><b>Vendredi</b><span>le jour le plus calme</span></div>
+    </div>
+    <div class="card" data-reveal>
+      <p style="font-weight:800;text-align:center">💞 Comment chacun dit « je t'aime »</p>
+      <svg viewBox="-160 -150 320 300" id="radar"></svg>
+      <div class="legend2"><span><i style="background:var(--him)"></i>Lui</span><span><i style="background:var(--her)"></i>Elle</span></div>
+      <p class="small" style="margin-top:8px">Elle : mots doux, puis <b>soin</b> (25 %). Lui : mots doux (47 %), puis <b>câlins</b> et <b>temps ensemble</b>.</p>
+    </div>
+    <h3 class="center" data-reveal style="font-size:22px;color:var(--teal);margin-top:20px">Nos 8 règles (cochez celles que vous signez)</h3>
+    <div class="rules" id="rules" data-reveal></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="scene" id="s-timeline">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°10 · La grande frise</span></div>
+    <h2 class="title center" data-reveal>Tous nos <em>moments marquants</em></h2>
+    <p class="lead center" data-reveal>Retrouvés un par un dans 2 ans de messages.</p>
+    <div class="tl-filter" data-reveal id="tlf"><button class="on" data-f="all">Tout</button><button data-f="love">💗 Amour</button><button data-f="life">🎓 Vie</button><button data-f="fun">😂 Fun</button></div>
+    <div class="tl" id="tl"></div>
+  </div>
+</section>
+
+<!-- 30 DAYS -->
+<section class="scene t-mint center" id="s-30">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Pièce n°11 · Le défi</span></div>
+    <h2 class="title" data-reveal>30 jours pour <em>s'aimer encore mieux</em></h2>
+    <p class="lead" data-reveal>Un petit défi par jour, tiré de nos chantiers. Touche un jour pour le voir, touche encore pour le valider.</p>
+    <div class="ring" data-reveal><svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="64" fill="none" stroke="#e1efeb" stroke-width="14"/><circle id="ringC" cx="75" cy="75" r="64" fill="none" stroke="#2fbf71" stroke-width="14" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402" style="transition:stroke-dashoffset .8s"/></svg><div class="rv"><span id="ringV">0</span>/30</div></div>
+    <div class="card dayinfo" id="dayInfo" data-reveal><p class="small">Choisis un jour 👇</p></div>
+    <div class="days" id="days" data-reveal></div>
+  </div>
+</section>
+
+<!-- REFLECTION -->
+<section class="scene" id="s-refl">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Pièce n°12 · À toi</span></div>
+    <h2 class="title center" data-reveal>Et maintenant, <em>on en parle</em></h2>
+    <p class="lead center" data-reveal>Coche ce sur quoi tu veux travailler, et ce que tu aimerais qu'il travaille. On envoie ça sur WhatsApp, et on en parle en vrai (pas à 1h du matin 😌).</p>
+    <div class="card" data-reveal><p style="font-weight:800;margin-bottom:8px">🙋‍♀️ Moi, je vais essayer de…</p><div class="refl" id="reflMe"></div></div>
+    <div class="card" data-reveal><p style="font-weight:800;margin-bottom:8px">💌 J'aimerais que toi, tu essaies de…</p><div class="refl" id="reflYou"></div></div>
+    <div class="center" data-reveal><button class="btn rose" id="sendRefl">Lui envoyer sur WhatsApp 💬</button></div>
+  </div>
+</section>
+
+<!-- END -->
+<section class="scene full t-plum center" id="s-end">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#4a3576;color:var(--gold)">Conclusion du labo</span></div>
+    <h2 class="title" data-reveal>Le diagnostic <em>final</em></h2>
+    <div class="card" data-reveal style="color:var(--ink);text-align:left">
+      <p>Vous n'êtes pas un couple sans disputes. Ça n'existe pas.</p>
+      <p style="margin-top:10px">Vous êtes un couple qui <b>se réconcilie en 10 minutes</b>, où <b>chacun tend la main</b> (77 contre 74), où les tensions ont <b>baissé de 39 %</b>, et où un mot doux revient <b>2 minutes</b> après chaque orage.</p>
+      <p style="margin-top:10px">Elle a besoin qu'on vienne vers elle. Lui a besoin qu'on lui dise clairement. Vous l'aviez déjà écrit le premier soir. Il ne reste plus qu'à le faire, un peu mieux chaque jour.</p>
+      <p class="hand" style="font-family:var(--hand);font-size:30px;color:var(--rose);margin-top:12px;text-align:center">Pronostic : 70 ans minimum. 🩺💞</p>
+    </div>
+    <div class="final" data-reveal><p style="font-family:var(--display);font-size:46px;font-weight:700"><span id="finalN">0</span> pts</p><p class="small" id="rank"></p></div>
+    <div class="disclaimer" data-reveal>🔬 <b>Méthode :</b> analyse automatique par mots-clés en français, darija et anglais, normalisée pour 1 000 messages. C'est approximatif (l'ironie et le contexte échappent aux machines) : ce sont des tendances, pas des diagnostics. Les citations sont courtes et volontairement choisies parmi les moments tendres.</div>
+    <div class="end-links" data-reveal><a class="btn rose" href="../nous/">💬 Nous Wrapped</a><a class="btn" href="../jeux/">🎡 Parc d'Amour</a><a class="btn" href="../anniversaire/">💌 La lettre</a></div>
+  </div>
+</section>
+
+<footer>Le Labo du Couple · fait avec des données et beaucoup d'amour</footer>
+</main>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const fmt = (n) => Math.round(n).toLocaleString("fr-FR");
+  const LUI = "../anniversaire/img/lui.png", ELLE = "../anniversaire/img/elle.png";
+  const avL = `<img class="av" src="${LUI}" alt="">`, avE = `<img class="av" src="${ELLE}" alt="">`;
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+
+  /* sound */
+  let AC = null, muted = store.get("labo-muted", false);
+  $("#muteBtn").textContent = muted ? "🔇" : "🔊";
+  const tone = (f, d = .09, type = "sine", v = .1, slide = 0) => { if (muted || !AC) return; const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (slide) o.frequency.exponentialRampToValueAtTime(f * slide, t + d); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g).connect(AC.destination); o.start(t); o.stop(t + d + .02); };
+  const S = { pop: () => tone(rnd(600, 900), .07, "sine", .09, .5), msg: () => { tone(880, .06, "sine", .07); setTimeout(() => tone(1320, .08, "sine", .05), 60); }, good: () => { tone(660, .08, "triangle"); setTimeout(() => tone(990, .1, "triangle"), 70); }, bad: () => tone(200, .22, "sawtooth", .05, .6), win: () => [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => tone(f, .18, "triangle", .1), i * 110)), tick: () => tone(1500, .02, "square", .03) };
+  $("#muteBtn").addEventListener("click", () => { muted = !muted; $("#muteBtn").textContent = muted ? "🔇" : "🔊"; store.set("labo-muted", muted); });
+  let tT; const toast = (m, ms = 2600) => { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tT); tT = setTimeout(() => t.classList.remove("show"), ms); };
+
+  /* confetti */
+  const cv = $("#fx"), ctx = cv.getContext("2d"); let parts = [], raf = null;
+  const size = () => { const d = devicePixelRatio || 1; cv.width = innerWidth * d; cv.height = innerHeight * d; cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px"; ctx.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener("resize", size);
+  const COL = ["#2a9d8f", "#ff4f7e", "#4f8bff", "#ffc94d", "#bfe9dd", "#fff"], EMO = ["💞", "🔬", "🩺", "✨", "💗", "🧠"];
+  function burst(x, y, n = 50) { if (reduce) return; for (let i = 0; i < n; i++) { const a = Math.random() * 6.28, s = rnd(4, 11); parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: Math.random() * 6, vr: rnd(-.3, .3), c: COL[i % 6], w: rnd(6, 12), life: 0, max: rnd(80, 130), e: i % 3 === 0 ? EMO[i % 6] : null }); } if (!raf) loop(); }
+  function loop() { ctx.clearRect(0, 0, innerWidth, innerHeight); parts = parts.filter(p => p.life < p.max); for (const p of parts) { p.life++; p.vy += .28; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; ctx.save(); ctx.globalAlpha = 1 - p.life / p.max; ctx.translate(p.x, p.y); ctx.rotate(p.r); if (p.e) { ctx.font = "22px serif"; ctx.fillText(p.e, -11, 8); } else { ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.w / 4, p.w, p.w / 2); } ctx.restore(); } raf = parts.length ? requestAnimationFrame(loop) : (ctx.clearRect(0, 0, innerWidth, innerHeight), null); }
+  const party = () => { burst(innerWidth * .2, innerHeight * .6, 60); setTimeout(() => burst(innerWidth * .8, innerHeight * .6, 60), 180); setTimeout(() => burst(innerWidth / 2, innerHeight * .35, 80), 360); };
+  const burstAt = (el, n = 30) => { const r = el.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, n); };
+
+  /* score */
+  let score = 0; const MAX = 10 * 10 + 4 * 10;
+  const addScore = (n) => { score += n; $("#scoreN").textContent = score; const b = $("#scoreBtn"); b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); fin(); };
+  const fin = () => { $("#finalN").textContent = score; const p = score / MAX; $("#rank").textContent = `${score}/${MAX} · ` + (p >= .85 ? "Coach de couple certifiée 🎓💞" : p >= .6 ? "Très bonne communicante 🧠" : p > 0 ? "En bonne voie (on s'entraîne ensemble 😌)" : "Joue aux scénarios pour gagner des points"); };
+  $("#scoreBtn").addEventListener("click", () => toast(`🧠 ${score} points d'intelligence émotionnelle sur ${MAX}`));
+  fin();
+
+  /* gate */
+  $("#enter").addEventListener("click", () => {
+    try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+    $("#folder").classList.add("open"); S.pop(); setTimeout(S.win, 250); party();
+    setTimeout(() => { $("#gate").classList.add("gone"); document.body.classList.remove("locked"); startReveal(); }, 1000);
+  });
+
+  /* titles + reveal */
+  const seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter("fr", { granularity: "grapheme" }) : null;
+  const gr = (t) => seg ? [...seg.segment(t)].map(x => x.segment) : Array.from(t);
+  if (!reduce) $$(".title").forEach(el => { let ci = 0; const walk = (node) => [...node.childNodes].forEach(n => { if (n.nodeType === 3) { const f = document.createDocumentFragment(); n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) return f.appendChild(document.createTextNode(" ")); const w = document.createElement("span"); w.className = "word"; gr(p).forEach(g => { const c = document.createElement("span"); c.className = "ch"; c.textContent = g; c.style.setProperty("--ci", ci++); w.appendChild(c); }); f.appendChild(w); }); n.replaceWith(f); } else if (n.nodeType === 1) walk(n); }); walk(el); });
+  const onReveal = new Map(); const whenSeen = (el, fn) => { const p = onReveal.get(el); onReveal.set(el, () => { p && p(); fn(); }); };
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); const f = onReveal.get(e.target); f && f(); } }), { rootMargin: "0px 0px -12% 0px" });
+  function startReveal() { $$("[data-reveal]").forEach(el => io.observe(el)); }
+  $$("[data-count]").forEach(el => whenSeen(el.closest("[data-reveal]"), () => { const end = +el.dataset.count, t0 = performance.now(); const f = (t) => { const k = Math.min(1, (t - t0) / 1500); el.textContent = fmt(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }));
+  let tick = false;
+  addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { tick = false; const max = document.documentElement.scrollHeight - innerHeight; $("#prog i").style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`; }); }, { passive: true });
+
+  /* ===== chat replay (day 1 pact) ===== */
+  const PACT = [["d", "14 octobre 2024 · 21h22"], ["him", "Par contre communicant très direct c pas vrai", "21:22"], ["him", "Glti lia tu deviens froide w distante quand t'es fâchée", "21:22"], ["her", "Mais je discute", "21:24"], ["her", "Faut que tu comprennes que je suis fâchée", "21:25"], ["her", "Et t'abordes le sujet", "21:25"], ["her", "Si tu me fais un truc, c'est à moi de l'aborder ?", "21:26"], ["him", "Ghi houwa si j'aborde le sujet je veux que tu me parles et que tu me dises ce qui ne va pas", "21:27"], ["him", "Hit des fois kaytraw des malentendus w je vais même pas savoir pourquoi t'es fâchée", "21:27"], ["her", "Faut que tu gères la situation ikunu endk les mots", "21:28"], ["her", "Matkhlinich l rassy faut que tu prennes les trucs en main", "21:28"], ["him", "Oui bien sûr mais meet me halfway, tu me dis au moins ce qui ne va pas si je te dis malek", "21:28"], ["her", "Oui oui je dis quand y'a un truc qui va pas", "21:30"], ["her", "Et toi, quand y'a un truc t'es comment ?", "21:30"], ["him", "Ana je le dis immédiatement w franchement", "21:35"]];
+  const esc = (s) => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  function playChat(box, L) { box.innerHTML = ""; let i = 0; const next = () => { if (i >= L.length) return; const [w, t, tm] = L[i++]; if (w === "d") { box.insertAdjacentHTML("beforeend", `<div class="date-chip">${esc(t)}</div>`); return setTimeout(next, 350); } const ty = document.createElement("div"); ty.className = "typing " + w; ty.innerHTML = "<i></i><i></i><i></i>"; box.appendChild(ty); setTimeout(() => { ty.remove(); box.insertAdjacentHTML("beforeend", `<div class="bub ${w}">${esc(t)}<time>${tm}</time></div>`); S.msg(); setTimeout(next, reduce ? 0 : 480); }, reduce ? 0 : Math.min(1200, 300 + t.length * 15)); }; next(); }
+  whenSeen($("#chat-pact").closest("[data-reveal]"), () => playChat($("#chat-pact"), PACT));
+
+  /* ===== promise vs reality ===== */
+  const PV = [
+    ["her", "« Je dis quand y'a un truc qui va pas »", "good", "✅ Promesse tenue : c'est elle qui exprime le malaise en premier, 102 fois sur 151. Pas de non-dits.<br>⚠️ Petit bémol : souvent de façon indirecte (« c'est bon », « comme tu veux », « rien ») : 29 phrases de ce type pour 1 000 messages de tension, contre 14 pour lui."],
+    ["him", "« Si je te dis malek, dis-moi ce qui ne va pas » (= je viendrai vers toi)", "good", "✅ Promesse tenue : il demande « malek / qu'est-ce qui va pas / dis-moi » 11,2 fois pour 1 000 messages de tension, contre 5,2 pour elle. Il vient vers elle, comme elle l'avait demandé."],
+    ["her", "« Faut que tu prennes les choses en main »", "good", "✅ Il fait le premier pas vers la paix 77 fois (elle 74), et il relance la conversation après un long silence 360 fois (elle 209)."],
+    ["him", "« Moi, je le dis immédiatement et franchement »", "warn", "⚠️ Pas tout à fait : il exprime le malaise en premier seulement 49 fois, et pendant les tensions il se tait 30 minutes ou plus 28 fois (elle 18). Il le dit… mais parfois après un long silence, puis en pavé (record : 119 messages d'affilée)."],
+  ];
+  $("#pvr").innerHTML = PV.map(([w, q, k, r]) => `<div class="pv"><div class="top">${w === "him" ? avL : avE}<div class="q">${q}</div></div><div class="res ${k === "warn" ? "warn" : ""}">${r}</div><button class="tapme">Voir le verdict des données 🔍</button></div>`).join("");
+  $$(".pv").forEach(p => $(".tapme", p).addEventListener("click", () => { p.classList.add("open"); S.pop(); }));
+
+  /* ===== traits ===== */
+  const TR = [["💗 Tendresse (mots doux & petits noms)", 104, 36, "‰"], ["❓ Curiosité (messages avec une question)", 7.1, 5.2, "%"], ["😂 Humour (rires)", 45, 30, "‰"], ["🤝 Empathie (« je comprends », « t'as raison »)", 4.2, 5.5, "‰"], ["🩺 Soin (repose-toi, courage, santé…)", 3.6, 4.9, "‰"], ["💬 Exprime ses émotions (« je me sens », « j'ai besoin »)", 1.3, 2.2, "‰"], ["🎀 Expressivité (lettres étirées, emojis)", 26.7, 33.8, "‰"], ["🔮 Projection (mariage, enfants, maison)", 2.6, 1.8, "‰"], ["🙏 Excuses", 5.8, 2.6, "‰"], ["📋 Directivité (« il faut que tu », « tu dois »)", 1.0, 2.4, "‰"]];
+  $("#traits").innerHTML = TR.map(([l, h, f, u]) => { const mx = Math.max(h, f), d = (x) => String(x).replace(".", ","); return `<div class="trait"><div class="tl"><span>${l}</span></div><div class="tb">${avL}<div class="tt h"><i data-w="${h / mx * 100}"></i></div><span class="him-c">${d(h)} ${u}</span>${avE}<div class="tt f"><i data-w="${f / mx * 100}"></i></div><span class="her-c">${d(f)} ${u}</span></div></div>`; }).join("");
+  whenSeen($("#traits").closest("[data-reveal]"), () => $$("#traits i").forEach((i, k) => setTimeout(() => i.style.width = i.dataset.w + "%", k * 60)));
+
+  /* ===== manual ===== */
+  const MAN = {
+    her: [["🫶", "Elle a besoin que tu viennes vers elle", "Dès le premier soir : « faut que tu comprennes que je suis fâchée et que tu abordes le sujet ». Quand elle écrit « c'est bon », c'est souvent une porte entrouverte, pas une porte fermée.", "Jour 1 · 21h25"], ["🌙", "Ne jamais dormir sur une dispute", "En novembre 2024, elle l'a écrit clairement : se dire « bonne nuit » alors que le problème n'est pas réglé, pour elle, c'est une ligne rouge. Et elle dit « bonne nuit » 926 fois en deux ans : ce rituel compte énormément pour elle.", "7 nov. 2024 · 926 bonne nuit"], ["🩺", "Elle t'aime en prenant soin de toi", "25 % de ses gestes d'amour sont du soin : « repose-toi » (298), « courage » (155), 190 conseils médicaux. Accepter son soin, c'est accepter son amour. Lui dire « oui docteur » (et le faire) la touche plus qu'un long message.", "525 messages de soin"], ["⚡", "Elle a besoin d'être entendue maintenant", "Elle réagit vite (83 % de réponses en moins d'1 min) et en rafales. Pendant une tension, une phrase qui valide (« je comprends que ça t'ait blessée ») vaut mieux qu'une longue explication.", "132 rafales de 10+ messages"], ["💍", "Elle a besoin d'être rassurée sur l'avenir", "La distance l'a beaucoup stressée au début (« ça m'énerve cette distance »), et le 3 mai 2025 elle a décrit sa demande idéale : un dîner, une bague fine, la question. Parler d'avenir avec elle la rassure.", "278 messages sur le mariage"]],
+    him: [["🎯", "Il a besoin qu'on lui dise clairement", "Dès le premier soir : « meet me halfway, dis-moi ce qui ne va pas, sinon je ne saurai même pas pourquoi t'es fâchée ». Un « je suis blessée parce que… » l'aide 10× plus qu'un « c'est bon ».", "Jour 1 · 21h28"], ["📜", "Ses pavés = besoin d'être compris", "En tension, ses messages s'allongent de 22 %. Ce n'est pas pour gagner : c'est qu'il veut absolument que tu comprennes. Lui répondre « j'ai lu, je comprends ce point-là » le calme instantanément.", "Record : 119 messages d'affilée"], ["🌫️", "Son silence = surcharge, pas abandon", "Quand c'est trop, il se tait (28 silences de 30+ min en pleine tension). Ce n'est pas de l'indifférence : il a besoin de temps pour retrouver ses mots. Il travaille à l'annoncer au lieu de disparaître.", "28 silences de 30+ min"], ["💗", "Son « kbida » en pleine dispute = une main tendue", "41 de ses gestes de paix commencent par un mot doux. Quand il écrit « kbida » au milieu d'un désaccord, ce n'est pas pour éviter le sujet : c'est sa façon de dire « je t'aime plus que ce problème ».", "41 paix par mots doux"], ["🔮", "Il se projette énormément", "Il parle de nos futurs enfants 3× plus que toi (107 contre 36) et de mariage autant que toi. Partager tes rêves avec lui (la maison, les voyages) le rend très heureux.", "107 messages sur les enfants"]],
+  };
+  const renderMan = (k) => { $("#manual").innerHTML = MAN[k].map(([e, t, d, ev]) => `<div class="mi"><span class="e">${e}</span><div><b>${t}</b><p>${d}</p><span class="ev">📊 ${ev}</span></div></div>`).join(""); };
+  $$(".tab[data-m]").forEach(t => t.addEventListener("click", () => { $$(".tab[data-m]").forEach(x => x.classList.remove("on")); t.classList.add("on"); renderMan(t.dataset.m); S.tick(); }));
+  renderMan("her");
+
+  /* ===== loop ===== */
+  const LOOP = [["😣", "Elle ressent un malaise", "#ff4f7e", "Elle exprime en premier dans 102 tensions sur 151. C'est sain : elle ne garde pas pour elle.", "✂️ Coupe-circuit pour elle : le dire avec une phrase en « je » : « je me suis sentie mise de côté quand… »."], ["🫥", "…mais de façon indirecte", "#ff8fb1", "« C'est bon », « comme tu veux », « rien » : 29 pour 1 000 messages de tension (lui : 14). Lui ne sait pas quoi faire de ces phrases.", "✂️ Pour elle : remplacer « c'est bon » par « ça ne va pas, j'ai besoin que tu viennes vers moi »."], ["📜", "Il explique en pavé… ou se tait", "#4f8bff", "Messages +22 % plus longs, record de 119 d'affilée, et 28 silences de 30+ min. Elle se sent soit submergée, soit abandonnée.", "✂️ Pour lui : 3 phrases maximum, puis « on s'appelle ? ». Et s'il a besoin d'une pause : l'annoncer (« je reviens dans 20 min, je t'aime »)."], ["🌀", "Elle relance en rafales", "#7a5cff", "132 rafales de 10+ messages pendant les tensions. Plus il se tait, plus elle écrit. Plus elle écrit, plus il se sent submergé.", "✂️ Pour elle : un seul message clair, puis attendre. Pour lui : répondre même par « j'ai lu, je réfléchis »."], ["🏷️", "Les étiquettes et les « toujours »", "#2a9d8f", "Lui : « toujours / jamais » 2,3× plus qu'elle et « m3sba / drama » 3× plus. Elle : le 🙄 en pleine tension 2,6× plus que lui. Chacun se sent jugé, la boucle repart.", "✂️ Pour les deux : parler d'une situation précise (« hier soir, quand… ») au lieu d'un « toujours », et décrire son émotion au lieu de juger celle de l'autre."]];
+  (() => {
+    const svg = $("#loop"), R = 118, n = LOOP.length; let g = "";
+    const pt = (i, r) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [Math.cos(a) * r, Math.sin(a) * r]; };
+    g += `<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(255,255,255,.75)"/></marker></defs>`;
+    g += `<circle r="${R}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2" stroke-dasharray="6 8"/>`;
+    for (let i = 0; i < n; i++) { const a0 = -Math.PI / 2 + i * 2 * Math.PI / n + .32, a1 = -Math.PI / 2 + (i + 1) * 2 * Math.PI / n - .32; g += `<path d="M${Math.cos(a0) * R} ${Math.sin(a0) * R} A${R} ${R} 0 0 1 ${Math.cos(a1) * R} ${Math.sin(a1) * R}" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="3" marker-end="url(#ar)"/>`; }
+    LOOP.forEach(([e, t, c], i) => { const [x, y] = pt(i, R); g += `<g class="node" data-i="${i}" transform="translate(${x},${y})"><circle r="30" fill="${c}" stroke="#fff" stroke-width="3"/><text text-anchor="middle" dominant-baseline="central" font-size="24">${e}</text></g>`; });
+    g += `<text text-anchor="middle" y="-6" fill="#fff" font-size="15">la boucle</text><text text-anchor="middle" y="14" fill="#ffc94d" font-size="13">touche une étape</text>`;
+    svg.innerHTML = g;
+    $$(".node", svg).forEach(nd => nd.addEventListener("click", () => { const [e, t, c, d, fix] = LOOP[+nd.dataset.i]; $$(".node", svg).forEach(x => x.classList.remove("on")); nd.classList.add("on"); S.pop(); $("#loopTip").innerHTML = `<p style="font-weight:800;font-size:17px">${e} ${t}</p><p class="small" style="margin-top:6px;color:var(--muted)">${d}</p><p style="margin-top:8px;font-weight:700;color:#1e6b46;background:#effaf5;border-radius:12px;padding:10px 12px">${fix}</p>`; }));
+  })();
+
+  /* ===== strengths & growth ===== */
+  const SGD = {
+    "her-good": [["🗣️", "Elle met des mots sur ses émotions", "« je me sens / j'ai besoin » : 2,2 ‰ (lui 1,3)", "En tension, elle dit ce qu'elle ressent avec des phrases en « je » 31 fois (lui 9). C'est exactement ce que conseillent tous les thérapeutes de couple.", ""], ["🤝", "Elle valide ce qu'il ressent", "« je comprends » 1 103 fois, « t'as raison » 212 fois", "Elle reconnaît ses torts et son point de vue plus souvent que lui. Sa façon de faire la paix n°1 : la compréhension (33 fois).", ""], ["🩺", "Elle prend soin de lui", "525 messages de soin, 190 conseils santé", "Repose-toi, courage, t'as mangé, bois de l'eau… Elle veille sur lui comme sur ses patients, mais avec beaucoup plus d'amour.", ""], ["🙏", "Elle dit merci", "801 « merci » (lui 601)", "La gratitude est un des meilleurs prédicteurs d'un couple qui dure. Elle la pratique tous les jours.", ""], ["🚫", "Pas de non-dits", "Elle exprime le malaise en premier dans 102 tensions sur 151", "Ce qui la touche, elle le dit. Les problèmes ne pourrissent pas sous le tapis.", ""]],
+    "him-good": [["❓", "Il vient vers elle", "« malek / qu'est-ce qui va pas » : 11,2 ‰ en tension (elle 5,2)", "Exactement ce qu'elle avait demandé le premier soir : « aborde le sujet ». Il le fait 2× plus qu'elle.", ""], ["🕊️", "Il fait la paix", "Premier pas vers la paix : 77 fois", "Et il relance la conversation après un long silence 360 fois. Il ne laisse jamais une dispute s'installer.", ""], ["💗", "Il dit je t'aime avec des mots", "1 186 compliments, 104 mots doux pour 1 000 messages", "Bebe, kbida, hbiba, omri… Il est le champion absolu des petits noms : presque 3× plus qu'elle.", ""], ["🙏", "Il s'excuse", "5,8 excuses pour 1 000 messages (elle 2,6)", "Il sait dire « désolé ». Le prochain niveau : des excuses sans « mais » (voir chantiers communs).", ""], ["🔮", "Il construit l'avenir", "462 messages sur le mariage, les enfants, la maison", "Il se projette avec elle, il en parle, il planifie. Et il lui a codé une app pour ses études.", ""]],
+    "her-work": [["🫥", "Les phrases indirectes", "29 ‰ en tension (lui 14 ‰) : « c'est bon », « comme tu veux », « fais ce que tu veux », « rien »", "Ce que lui peut ressentir : il comprend qu'il y a un problème mais pas lequel, il se sent perdu, puis frustré. C'est exactement ce qu'il demandait le jour 1 (« meet me halfway »).", "Je suis blessée parce que… et j'ai besoin que…"], ["🌀", "Le mitraillage de messages", "132 rafales de 10+ messages pendant les tensions (lui 37)", "Ce que lui peut ressentir : submergé, il ne sait plus à quel message répondre, alors il se tait… ce qui relance les rafales.", "Un seul message clair, puis : « Appelle-moi quand tu peux. »"], ["🙄", "Le 🙄 et l'ironie en pleine tension", "2,6 pour 1 000 messages de tension (lui 1,2)", "Même si c'est une carapace, l'ironie peut être reçue comme du mépris. Et le mépris est ce qui fait le plus mal dans une dispute.", "Ça m'agace vraiment quand… (au lieu du 🙄)"], ["🧊", "« Calme-toi », « c'est rien », « c'est pas grave »", "3,8 ‰ en tension (lui 2,5 ‰)", "Ce que lui peut ressentir : que son émotion ne compte pas. « Calme-toi » a rarement calmé quelqu'un.", "Je vois que ça t'énerve, explique-moi ce qui se passe."], ["📋", "Le réflexe « il faut que tu »", "2,4 ‰ au total (lui 1,0 ‰) ; en tension 3,0 ‰ (lui 2,1 ‰)", "Un réflexe de docteure : prescrire. Mais dans un couple, une prescription peut sonner comme un ordre.", "Est-ce que tu pourrais… ? Ça me ferait plaisir."]],
+    "him-work": [["♾️", "Les « toujours » et « jamais »", "14,5 ‰ en tension (elle 6,4 ‰), soit 2,3× plus", "Ce qu'elle peut ressentir : accusée de tout. Au lieu d'écouter le vrai sujet, elle se défend (« c'est faux, pas toujours ! »).", "Hier soir, quand…, je me suis senti… (un fait précis, une émotion)"], ["🏷️", "Mettre une étiquette sur son émotion", "« m3sba », « drama », « hem9a » : 3,5 ‰ en tension (elle 1,1 ‰), soit 3× plus", "Ce qu'elle peut ressentir : jugée au lieu d'être comprise. Être traitée de « m3sba » quand on est blessée, c'est l'impression qu'on minimise ce qu'on vit.", "Je vois que tu es blessée. C'est à cause de quoi ?"], ["📜", "Le pavé", "Messages +22 % plus longs en tension, record de 119 d'affilée", "Ce qu'elle peut ressentir : un cours ou une plaidoirie. Impossible d'en placer une, l'impression de perdre d'avance.", "3 phrases maximum, puis : « On s'appelle ? Je préfère te l'expliquer de vive voix. »"], ["🌫️", "Le silence sans prévenir", "28 silences de 30+ min en pleine tension (elle 18), dont 9 de plus de 2h", "Ce qu'elle peut ressentir : de l'abandon, parfois de la punition, même si pour lui c'est juste du temps pour se calmer.", "J'ai besoin de 20 minutes pour me calmer. Je reviens, je t'aime."], ["🩹", "Le câlin avant la reconnaissance", "Ses paix : 41 par mots doux, seulement 13 par « je comprends »", "Ce qu'elle peut ressentir : qu'on passe le problème sous le tapis. Le « kbida » est doux, mais il arrive parfois avant qu'elle se sente comprise.", "D'abord : « Je comprends pourquoi ça t'a fait mal. » Ensuite : « kbida ❤️ »."]],
+    "both-work": [["🩹", "Les excuses avec un « mais »", "« Désolé(e)… mais » : 29 fois pour lui, 9 pour elle", "Un « mais » efface tout ce qui vient avant. L'autre n'entend que la deuxième moitié.", "Désolé(e). Point. (Ton point de vue viendra plus tard, dans un autre message.)"], ["🌙", "Les discussions sérieuses à 1h du matin", "43 % des tensions entre 23h et 4h, pic à 1h", "Fatigués, on interprète tout plus mal. Les mots de minuit sont rarement les meilleurs.", "On en parle demain, à tête reposée. Bisou. 🌙"], ["🚪", "Le mot « rupture » en pleine dispute", "À peine 5 mentions en 151 tensions, souvent pour dire justement qu'on n'en parlait pas", "Même évoqué sous la colère, ce mot fragilise la confiance. Bonne nouvelle : chez nous, c'est rarissime. On garde ça comme ça.", "Règle d'or : on peut être fâchés, on ne remet jamais le couple en jeu."]],
+  };
+  Object.entries(SGD).forEach(([k, arr]) => {
+    const good = k.endsWith("good");
+    $("#sg-" + k).innerHTML = arr.map(([e, t, n, d, tr]) => `<div class="sgc ${good ? "good" : "work"}"><button class="h" style="width:100%;text-align:left"><span class="e">${e}</span><span><b>${t}</b><span class="n">📊 ${n}</span></span><span class="chev">⌄</span></button><div class="body"><div class="row"><span class="lbl">${good ? "Pourquoi c'est précieux" : "Ce que l'autre peut ressentir"}</span>${d}</div>${tr ? `<div class="row try"><span class="lbl">À essayer à la place</span><em>« ${tr} »</em></div>` : ""}</div></div>`).join("");
+  });
+  $$(".sgc").forEach(c => $(".h", c).addEventListener("click", () => { c.classList.toggle("open"); S.pop(); }));
+
+  /* self-check quiz after growth */
+  (() => {
+    const box = $("#selfq");
+    const Q = [["Lequel de ces chantiers est le plus présent chez <b>elle</b> pendant les tensions ?", ["Les phrases indirectes (« c'est bon »)", "Les « toujours / jamais »", "Le silence de 2h"], 0, "Les phrases indirectes : 29 ‰ contre 14 ‰ pour lui."], ["Et chez <b>lui</b> ?", ["Le 🙄", "Les « toujours / jamais »", "« Il faut que tu »"], 1, "Les « toujours / jamais » : 2,3× plus qu'elle en tension."], ["Qui se tait le plus longtemps pendant les tensions ?", ["Elle", "Lui", "Personne"], 1, "Lui : 28 silences de 30+ min, contre 18 pour elle."], ["Quel chantier est commun aux deux ?", ["Le pavé", "Les excuses avec un « mais »", "Le mitraillage"], 1, "Les « désolé(e)… mais » : 29 pour lui, 9 pour elle."]];
+    let i = 0;
+    const show = () => {
+      if (i >= Q.length) { box.innerHTML = `<p style="font-weight:800;text-align:center">✅ Bilan validé ! Tu as tout compris.</p>`; return; }
+      box.innerHTML = `<p class="small" style="font-weight:800">Vérification rapide ${i + 1}/${Q.length} · 10 pts</p><p style="font-family:var(--display);font-weight:600;font-size:19px;margin:6px 0 10px">${Q[i][0]}</p><div style="display:grid;gap:8px">${Q[i][1].map((o, k) => `<button class="rc" data-k="${k}"><span class="bx">✓</span>${o}</button>`).join("")}</div><p class="small" id="sqf" style="margin-top:8px;font-weight:800"></p>`;
+      $$(".rc", box).forEach(b => b.addEventListener("click", () => {
+        if (box.dataset.l) return; box.dataset.l = 1; const ok = +b.dataset.k === Q[i][2];
+        b.classList.add("on"); b.style.background = ok ? "#e3f8ec" : "#ffe7e7"; if (ok) { addScore(10); S.good(); } else S.bad();
+        $("#sqf").textContent = (ok ? "✅ " : "❌ ") + Q[i][3]; setTimeout(() => { delete box.dataset.l; i++; show(); }, 2200);
+      }));
+    };
+    show();
+  })();
+
+  /* ===== translator ===== */
+  const TRN = [["her", "« C'est bon. »", "Ce qu'elle veut souvent dire : « Ce n'est pas bon du tout, mais je n'ai plus l'énergie de l'expliquer. »", "À la place : « Là je suis blessée. J'ai besoin que tu viennes vers moi. »"], ["her", "« Fais ce que tu veux. »", "Traduction : « Je ne suis pas d'accord, et ça me fait de la peine que tu n'aies pas compris pourquoi. »", "À la place : « Je ne suis pas d'accord, voilà pourquoi… Qu'est-ce que tu en penses ? »"], ["her", "« Rien. »", "Traduction : « Il y a quelque chose, mais je ne suis pas prête à en parler. »", "À la place : « Il y a un truc, laisse-moi 10 minutes et je t'explique. »"], ["her", "« Calme-toi. »", "Traduction : « Je me sens attaquée par ton ton. »", "À la place : « On peut en parler plus doucement ? Je veux t'écouter. »"], ["him", "« T'es m3sba / c'est du drama. »", "Ce qu'il veut souvent dire : « Je ne comprends pas ta réaction et ça me déstabilise. »", "À la place : « Je vois que ça te touche beaucoup. Explique-moi, je veux comprendre. »"], ["him", "« Tu fais toujours ça. »", "Traduction : « Ça s'est déjà produit et ça commence à me peser. »", "À la place : « Hier, quand…, je me suis senti… Ça m'arrive souvent ces temps-ci. »"], ["him", "(silence de 2 heures)", "Traduction : « Je suis débordé, je ne trouve pas les bons mots. »", "À la place : « J'ai besoin de 20 minutes pour me calmer. Je reviens, je t'aime. »"], ["him", "(30 messages d'affilée à 1h du matin)", "Traduction : « J'ai tellement besoin que tu me comprennes. »", "À la place : « On en parle demain de vive voix ? Je préfère ça. Bisou 🌙 »"], ["both", "« Désolé(e), mais… »", "Traduction : « Je m'excuse… à moitié. »", "À la place : « Désolé(e). » Point. Le reste viendra plus tard."]];
+  $("#trans").innerHTML = TRN.map(([w, s, a, b]) => `<div class="tr"><div class="said">${w === "him" ? avL : w === "her" ? avE : avL + avE}${s}</div><div class="steps"><div class="st s1">🔍 ${a}</div><div class="st s2">💡 ${b}</div></div><button class="nx">Traduire →</button></div>`).join("");
+  $$(".tr").forEach(t => { let k = 0; $(".nx", t).addEventListener("click", () => { k++; S.pop(); if (k === 1) { $(".s1", t).classList.add("show"); $(".nx", t).textContent = "Et à la place ? →"; } else { $(".s2", t).classList.add("show"); $(".nx", t).remove(); } }); });
+
+  /* ===== scenarios ===== */
+  const SC = [
+    ["Il est 1h du matin. Un message de lui te vexe.", ["Je réponds à chaud, en 15 messages.", "« Ça m'a vexée. On en parle demain ? Bisou 🌙 »", "« C'est bon. » et je vais dormir."], 1, "43 % de nos tensions démarrent entre 23h et 4h. Nommer l'émotion + reporter = la meilleure combinaison. Et « c'est bon » + dormir fâchée, c'est sa ligne rouge à elle."],
+    ["Elle répond « c'est bon. » à ton message.", ["« Ok. »", "« Je sens que ce n'est pas bon 🙂 Je suis là, dis-moi. »", "Un long message pour expliquer ton point de vue."], 1, "Le premier soir, elle l'a dit : elle veut que tu viennes vers elle. Son « c'est bon » est une porte entrouverte."],
+    ["Il ne répond plus depuis 40 minutes en pleine discussion.", ["J'envoie 20 messages pour qu'il réagisse.", "« Je comprends que tu aies besoin d'une pause. J'attends ton retour ❤️ »", "« Bslama. »"], 1, "Son silence, c'est de la surcharge, pas de l'abandon. Les rafales (132 fois) le submergent encore plus."],
+    ["Elle sort d'une garde épuisante et te répond sèchement.", ["« T'es m3sba ou quoi ? »", "« Grosse journée, mon amour ? Je suis là. »", "Je ne réponds pas pour la laisser tranquille."], 1, "Les étiquettes (« m3sba ») sont 3× plus fréquentes chez lui. Valider sa fatigue = la désamorcer."],
+    ["Tu as tort et tu le sais.", ["« Désolé(e), mais toi aussi… »", "« Désolé(e), t'as raison. »", "Je change de sujet avec un meme."], 1, "Le « mais » annule l'excuse (29 fois chez lui, 9 chez elle). Une excuse s'arrête au point."],
+    ["En pleine dispute, il t'écrit « kbida ».", ["J'ignore, il esquive le sujet.", "Je le prends comme une main tendue, et je réponds : « On en parle calmement ? »", "« Ne change pas de sujet. »"], 1, "41 de ses gestes de paix commencent par un mot doux. C'est sa façon de dire « je t'aime plus que ce problème »."],
+    ["Vous êtes fâchés et c'est l'heure de dormir.", ["« Bonne nuit. » (sec)", "« Je t'aime même fâchée. On finit d'en parler demain. »", "Je ne dis rien."], 1, "Pour elle, dormir sur un problème non réglé est une ligne rouge. Pas besoin de tout régler : juste de se rassurer."],
+    ["Il te dit : « Tu fais toujours ça ! »", ["« Et toi alors ? »", "« Toujours ? Donne-moi un exemple précis, je veux comprendre. »", "« Laisse tomber. »"], 1, "Ramener un « toujours » à un fait précis désamorce tout. Et « laisse tomber » fait partie des phrases indirectes à travailler."],
+    ["Elle t'écrit « il faut que tu dormes plus ».", ["« Arrête de me dire quoi faire. »", "« Oui docteur 😌 Tu as raison, ce soir je dors tôt. »", "Je l'ignore."], 1, "Son « il faut que tu » est un réflexe de soin, pas un ordre. 25 % de ses gestes d'amour sont du soin."],
+    ["Tu sens que tu vas écrire un très long message en colère.", ["Je l'écris et je l'envoie, il faut que ça sorte.", "Je l'écris dans mes notes, j'attends 20 minutes, puis j'envoie l'essentiel en 3 phrases.", "Je l'envoie en 40 petits messages."], 1, "Record : 119 messages d'affilée. Écrire pour soi d'abord, puis envoyer l'essentiel, c'est l'astuce des couples qui durent."],
+  ];
+  (() => {
+    const box = $("#scen"); let i = 0, sc = 0;
+    const show = () => {
+      if (i >= SC.length) { box.innerHTML = `<p class="sq" style="text-align:center">${sc}/${SC.length} 🧠</p><p style="text-align:center;font-weight:800;color:var(--muted)">${sc >= 9 ? "Intelligence émotionnelle : niveau docteure 🩺💞" : sc >= 6 ? "Très bien ! On a les bons réflexes." : "On s'entraîne ensemble, c'est fait pour ça 😌"}</p><div style="text-align:center;margin-top:12px"><button class="btn small" id="scAgain">Rejouer</button></div>`; $("#scAgain").onclick = () => { i = 0; sc = 0; show(); }; if (sc >= 8) party(); return; }
+      const [q, o, ok, fb] = SC[i]; const order = [0, 1, 2].sort(() => Math.random() - .5);
+      box.innerHTML = `<div class="sn">Situation ${i + 1}/${SC.length} · 10 pts</div><div class="sq">${q}</div><div class="so">${order.map(k => `<button class="o" data-k="${k}">${o[k]}</button>`).join("")}</div><div class="fb"></div>`;
+      $$(".o", box).forEach(b => b.addEventListener("click", () => {
+        if (box.dataset.l) return; box.dataset.l = 1; const k = +b.dataset.k, good = k === ok;
+        $$(".o", box).forEach(x => { if (+x.dataset.k === ok) x.classList.add("good"); });
+        if (!good) b.classList.add("bad"); good ? (sc++, addScore(10), S.good()) : S.bad();
+        const f = $(".fb", box); f.innerHTML = (good ? "✅ Exactement. " : "💡 Pas tout à fait. ") + fb + `<div style="margin-top:10px"><button class="btn small" id="scNext">Suivante →</button></div>`; f.classList.add("show");
+        $("#scNext").onclick = () => { delete box.dataset.l; i++; show(); };
+      }));
+    };
+    show();
+  })();
+
+  /* ===== radar ===== */
+  (() => {
+    const L = ["💬 Mots doux", "🩺 Soin", "📅 Temps", "🤗 Câlins", "🛠️ Aide", "🎁 Cadeaux"], H0 = [1186, 335, 337, 361, 164, 113], F0 = [862, 525, 259, 201, 153, 78];
+    const pct = (a) => { const s = a.reduce((x, y) => x + y, 0); return a.map(x => x / s); };
+    const H = pct(H0), F = pct(F0), mx = Math.max(...H, ...F), R = 105, n = 6, svg = $("#radar");
+    const pt = (i, r) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [Math.cos(a) * r, Math.sin(a) * r]; };
+    let g = ""; [.25, .5, .75, 1].forEach(k => g += `<polygon points="${Array.from({ length: n }, (_, i) => pt(i, R * k).join(",")).join(" ")}" fill="none" stroke="#dbe9e6"/>`);
+    for (let i = 0; i < n; i++) { const [x, y] = pt(i, R); g += `<line x1="0" y1="0" x2="${x}" y2="${y}" stroke="#dbe9e6"/>`; const [lx, ly] = pt(i, R + 22); g += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${L[i]}</text>`; }
+    const poly = (v, c) => `<polygon class="poly" points="${v.map((x, i) => pt(i, R * Math.sqrt(x / mx)).join(",")).join(" ")}" fill="${c}" fill-opacity=".25" stroke="${c}" stroke-width="3" stroke-linejoin="round"/>`;
+    svg.innerHTML = g + poly(H, "#4f8bff") + poly(F, "#ff4f7e");
+    whenSeen(svg.closest("[data-reveal]"), () => setTimeout(() => svg.classList.add("on"), 100));
+  })();
+
+  /* ===== rules (shared with Nous Wrapped) ===== */
+  (() => {
+    const RU = [["🌙", "La règle de 1h du matin", "Après minuit, les sujets sérieux attendent demain : un bisou, et on en reparle au réveil."], ["🤝", "Celui qui n'a pas commencé tend la main", "Déjà vrai 56 % du temps. On vise 100 %."], ["💗", "Parler la langue de l'autre", "Pour lui : « je comprends ». Pour elle : « kbida ». ~10 minutes chacun."], ["📞", "L'alerte pavé", "Au-delà de 10 messages d'affilée pendant une tension, on passe en vocal ou en appel."], ["🩺", "Se laisser soigner", "Quand elle dit « repose-toi », il répond « oui docteur »… et il le fait."], ["🫶", "Rendre chaque câlin", "Chaque « bisou » mérite son bisou retour."], ["💌", "Le défi kbida quotidien", "Un mot doux surprise par jour."], ["😴", "Le rituel bonne nuit", "On ne s'endort jamais fâchés, même avec un simple « tsbhi 3la khir »."]];
+    let on = new Set(store.get("nous-rules", []));
+    $("#rules").innerHTML = RU.map(([e, t, d], i) => `<button class="rule${on.has(i) ? " on" : ""}" data-i="${i}"><span class="ri">${e}</span><span><b>${t}</b><p>${d}</p></span><span class="ck">✓</span></button>`).join("");
+    $$(".rule").forEach(r => r.addEventListener("click", () => { const i = +r.dataset.i; on.has(i) ? on.delete(i) : on.add(i); r.classList.toggle("on"); S.pop(); store.set("nous-rules", [...on]); if (on.size === RU.length) { toast("📜 Toutes les règles signées !"); party(); } }));
+  })();
+
+  /* ===== timeline ===== */
+  (() => {
+    const EV = [
+      ["14 oct. 2024 · 01h18", "💬", "« Reeee » : le premier message", "Elle est en stage en Roumanie, lui est enrhumé. Elle lui prescrit du paracétamol.", "love", 1],
+      ["14 oct. 2024 · 02h01", "🐝", "« J'ai supprimé l'appli 😂 »", "Il avait déjà supprimé Bumble le soir même.", "fun"],
+      ["14 oct. 2024 · 20h39", "🧠", "Le test de personnalité", "Lui : INTJ-T. Et le premier pacte de communication du couple.", "life"],
+      ["14 oct. 2024 · 21h44", "🥹", "Premier « mon bébé »", "Moins de 24h après le premier message.", "love"],
+      ["16 oct. 2024", "🌹", "Premier « mon amour »", "« Fais-toi encore plus belle mon amour, même si on sait très bien que ce n'est pas possible. »", "love"],
+      ["26 oct. 2024 · 07h24", "🫶", "« Safi ana wlit kanbghik »", "Le premier « je t'aime », par lui. Elle : « Aimmmmeeeee mmmmooooooooiiiii ».", "love", 1],
+      ["27 oct. 2024 · 02h17", "💞", "« Nbghik rebbbek »", "Le premier « je t'aime » d'elle. À 2h du matin, évidemment.", "love"],
+      ["12 nov. 2024", "💍", "« Je veux la bague babe »", "Quatre semaines après le premier message. 😂", "fun"],
+      ["24 nov. 2024", "✈️", "Elle atterrit au Maroc", "La distance commence à rétrécir.", "life"],
+      ["1er déc. 2024", "👩‍👦", "« Elle est vraiment trop mignonne ta maman »", "Elle craque déjà pour sa famille.", "life"],
+      ["10 déc. 2024 · 22h23", "📸", "« On fera la même photo quand on se mariera »", "Avant même de l'avoir rencontré en vrai.", "love"],
+      ["11 déc. 2024 · 00h01", "🍟", "« Descend 😌 » : le premier rendez-vous", "McDo, 2h du matin. « Tu me manques déjà » à 02h10. « T'es encore plus belle en personne. »", "love", 1],
+      ["11 déc. 2024 · 12h56", "💼", "On lui propose un poste d'architecte", "Le lendemain du premier rendez-vous. Elle porte bonheur.", "life"],
+      ["12 déc. 2024", "📿", "Le bracelet Tommy au poignet", "Il ne l'a plus jamais enlevé (jamais de dar de smail).", "love"],
+      ["13 déc. 2024", "💍", "« Tu t'es mariée ? »", "Quelqu'un remarque la bague à son doigt.", "fun"],
+      ["Janvier 2025", "📈", "Le mois record", "38 322 messages. Le début des 188 jours d'affilée.", "fun"],
+      ["4 févr. 2025", "🎁", "« Un petit cadeau pour m'excuser »", "Une réconciliation… avec cadeau. 🎁", "love"],
+      ["16 févr. 2025", "🥹", "« Ta présence a fait de moi une autre personne »", "Elle, à lui. Mon amour à moi, hbibi dyali.", "love", 1],
+      ["25 févr. 2025", "📸", "La grande bataille de photos", "221 photos échangées en quelques minutes.", "fun"],
+      ["26 févr. 2025 · 14h25", "📢", "« akhti » × 566", "En 2 minutes. Personne ne sait pourquoi.", "fun"],
+      ["Mars 2025", "🎓", "Elle prépare le résidanat", "Entre la thèse, les gardes et les révisions. Il la soutient : 185 messages sur ses examens.", "life"],
+      ["27 mars 2025", "🎂", "Son anniversaire", "« Aujourd'hui c'est ton jour, mais pour moi chaque jour est une célébration de toi. On met les disputes de côté lyoma. »", "love", 1],
+      ["3 mai 2025", "💍", "Sa demande en mariage idéale", "Un dîner, une bague fine, et la question. (Note pour lui : c'est noté. 😌)", "love"],
+      ["5 mai 2025", "🔥", "Le jour record", "4 612 messages en 24h.", "fun"],
+      ["17 juil. → 30 sept. 2025", "📱", "L'ère de l'iPhone", "75 jours de messages perdus. On n'en parle plus jamais.", "fun"],
+      ["14 oct. 2025", "🎉", "Un an", "« Omri diali, ma hbibti, ma kbidti… »", "love", 1],
+      ["26 nov. 2025", "📲", "« Khadija Roumanie » devient « Dr Baby »", "Nouveau numéro, nouveau nom.", "fun"],
+      ["1er mai 2026", "📱", "Il lui code Doctora", "Une app de révision rien que pour elle, avec un hamster. Le 20 mai : « hadak lqcm klituuuu ». 😂", "life", 1],
+      ["Fin de l'été 2026", "🎳", "La journée bowling", "« Haka glti 9bl ma ntzwj bik f bowling. »", "love"],
+      ["14 oct. 2026 · 00h00", "💌", "La lettre des 2 ans", "42 703 caractères. Le plus long message de toute notre histoire.", "love", 1],
+      ["Aujourd'hui", "💞", "« Kbida ntina » · « Hbiba ntina »", "Message n° 438 201. Et ça continue.", "love", 1],
+    ];
+    const box = $("#tl");
+    const render = (f) => { box.innerHTML = EV.filter(e => f === "all" || e[4] === f).map(([d, e, t, p, c, big]) => `<div class="ev${big ? " big" : ""}" data-reveal><span class="dot">${e}</span><span class="d">${d}</span><b>${t}</b><p>${p}</p></div>`).join(""); $$("[data-reveal]", box).forEach(el => io.observe(el)); };
+    render("all");
+    $$("#tlf button").forEach(b => b.addEventListener("click", () => { $$("#tlf button").forEach(x => x.classList.remove("on")); b.classList.add("on"); render(b.dataset.f); S.tick(); }));
+  })();
+
+  /* ===== 30 days ===== */
+  (() => {
+    const D = ["Un mot doux surprise, sans raison.", "Remplacer un « c'est bon » par une vraie phrase.", "Dire « je comprends » avant de donner son avis.", "Un compliment précis (pas juste « t'es belle »).", "Se dire bonne nuit, même fâchés.", "Annoncer sa pause au lieu de disparaître.", "3 phrases max pour un sujet sérieux.", "Demander « comment s'est passée ta journée ? » et écouter.", "Dire merci pour une petite chose.", "Zéro « toujours » et « jamais » de la journée.", "Un vocal au lieu de 10 messages.", "Raconter un souvenir de nos débuts.", "Laisser l'autre finir sans l'interrompre.", "Faire un petit geste de soin (« t'as mangé ? »).", "Partager un rêve d'avenir.", "Une excuse sans « mais ».", "Envoyer une photo de nous et dire pourquoi on l'aime.", "Zéro 🙄 en cas de désaccord.", "Dire ce qu'on ressent avec une phrase en « je ».", "Reporter une discussion après minuit à demain.", "Un câlin rendu pour chaque câlin reçu.", "Planifier notre prochaine sortie.", "Écrire 3 choses qu'on admire chez l'autre.", "Demander « de quoi tu as besoin là ? ».", "Pas de téléphone pendant notre prochain moment ensemble.", "Rire ensemble d'une vieille dispute.", "Accepter un conseil de l'autre sans discuter.", "Un « fier/fière de toi » sincère.", "Relire notre premier message ensemble.", "Se dire pourquoi on se choisit, encore."];
+    let on = new Set(store.get("labo-30", []));
+    const box = $("#days"), ring = $("#ringC");
+    const upd = () => { $("#ringV").textContent = on.size; ring.style.strokeDashoffset = 402 - 402 * on.size / 30; };
+    box.innerHTML = D.map((_, i) => `<button class="day${on.has(i) ? " on" : ""}" data-i="${i}">${i + 1}</button>`).join("");
+    let sel = -1;
+    $$(".day", box).forEach(b => b.addEventListener("click", () => {
+      const i = +b.dataset.i;
+      if (sel !== i) { sel = i; $("#dayInfo").innerHTML = `<p class="small" style="font-weight:800">Jour ${i + 1}</p><p style="font-family:var(--display);font-weight:600;font-size:19px;margin-top:4px">${D[i]}</p><p class="small" style="margin-top:4px">${on.has(i) ? "✅ Validé ! Touche encore pour annuler." : "Touche encore le jour pour le valider ✓"}</p>`; S.tick(); return; }
+      on.has(i) ? on.delete(i) : on.add(i); b.classList.toggle("on"); store.set("labo-30", [...on]); upd(); S.good(); sel = -1;
+      $("#dayInfo").innerHTML = `<p style="font-weight:800">${on.has(i) ? "✅ Jour " + (i + 1) + " validé !" : "Jour " + (i + 1) + " annulé"}</p>`;
+      if (on.size === 30) { toast("🏆 30 jours ! Vous êtes officiellement le meilleur couple du labo"); party(); }
+    }));
+    upd();
+  })();
+
+  /* ===== reflection ===== */
+  (() => {
+    const ME = ["Dire ce que je ressens au lieu de « c'est bon »", "Envoyer un message clair plutôt qu'une rafale", "Remplacer le 🙄 par « ça m'agace quand… »", "Ne plus dire « calme-toi »", "Dire « est-ce que tu pourrais » au lieu de « il faut que tu »", "M'excuser sans « mais »", "Ne jamais m'endormir fâchée"];
+    const YOU = ["Éviter les « toujours » et « jamais »", "Ne plus me dire « m3sba » ou « drama »", "3 phrases max, puis on s'appelle", "M'annoncer ta pause au lieu du silence", "Me dire « je comprends » avant le « kbida »", "T'excuser sans « mais »", "Garder les sujets sérieux pour la journée"];
+    const sm = new Set(), sy = new Set();
+    const mk = (id, arr, set) => { $(id).innerHTML = arr.map((t, i) => `<button class="rc" data-i="${i}"><span class="bx">✓</span>${t}</button>`).join(""); $$(id + " .rc").forEach(b => b.addEventListener("click", () => { const i = +b.dataset.i; set.has(i) ? set.delete(i) : set.add(i); b.classList.toggle("on"); S.pop(); })); };
+    mk("#reflMe", ME, sm); mk("#reflYou", YOU, sy);
+    $("#sendRefl").addEventListener("click", () => {
+      if (!sm.size && !sy.size) return toast("Coche au moins une chose 🥹");
+      let t = "🔬 Le Labo du Couple · Mes engagements ❤️\n";
+      if (sm.size) t += "\nMoi, je vais essayer de :\n" + [...sm].map(i => "• " + ME[i]).join("\n");
+      if (sy.size) t += "\n\nJ'aimerais que toi, tu essaies de :\n" + [...sy].map(i => "• " + YOU[i]).join("\n");
+      t += "\n\nOn en parle en vrai ? (pas à 1h du matin 😌) Je t'aime.";
+      location.href = "https://wa.me/?text=" + encodeURIComponent(t);
+    });
+  })();
+
+  whenSeen($("#finalN").closest("[data-reveal]"), () => { fin(); if (score) party(); });
+})();
+</script>
+</body>
+</html>
