@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a1f4d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Nous Wrapped">
+<meta name="robots" content="noindex">
+<title>Nous Wrapped</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%AC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --choco:#5b3a29; --choco-2:#7a4f38; --pink:#ff8fb1; --rose:#ff4f7e; --blush:#ffd6e3; --mallow:#fff5f8;
+  --gold:#ffc94d; --mint:#bff0dc; --night:#1d1640; --plum:#2a1f4d; --ink:#3b2418; --muted:#8a6a5a;
+  --him:#4f8bff; --her:#ff4f7e; --shadow:0 14px 34px rgba(42,31,77,.18);
+  --display:"Fredoka","Arial Rounded MT Bold",system-ui,sans-serif; --body:"Nunito",system-ui,-apple-system,sans-serif; --hand:"Caveat",cursive;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--mallow);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden;height:100vh}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;border:0;background:none}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05}
+p{margin:0;line-height:1.5}
+.wrap{width:100%;max-width:640px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left)) 0 max(18px,env(safe-area-inset-right));position:relative;z-index:1}
+.scene{position:relative;padding:86px 0 76px;overflow:hidden}
+.full{min-height:100vh;min-height:100svh;display:flex;align-items:center}
+.center{text-align:center}
+.stack>*+*{margin-top:16px}
+.kicker{display:inline-block;font-family:var(--display);font-weight:600;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);background:#fff;border-radius:999px;padding:6px 14px;box-shadow:var(--shadow)}
+.title{font-size:clamp(30px,8.4vw,52px);color:var(--choco)}
+.title em{font-style:normal;color:var(--rose)}
+.lead{font-size:clamp(16px,4.3vw,19px);color:var(--choco-2)}
+.small{font-size:14px;color:var(--muted)}
+.card{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-weight:600;font-size:18px;background:var(--rose);color:#fff;border-radius:999px;padding:13px 22px;box-shadow:0 10px 22px rgba(255,79,126,.35);transition:transform .15s}
+.btn:active{transform:scale(.93)}
+.btn.ghost{background:#fff;color:var(--rose);box-shadow:var(--shadow)}
+.btn.small{font-size:15px;padding:9px 16px}
+.av{border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.2);background:#fff;display:block}
+.him-c{color:var(--him)} .her-c{color:var(--her)}
+.big{font-family:var(--display);font-weight:700;font-size:clamp(56px,17vw,104px);line-height:.95;letter-spacing:-.02em}
+
+/* themed scenes (wrapped style) */
+.t-night{background:radial-gradient(circle at 30% 20%,#3a2a7a,#1d1640 70%);color:#fff}
+.t-night .title,.t-night .lead{color:#fff}
+.t-pink{background:linear-gradient(160deg,#ff9ebd,#ff4f7e);color:#fff}
+.t-pink .title,.t-pink .lead,.t-pink .title em{color:#fff}
+.t-gold{background:linear-gradient(160deg,#ffe58a,#ffb347);color:var(--choco)}
+.t-mint{background:linear-gradient(160deg,#d6f8e8,#8fe0c0)}
+.t-plum{background:linear-gradient(160deg,#5b2a86,#2a1f4d);color:#fff}
+.t-plum .title,.t-plum .lead{color:#fff}
+.t-choco{background:linear-gradient(160deg,#7a4f38,#3b2418);color:#fff}
+.t-choco .title,.t-choco .lead{color:#fff}
+.t-sky{background:linear-gradient(180deg,#e3f0ff,#fff)}
+.t-night .small,.t-plum .small,.t-choco .small,.t-pink .small{color:rgba(255,255,255,.75)}
+
+[data-reveal]{opacity:0;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.9,.25,1.2);transition-delay:var(--d,0s)}
+[data-reveal].v-up{transform:translateY(50px)}
+[data-reveal].v-left{transform:translateX(-80px) rotate(-4deg)}
+[data-reveal].v-right{transform:translateX(80px) rotate(4deg)}
+[data-reveal].v-zoom{transform:scale(.5) rotate(-5deg)}
+[data-reveal].in{opacity:1;transform:none}
+.ch{display:inline-block;white-space:pre}.word{display:inline-block;white-space:nowrap}
+.title.in .ch{animation:chPop .7s cubic-bezier(.3,1.8,.5,1) backwards;animation-delay:calc(var(--ci)*24ms)}
+@keyframes chPop{0%{opacity:0;transform:translateY(50px) rotate(20deg) scale(.2)}}
+@keyframes okpop{50%{transform:scale(1.12)}}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+
+/* hud */
+#prog{position:fixed;top:0;left:0;right:0;height:calc(8px + env(safe-area-inset-top));z-index:40;pointer-events:none}
+#prog .fill{position:absolute;left:0;bottom:0;height:6px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#4f8bff,#ff4f7e,#ffc94d)}
+#prog .runner{position:absolute;bottom:-14px;left:0;transform:translateX(-50%)}
+#prog .goal{position:absolute;bottom:-14px;right:4px}
+#prog .av{width:30px;height:30px;border-width:2px}
+#scoreBtn{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:45;background:var(--plum);color:#fff;font-family:var(--display);font-weight:600;font-size:16px;border-radius:999px;padding:10px 16px;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+#scoreBtn.bump{animation:okpop .5s}
+#muteBtn{position:fixed;left:max(14px,env(safe-area-inset-left));bottom:max(14px,env(safe-area-inset-bottom));z-index:45;width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:var(--shadow);font-size:20px}
+.toast{position:fixed;left:50%;top:max(24px,calc(env(safe-area-inset-top) + 16px));transform:translate(-50%,-180%);visibility:hidden;background:#fff;color:var(--choco);font-weight:800;padding:12px 18px;border-radius:18px;z-index:70;max-width:90vw;text-align:center;transition:transform .45s cubic-bezier(.3,1.5,.5,1);box-shadow:0 14px 30px rgba(0,0,0,.2);border:3px solid var(--gold)}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:60}
+.deco{position:absolute;z-index:0;pointer-events:none;opacity:.16;will-change:transform}
+.floaty{position:absolute;pointer-events:none;font-size:26px;opacity:.5;animation:rise linear infinite}
+@keyframes rise{from{transform:translateY(110vh)}to{transform:translateY(-20vh) rotate(30deg)}}
+
+/* gate */
+#gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center;background:radial-gradient(circle at 50% 30%,#3a2a7a,#1d1640);color:#fff;transition:opacity .7s,visibility .7s}
+#gate.gone{opacity:0;visibility:hidden}
+#gate h1{font-size:clamp(36px,10vw,58px)}
+#gate h1 em{font-style:normal;background:linear-gradient(90deg,#4f8bff,#ff4f7e,#ffc94d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.phone-ic{font-size:90px;animation:buzz 1.6s infinite}
+@keyframes buzz{0%,70%,100%{transform:rotate(0)}75%{transform:rotate(-12deg)}80%{transform:rotate(12deg)}85%{transform:rotate(-8deg)}90%{transform:rotate(8deg)}}
+.notif{background:rgba(255,255,255,.12);border-radius:16px;padding:10px 14px;font-weight:700;font-size:14px;backdrop-filter:blur(6px);animation:okpop 2s infinite}
+
+/* chat replay */
+.phone{position:relative;max-width:420px;margin:0 auto;border-radius:30px;overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,.25);background:#efe7dd url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='8' y='30' font-size='16' opacity='.08'%3E%E2%9D%A4%3C/text%3E%3Ctext x='38' y='54' font-size='12' opacity='.07'%3E%F0%9F%8D%9F%3C/text%3E%3C/svg%3E")}
+.phone .bar{display:flex;align-items:center;gap:10px;background:#075e54;color:#fff;padding:12px 14px;font-weight:800}
+.phone .bar .av{width:38px;height:38px;border-width:2px}
+.phone .bar small{display:block;font-weight:600;font-size:12px;opacity:.8}
+.msgs{display:flex;flex-direction:column;gap:6px;padding:14px 12px 16px;min-height:200px}
+.date-chip{align-self:center;background:#e1f2fb;color:#3b5;color:#54656f;font-size:12px;font-weight:800;border-radius:8px;padding:4px 10px;margin:4px 0}
+.bub{max-width:82%;padding:7px 10px 18px;border-radius:12px;font-size:15.5px;line-height:1.35;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.12);animation:bubIn .35s cubic-bezier(.3,1.5,.5,1);color:#111;word-wrap:break-word}
+.bub time{position:absolute;right:8px;bottom:3px;font-size:10.5px;color:#667781}
+.bub.her{align-self:flex-start;background:#fff;border-top-left-radius:2px}
+.bub.him{align-self:flex-end;background:#d9fdd3;border-top-right-radius:2px}
+.bub.em{font-size:30px;background:transparent;box-shadow:none;padding:0 4px 16px}
+@keyframes bubIn{from{opacity:0;transform:translateY(14px) scale(.85)}}
+.typing{align-self:flex-start;background:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:4px}
+.typing.him{align-self:flex-end;background:#d9fdd3}
+.typing i{width:7px;height:7px;border-radius:50%;background:#999;animation:dot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{transform:translateY(-4px);opacity:.4}}
+.replay{display:block;margin:10px auto 0}
+
+/* guesses */
+.guess{background:#fff;color:var(--ink);border-radius:26px;box-shadow:var(--shadow);padding:20px;text-align:left}
+.guess .gq{font-family:var(--display);font-weight:600;font-size:clamp(20px,5.4vw,24px);color:var(--choco);margin:8px 0 14px}
+.guess .tag{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--plum);border-radius:8px;padding:4px 8px}
+.gopts{display:grid;gap:10px}
+.gopts.two{grid-template-columns:1fr 1fr}
+.gopts.four{grid-template-columns:1fr 1fr}
+.gopt{background:var(--mallow);border:2px solid var(--blush);border-radius:16px;padding:13px 12px;font-weight:800;font-size:16px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s}
+.gopt:active{transform:scale(.96)}
+.gopt .av{width:34px;height:34px;border-width:2px}
+.gopt.emo{font-size:34px;padding:8px}
+.gopt.good{background:var(--mint);border-color:#6fd3a8;animation:okpop .5s}
+.gopt.bad{background:#ffe0e0;border-color:#ff9b9b;animation:shake .45s}
+.greveal{display:none;margin-top:14px;font-weight:700;color:var(--choco-2);line-height:1.5}
+.greveal.show{display:block;animation:okpop .5s}
+.greveal b{color:var(--rose)}
+.slider-wrap{margin:8px 0 4px}
+.slider-val{font-family:var(--display);font-weight:700;font-size:40px;color:var(--rose);text-align:center}
+input[type=range]{width:100%;accent-color:var(--rose);height:34px}
+
+/* stats */
+.duel{margin-top:6px}
+.duel .row{display:flex;align-items:center;gap:10px;margin:12px 0}
+.duel .row .av{width:40px;height:40px;flex:none}
+.duel .track{flex:1;height:30px;border-radius:999px;background:rgba(0,0,0,.08);overflow:hidden;position:relative}
+.duel .bar{height:100%;width:0;border-radius:999px;transition:width 1.4s cubic-bezier(.2,.9,.25,1)}
+.duel .bar.him{background:linear-gradient(90deg,#7fb0ff,var(--him))}
+.duel .bar.her{background:linear-gradient(90deg,#ff9ebd,var(--her))}
+.duel .num{min-width:84px;text-align:right;font-family:var(--display);font-weight:700;font-size:18px}
+.t-night .duel .track,.t-plum .duel .track,.t-pink .duel .track,.t-choco .duel .track{background:rgba(255,255,255,.18)}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.st{background:rgba(255,255,255,.95);color:var(--ink);border-radius:22px;padding:16px 12px;text-align:center;box-shadow:var(--shadow)}
+.st b{display:block;font-family:var(--display);font-size:clamp(26px,7.4vw,36px);color:var(--rose);line-height:1.05}
+.st span{font-size:13px;font-weight:800;color:var(--muted)}
+.lw{display:grid;gap:10px}
+.lw .item{background:rgba(255,255,255,.95);color:var(--ink);border-radius:18px;padding:12px 14px;box-shadow:var(--shadow)}
+.lw .item .lbl{display:flex;justify-content:space-between;font-weight:800;font-size:15px;margin-bottom:8px}
+.lw .split{display:flex;height:16px;border-radius:999px;overflow:hidden;background:#eee}
+.lw .split i{display:block;height:100%;width:0;transition:width 1.2s cubic-bezier(.2,.9,.25,1)}
+.lw .split .h{background:var(--him)}.lw .split .f{background:var(--her)}
+.lw .nums{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-top:5px}
+.legend2{display:flex;justify-content:center;gap:18px;font-weight:800;font-size:14px}
+.legend2 span{display:inline-flex;align-items:center;gap:6px}
+.legend2 i{width:14px;height:14px;border-radius:4px;display:inline-block}
+
+/* heatmap + months */
+.heat{display:grid;grid-template-columns:18px repeat(24,minmax(0,1fr));gap:2px;font-size:8.5px;font-weight:800;color:rgba(255,255,255,.7)}
+.heat .c{aspect-ratio:1;border-radius:3px;background:#ff4f7e;opacity:.06;transform:scale(0);transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.in .heat .c,.heat.in .c{transform:none}
+.heat .hl{display:flex;align-items:center}
+.heat .hx{text-align:left;overflow:visible;white-space:nowrap}
+.months{display:flex;align-items:flex-end;gap:3px;height:200px;padding-top:20px}
+.months .m{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative}
+.months .b{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#ff4f7e,#ff9ebd);height:0;transition:height 1.2s cubic-bezier(.2,.9,.25,1)}
+.months .m.peak .b{background:linear-gradient(180deg,#ffc94d,#ff4f7e)}
+.months .lbl{font-size:9px;font-weight:800;color:var(--muted);margin-top:4px;writing-mode:vertical-rl;transform:rotate(180deg);height:34px}
+.months .tip{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--plum);color:#fff;font-size:11px;font-weight:800;padding:3px 6px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;z-index:3}
+.months .m.on .tip{opacity:1}
+
+/* emoji podium */
+.podiums{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.podium{background:rgba(255,255,255,.95);border-radius:22px;padding:14px 10px;color:var(--ink);box-shadow:var(--shadow)}
+.podium h3{display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;margin-bottom:10px}
+.podium h3 .av{width:30px;height:30px;border-width:2px}
+.prow{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px;padding:4px 6px}
+.prow .e{font-size:28px;width:38px;text-align:center}
+.prow .n{margin-left:auto;color:var(--muted)}
+
+/* multi-round games */
+.round-card{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:20px;text-align:center;color:var(--ink)}
+.round-card .rq{font-family:var(--display);font-weight:600;font-size:clamp(22px,6vw,28px);color:var(--choco);min-height:2.6em;display:flex;align-items:center;justify-content:center;line-height:1.15}
+.round-card .rq.quote{font-family:var(--hand);font-size:clamp(28px,7.6vw,36px);color:var(--plum)}
+.round-card .rnum{font-size:13px;font-weight:800;color:var(--muted)}
+.round-card .rfeed{min-height:1.6em;font-weight:800;margin-top:12px;color:var(--choco-2)}
+.word-big{font-family:var(--display);font-weight:700;font-size:clamp(36px,11vw,56px);color:var(--rose)}
+.hl-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.hl-c{border-radius:20px;padding:16px 10px;background:var(--mallow);border:2px solid var(--blush);font-weight:800;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:transform .15s}
+.hl-c:active{transform:scale(.96)}
+.hl-c .v{font-family:var(--display);font-size:26px;color:var(--rose);min-height:1.2em}
+.hl-c.good{background:var(--mint);border-color:#6fd3a8}
+.hl-c.bad{background:#ffe0e0;border-color:#ff9b9b}
+
+/* fun facts flip */
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fact{height:170px;perspective:900px}
+.fact .in3d{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.fact.on .in3d{transform:rotateY(180deg)}
+.fact .f,.fact .b{position:absolute;inset:0;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:var(--shadow)}
+.fact .f{background:#fff;color:var(--choco);font-family:var(--display);font-weight:600;font-size:16px;gap:6px}
+.fact .f span{font-size:36px}
+.fact .b{background:var(--plum);color:#fff;transform:rotateY(180deg);font-size:13.5px;font-weight:700;line-height:1.35}
+.fact .b b{display:block;font-family:var(--display);font-size:26px;color:var(--gold);margin-bottom:4px;word-break:break-all;line-height:1.05}
+
+/* long word unroll */
+.unroll{font-family:var(--display);font-weight:700;font-size:22px;color:var(--rose);word-break:break-all;line-height:1.15;min-height:2.4em}
+
+/* final */
+.final-score{font-family:var(--display);font-weight:700;font-size:clamp(60px,18vw,110px);color:#fff;line-height:1}
+.rank{font-family:var(--hand);font-size:clamp(30px,8vw,40px);color:var(--gold)}
+.end-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+footer{padding:30px 0 calc(90px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:14px}
+footer a{color:var(--rose);font-weight:800}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.deco,.floaty{display:none}}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate">
+  <div class="phone-ic">📱</div>
+  <div class="notif">💬 438 201 nouveaux messages de « Ton chéri »</div>
+  <h1>Nous <em>Wrapped</em></h1>
+  <p style="font-weight:700;opacity:.85">2 ans de WhatsApp, analysés avec beaucoup trop d'amour<br>(et un peu d'informatique)</p>
+  <button class="btn" id="enter">Ouvrir le récap 💌</button>
+</div>
+
+<div id="prog" aria-hidden="true"><div class="fill"></div><span class="runner"><img class="av" src="../anniversaire/img/lui.png" alt=""></span><span class="goal"><img class="av" src="../anniversaire/img/elle.png" alt=""></span></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button id="muteBtn" aria-label="Son">🔊</button>
+<button id="scoreBtn">⭐ <span id="scoreN">0</span> pts</button>
+
+<main>
+
+<!-- INTRO GUESS -->
+<section class="scene full t-night center" id="s-intro">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#2c2058;color:var(--gold)">Avant de commencer</span></div>
+    <h2 class="title" data-reveal>Combien de messages on s'est <em style="color:var(--gold)">envoyés</em> ?</h2>
+    <p class="lead" data-reveal>Depuis le tout premier, le 14 octobre 2024. Fais glisser, puis valide.</p>
+    <div class="guess" data-reveal>
+      <span class="tag">Devinette 1 · jusqu'à 30 pts</span>
+      <div class="slider-wrap"><div class="slider-val" id="slVal">10 000</div><input type="range" id="slider" min="0" max="1000" value="333" aria-label="Nombre de messages"></div>
+      <div class="center"><button class="btn" id="slGo">Valider 🔒</button></div>
+      <div class="greveal" id="slRev"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO TOTAL -->
+<section class="scene full t-pink center" id="s-total">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Le chiffre officiel</span></div>
+    <div class="big" data-reveal><span data-count="438201">0</span></div>
+    <h2 class="title" data-reveal>messages en deux ans</h2>
+    <p class="lead" data-reveal>Soit environ <b>591 messages par jour</b>. Tous les jours. Pendant 742 jours. 🫠</p>
+    <div class="statgrid" data-reveal>
+      <div class="st"><b data-count="742">0</b><span>jours depuis le 1er message</span></div>
+      <div class="st"><b data-count="1516815">0</b><span>mots écrits</span></div>
+      <div class="st"><b data-count="23146">0</b><span>photos, vidéos & vocaux</span></div>
+      <div class="st"><b>≈ 20</b><span>tomes de Harry Potter en mots 📚</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FIRST CONVO -->
+<section class="scene t-sky" id="s-first">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker">Chapitre 1 · 14 octobre 2024, 01h18</span></div>
+    <h2 class="title center" data-reveal>Le tout <em>premier</em> message</h2>
+    <p class="lead center" data-reveal>Elle était en stage en Roumanie. Lui était enrhumé. Le médecin et l'informaticien. Ça commence comme ça :</p>
+    <div class="phone" data-reveal><div class="bar"><img class="av" src="../anniversaire/img/elle.png" alt=""><div>Khadija Roumanie 🇷🇴<small>en ligne</small></div></div><div class="msgs" id="chat-first"></div></div>
+    <button class="btn small ghost replay" data-replay="first">↻ Rejouer</button>
+    <div class="card" data-reveal>
+      <p><b>🤫 Easter egg :</b> 43 minutes plus tard, il avoue : « j'ai supprimé l'appli 😂 ». Il avait <b>déjà supprimé Bumble</b> le soir même. Deux jours après : « Aslan B stands for <b>baby</b>, machi bumble ». 😌</p>
+    </div>
+    <div class="card" data-reveal>
+      <p><b>🥹 Jour 1, 21h44 :</b> elle l'appelait déjà « mon bébé ». Le soir même. Moins de 24h après « Reeee ».</p>
+    </div>
+  </div>
+</section>
+
+<!-- GUESS JTM -->
+<section class="scene t-plum center" id="s-jtm">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#7a4f8a;color:#fff">Chapitre 2 · Le premier « je t'aime »</span></div>
+    <h2 class="title" data-reveal>Qui l'a dit <em style="color:var(--gold)">en premier</em> ?</h2>
+    <div class="guess" data-reveal data-guess="jtm"></div>
+    <div class="phone" id="jtmPhone" style="display:none"><div class="bar"><img class="av" src="../anniversaire/img/elle.png" alt=""><div>Khadija Roumanie<small>26 octobre 2024</small></div></div><div class="msgs" id="chat-love"></div></div>
+  </div>
+</section>
+
+<!-- DISTANCE -->
+<section class="scene t-gold center" id="s-distance">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Chapitre 3 · La distance</span></div>
+    <h2 class="title" data-reveal>🇷🇴 ✈️ 🇲🇦</h2>
+    <p class="lead" data-reveal style="color:var(--choco)">Roumanie → Maroc : environ 3 000 km. Des messages à 2h du matin, des « ça m'énerve cette distance de merde », et une seule idée en tête : se voir.</p>
+    <div class="guess" data-reveal data-guess="days"></div>
+  </div>
+</section>
+
+<!-- FIRST DATE -->
+<section class="scene t-night" id="s-date">
+  <div class="wrap stack">
+    <div class="center" data-reveal><span class="kicker" style="background:#2c2058;color:var(--gold)">Chapitre 4 · 10 → 11 décembre 2024</span></div>
+    <h2 class="title center" data-reveal>La nuit du <em style="color:var(--gold)">premier rendez-vous</em></h2>
+    <p class="lead center" data-reveal>Elle atterrit le soir même. Il insiste : « Non, on se voit ce soir ». Et avant même de le rencontrer en vrai, elle prévoit déjà le mariage… 😂</p>
+    <div class="phone" data-reveal><div class="bar"><img class="av" src="../anniversaire/img/elle.png" alt=""><div>Khadija 💕<small>en ligne</small></div></div><div class="msgs" id="chat-date"></div></div>
+    <button class="btn small ghost replay" data-replay="date">↻ Rejouer</button>
+    <p class="small center" data-reveal>« Descend 😌 » à 00h01. « Tu me manques déjà » à 02h10. Deux heures, c'est tout ce qu'il a tenu.</p>
+  </div>
+</section>
+
+<!-- WHO TALKS MORE -->
+<section class="scene full center" id="s-more">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Le grand duel</span></div>
+    <h2 class="title" data-reveal>Qui parle le <em>plus</em> ?</h2>
+    <div class="guess" data-reveal data-guess="more"></div>
+    <div class="card" id="moreStats" style="display:none;text-align:left">
+      <div class="duel" data-duel>
+        <div class="row"><img class="av" src="../anniversaire/img/elle.png" alt=""><div class="track"><div class="bar her" data-w="248068"></div></div><div class="num her-c">248 068</div></div>
+        <div class="row"><img class="av" src="../anniversaire/img/lui.png" alt=""><div class="track"><div class="bar him" data-w="190133"></div></div><div class="num him-c">190 133</div></div>
+      </div>
+      <p class="small" style="margin-top:8px"><b>Messages envoyés.</b> Elle mène avec 57 % 🏆. MAIS…</p>
+      <div class="duel" data-duel style="margin-top:12px">
+        <div class="row"><img class="av" src="../anniversaire/img/lui.png" alt=""><div class="track"><div class="bar him" data-w="823755"></div></div><div class="num him-c">823 755</div></div>
+        <div class="row"><img class="av" src="../anniversaire/img/elle.png" alt=""><div class="track"><div class="bar her" data-w="693060"></div></div><div class="num her-c">693 060</div></div>
+      </div>
+      <p class="small" style="margin-top:8px"><b>Mots écrits.</b> Lui en écrit plus. Elle envoie plus de messages, lui écrit des romans. La preuve : son plus long message fait <b>42 703 caractères</b>. C'était la lettre des 2 ans. 💌</p>
+    </div>
+  </div>
+</section>
+
+<!-- RECORDS -->
+<section class="scene t-mint center" id="s-records">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Les records</span></div>
+    <h2 class="title" data-reveal>Le jour où on n'a <em>jamais arrêté</em></h2>
+    <div class="guess" data-reveal data-guess="record"></div>
+    <div class="statgrid" data-reveal>
+      <div class="st"><b data-count="188">0</b><span>jours d'affilée sans manquer un seul jour (jan → juil 2025)</span></div>
+      <div class="st"><b>Janv. 25</b><span>le mois le plus bavard : 38 322 messages</span></div>
+      <div class="st"><b>83 %</b><span>de ses réponses en moins d'1 minute (lui : 80 %) ⚡</span></div>
+      <div class="st"><b>Mercredi</b><span>le jour où on parle le plus (66 314 msgs)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MONTH TIMELINE -->
+<section class="scene center" id="s-months">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">La courbe de nous</span></div>
+    <h2 class="title" data-reveal>Nos messages, <em>mois par mois</em></h2>
+    <p class="lead" data-reveal>Touche une barre pour voir le chiffre.</p>
+    <div class="card" data-reveal><div class="months" id="months"></div></div>
+  </div>
+</section>
+
+<!-- NIGHT OWLS -->
+<section class="scene t-night center" id="s-night">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#2c2058;color:var(--gold)">Les oiseaux de nuit 🦉</span></div>
+    <h2 class="title" data-reveal>On parle le plus à quelle <em style="color:var(--gold)">heure</em> ?</h2>
+    <div class="guess" data-reveal data-guess="hour"></div>
+    <div class="heat" id="heat" data-reveal></div>
+    <p class="small" data-reveal>Chaque case = une heure de la semaine. Plus c'est rose, plus on parle.</p>
+    <div class="statgrid" data-reveal>
+      <div class="st"><b data-count="31055">0</b><span>messages envoyés à 2h du matin 🍟 (l'heure du McDo)</span></div>
+      <div class="st"><b>31 %</b><span>de nos messages entre minuit et 5h du matin 😴</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOVE WORDS -->
+<section class="scene t-pink center" id="s-love">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Le compteur d'amour</span></div>
+    <h2 class="title" data-reveal>Qui dit le plus <em>« je t'aime »</em> ?</h2>
+    <div class="guess" data-reveal data-guess="love"></div>
+    <div class="legend2" data-reveal><span><i style="background:var(--him)"></i>Lui</span><span><i style="background:#fff"></i>Elle</span></div>
+    <div class="lw" id="lw1" data-reveal></div>
+  </div>
+</section>
+
+<!-- PET NAMES -->
+<section class="scene center" id="s-names">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Le classement des petits noms</span></div>
+    <h2 class="title" data-reveal>Bebe, hbiba, kbida… <em>qui gagne ?</em></h2>
+    <div class="guess" data-reveal data-guess="mavie"></div>
+    <div class="legend2" data-reveal><span><i style="background:var(--him)"></i>Lui</span><span><i style="background:var(--her)"></i>Elle</span></div>
+    <div class="lw" id="lw2" data-reveal></div>
+    <div class="card" data-reveal>
+      <p class="small" style="font-weight:800">Le plus long petit nom jamais écrit (par lui, le 29 nov. 2024) :</p>
+      <div class="unroll" id="unroll"></div>
+      <button class="btn small" id="unrollBtn">Dérouler 🎀</button>
+    </div>
+  </div>
+</section>
+
+<!-- EMOJIS -->
+<section class="scene t-gold center" id="s-emoji">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Les emojis</span></div>
+    <h2 class="title" data-reveal>Ton emoji <em style="color:var(--plum)">n°1</em>, c'est…</h2>
+    <div class="guess" data-reveal data-guess="emoji"></div>
+    <div class="podiums" data-reveal>
+      <div class="podium"><h3><img class="av" src="../anniversaire/img/elle.png" alt="">Elle</h3><div id="podHer"></div></div>
+      <div class="podium"><h3><img class="av" src="../anniversaire/img/lui.png" alt="">Lui</h3><div id="podHim"></div></div>
+    </div>
+    <div class="card" data-reveal><p><b>L'emoji officiel du couple : 😌</b>, envoyé <b>7 559 fois</b> à vous deux. Le petit air satisfait. Le « j'ai raison ». Le « je suis mignon(ne) et je le sais ».</p></div>
+    <div class="guess" data-reveal data-guess="hearts"></div>
+  </div>
+</section>
+
+<!-- WHO WRITES LIKE THAT -->
+<section class="scene t-plum center" id="s-spell">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#7a4f8a;color:#fff">Mini-jeu · L'orthographe du cœur</span></div>
+    <h2 class="title" data-reveal>Qui écrit <em style="color:var(--gold)">comme ça</em> ?</h2>
+    <p class="lead" data-reveal>On écrit la darija chacun à notre façon. Devine qui a écrit ce mot (avec le nombre de fois !).</p>
+    <div class="round-card" data-reveal id="spell"></div>
+  </div>
+</section>
+
+<!-- WHO SAID IT -->
+<section class="scene center" id="s-said">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Mini-jeu · Vraies citations</span></div>
+    <h2 class="title" data-reveal>Qui a <em>dit</em> ça ?</h2>
+    <p class="lead" data-reveal>De vraies phrases, tirées de nos conversations.</p>
+    <div class="round-card" data-reveal id="said"></div>
+  </div>
+</section>
+
+<!-- MORE GUESSES -->
+<section class="scene t-mint center" id="s-habits">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Nos petites habitudes</span></div>
+    <h2 class="title" data-reveal>Devinettes <em>express</em></h2>
+    <div class="guess" data-reveal data-guess="sorry"></div>
+    <div class="guess" data-reveal data-guess="night"></div>
+    <div class="guess" data-reveal data-guess="hbila"></div>
+    <div class="guess" data-reveal data-guess="morning"></div>
+  </div>
+</section>
+
+<!-- HIGHER LOWER -->
+<section class="scene t-choco center" id="s-hl">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#7a4f38;color:var(--gold)">Mini-jeu · Plus ou moins</span></div>
+    <h2 class="title" data-reveal>Lequel est le <em style="color:var(--gold)">plus grand</em> ?</h2>
+    <p class="lead" data-reveal>Touche la carte que tu crois la plus grande.</p>
+    <div class="round-card" data-reveal id="hl"></div>
+  </div>
+</section>
+
+<!-- FUN FACTS -->
+<section class="scene center" id="s-facts">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Les dossiers secrets 🕵️</span></div>
+    <h2 class="title" data-reveal>Fun facts <em>classés top secret</em></h2>
+    <p class="lead" data-reveal>Touche une carte pour la retourner.</p>
+    <div class="facts" id="facts" data-reveal></div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="scene full t-night center" id="s-final">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="background:#2c2058;color:var(--gold)">Ton score de couple</span></div>
+    <div class="final-score" data-reveal><span id="finalN">0</span><span style="font-size:.35em"> pts</span></div>
+    <div class="rank" id="rank" data-reveal>Continue à jouer…</div>
+    <p class="small" id="finalHint" data-reveal></p>
+    <h2 class="title" data-reveal style="margin-top:30px">Et aujourd'hui, <em style="color:var(--gold)">25 octobre 2026</em>…</h2>
+    <p class="lead" data-reveal>Message n° 438 201. Toujours pareil. Toujours nous.</p>
+    <div class="phone" data-reveal><div class="bar"><img class="av" src="../anniversaire/img/elle.png" alt=""><div>Dr Baby 🩺<small>en ligne</small></div></div><div class="msgs" id="chat-end"></div></div>
+    <p class="lead" data-reveal style="margin-top:20px">438 201 messages. Et j'ai encore tellement de choses à te dire. ❤️</p>
+    <p class="hand" data-reveal style="font-family:var(--hand);font-size:34px;color:var(--gold)">À suivre… pendant 70 ans 😌</p>
+    <div class="end-links" data-reveal><a class="btn" href="../anniversaire/">💌 La lettre</a><a class="btn ghost" href="../jeux/">🎡 Le Parc d'Amour</a></div>
+  </div>
+</section>
+
+<footer>Statistiques calculées sur nos 2 conversations WhatsApp, avec amour · aucune bulle n'a été maltraitée</footer>
+</main>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const fmt = (n) => Math.round(n).toLocaleString("fr-FR");
+  const LUI = "../anniversaire/img/lui.png", ELLE = "../anniversaire/img/elle.png";
+  const avL = `<img class="av" src="${LUI}" alt="">`, avE = `<img class="av" src="${ELLE}" alt="">`;
+
+  /* ---------- sound ---------- */
+  let AC = null, muted = false;
+  try { muted = localStorage.getItem("nous-muted") === "1"; } catch (e) {}
+  $("#muteBtn").textContent = muted ? "🔇" : "🔊";
+  const tone = (f, d = .09, type = "sine", v = .12, slide = 0) => { if (muted || !AC) return; const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (slide) o.frequency.exponentialRampToValueAtTime(f * slide, t + d); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g).connect(AC.destination); o.start(t); o.stop(t + d + .02); };
+  const S = { pop: () => tone(rnd(600, 900), .07, "sine", .1, .5), msg: () => { tone(880, .06, "sine", .08); setTimeout(() => tone(1320, .08, "sine", .06), 60); }, good: () => { tone(660, .08, "triangle"); setTimeout(() => tone(990, .1, "triangle"), 70); }, bad: () => tone(180, .25, "sawtooth", .06, .6), win: () => [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => tone(f, .18, "triangle", .12), i * 110)), tick: () => tone(1500, .02, "square", .03) };
+  $("#muteBtn").addEventListener("click", () => { muted = !muted; $("#muteBtn").textContent = muted ? "🔇" : "🔊"; try { localStorage.setItem("nous-muted", muted ? "1" : "0"); } catch (e) {} });
+
+  let tT; const toast = (m, ms = 2400) => { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tT); tT = setTimeout(() => t.classList.remove("show"), ms); };
+
+  /* ---------- confetti ---------- */
+  const cv = $("#fx"), ctx = cv.getContext("2d"); let parts = [], raf = null;
+  const size = () => { const d = devicePixelRatio || 1; cv.width = innerWidth * d; cv.height = innerHeight * d; cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px"; ctx.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener("resize", size);
+  const COL = ["#ff4f7e", "#4f8bff", "#ffc94d", "#bff0dc", "#ff8fb1", "#fff"], EMO = ["❤️", "💬", "😌", "💕", "✨", "🥹"];
+  function burst(x, y, n = 60) { if (reduce) return; for (let i = 0; i < n; i++) { const a = Math.random() * 6.28, s = rnd(4, 11); parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: Math.random() * 6, vr: rnd(-.3, .3), c: COL[i % 6], w: rnd(6, 12), life: 0, max: rnd(80, 140), e: i % 3 === 0 ? EMO[i % 6] : null }); } if (!raf) loop(); }
+  function loop() { ctx.clearRect(0, 0, innerWidth, innerHeight); parts = parts.filter(p => p.life < p.max); for (const p of parts) { p.life++; p.vy += .28; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; ctx.save(); ctx.globalAlpha = 1 - p.life / p.max; ctx.translate(p.x, p.y); ctx.rotate(p.r); if (p.e) { ctx.font = "22px serif"; ctx.fillText(p.e, -11, 8); } else { ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.w / 4, p.w, p.w / 2); } ctx.restore(); } raf = parts.length ? requestAnimationFrame(loop) : (ctx.clearRect(0, 0, innerWidth, innerHeight), null); }
+  const party = () => { burst(innerWidth * .2, innerHeight * .6, 70); setTimeout(() => burst(innerWidth * .8, innerHeight * .6, 70), 180); setTimeout(() => burst(innerWidth / 2, innerHeight * .35, 90), 380); };
+  const burstAt = (el, n = 30) => { const r = el.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, n); };
+
+  /* ---------- score ---------- */
+  let score = 0, played = 0;
+  const MAX = 30 + 13 * 10 + 8 * 5 + 10 * 5 + 6 * 5;
+  const addScore = (n) => { score += n; $("#scoreN").textContent = score; const b = $("#scoreBtn"); b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); updateFinal(); };
+  $("#scoreBtn").addEventListener("click", () => toast(`⭐ ${score} points sur ${MAX} possibles. Continue !`));
+  function updateFinal() {
+    $("#finalN").textContent = score;
+    const p = score / MAX;
+    $("#rank").textContent = p >= .85 ? "Docteure en Nous, mention très bien 🎓👑" : p >= .65 ? "Experte certifiée du couple 💘" : p >= .45 ? "Elle nous connaît bien (mais révise un peu 😏)" : p > 0 ? "On va devoir relire nos messages ensemble… à 2h du mat 🍟" : "Continue à jouer…";
+    $("#finalHint").textContent = `${score} / ${MAX} points possibles`;
+  }
+
+  /* ---------- gate ---------- */
+  $("#enter").addEventListener("click", () => {
+    try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+    S.msg(); party();
+    setTimeout(() => { $("#gate").classList.add("gone"); document.body.classList.remove("locked"); startReveal(); }, 500);
+  });
+
+  /* ---------- split titles + reveal ---------- */
+  const seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter("fr", { granularity: "grapheme" }) : null;
+  const gr = (t) => seg ? [...seg.segment(t)].map(x => x.segment) : Array.from(t);
+  if (!reduce) $$(".title").forEach(el => { let ci = 0; const walk = (node) => [...node.childNodes].forEach(n => { if (n.nodeType === 3) { const f = document.createDocumentFragment(); n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) return f.appendChild(document.createTextNode(" ")); const w = document.createElement("span"); w.className = "word"; gr(p).forEach(g => { const c = document.createElement("span"); c.className = "ch"; c.textContent = g; c.style.setProperty("--ci", ci++); w.appendChild(c); }); f.appendChild(w); }); n.replaceWith(f); } else if (n.nodeType === 1) walk(n); }); walk(el); });
+  const V = ["v-up", "v-left", "v-right", "v-zoom"];
+  $$("[data-reveal]").forEach((el, i) => el.classList.add(el.classList.contains("title") || el.classList.contains("guess") || el.classList.contains("phone") ? "v-up" : V[i % 4]));
+  const onReveal = new Map();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); const f = onReveal.get(e.target); f && f(); } }), { rootMargin: "0px 0px -12% 0px" });
+  function startReveal() { $$("[data-reveal]").forEach(el => io.observe(el)); }
+  const whenSeen = (el, fn) => { onReveal.set(el, fn); };
+
+  /* count-ups */
+  $$("[data-count]").forEach(el => {
+    const host = el.closest("[data-reveal]") || el;
+    const prev = onReveal.get(host);
+    onReveal.set(host, () => { prev && prev(); const end = +el.dataset.count, t0 = performance.now(), dur = 1800; const f = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = fmt(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); else if (end > 100000) burstAt(el, 40); }; requestAnimationFrame(f); });
+  });
+
+  /* ---------- decos + scroll ---------- */
+  const DE = ["💬", "❤️", "😌", "🍟", "🩺", "💕", "✨", "📱", "🥹", "🙄"];
+  $$(".scene").forEach((s, i) => { for (let k = 0; k < 2; k++) { const d = document.createElement("span"); d.className = "deco"; d.textContent = DE[(i * 2 + k) % DE.length]; d.style.fontSize = rnd(60, 120) + "px"; d.style.left = (k ? rnd(70, 88) : rnd(-6, 12)) + "%"; d.style.top = rnd(8, 75) + "%"; d.dataset.s = rnd(.15, .4) * (k ? -1 : 1); s.prepend(d); } });
+  const decos = $$(".deco"), fill = $("#prog .fill"), runner = $("#prog .runner");
+  let tick = false;
+  addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { tick = false; const y = scrollY, H = innerHeight, max = document.documentElement.scrollHeight - H, p = max > 0 ? Math.min(1, y / max) : 0; fill.style.transform = `scaleX(${p})`; runner.style.left = `calc(${p * 100}% * .92)`; if (reduce) return; decos.forEach(d => { const b = d.parentElement.getBoundingClientRect(); if (b.bottom < -200 || b.top > H + 200) return; const off = b.top + b.height / 2 - H / 2; d.style.transform = `translate3d(0,${off * d.dataset.s}px,0) rotate(${off * .05}deg)`; }); }); }, { passive: true });
+
+  /* ================= CHAT REPLAYS ================= */
+  const CHATS = {
+    first: [["d", "14 octobre 2024"], ["him", "Reeee", "01:18"], ["him", "Or should i say buna ziwa", "01:18"], ["him", "Zeua", "01:19"], ["him", "Bon je peux pas l'epeler", "01:19"], ["her", "Buna seară", "01:19"], ["her", "Hahahah", "01:19"], ["him", "Haha tu fais quoi en roumanie a sahbti", "01:19"], ["her", "Je fais un stage là", "01:26"], ["him", "Pharmacienne ? Wla tbiba ?", "01:29"], ["her", "Médecin", "01:29"], ["him", "Aah dans ce cas la i will take whatever you prescribe", "01:32"], ["her", "Prends du paracetamol si t'as un headache", "01:36"], ["her", "Codéine", "01:37"], ["her", "😂😂😂😂😂", "01:37", 1], ["him", "T'étais où quand j'étais au lycée", "01:37"], ["him", "Tu me prescris de la codéine w kat gouli lia ana li je te déçois", "01:40"], ["him", "Nti tweli mon médecin w ana ghanweli ton consultant IT", "01:48"], ["him", "Mziana ?", "01:48"], ["her", "😊😊😊😊😊😊", "01:49", 1]],
+    love: [["d", "26 octobre 2024 · 7h24 du matin"], ["her", "Caaaaaaaaaa m'énerve had la distance de merde", "07:24"], ["him", "Safi ana wlit kanbghik", "07:24"], ["her", "Aimmmmeeeee mmmmooooooooiiiii", "07:24"], ["him", "Thats the plan bebe", "07:25"]],
+    date: [["d", "10 décembre 2024"], ["her", "On fera la même photo", "22:22"], ["her", "Quand on se mariera", "22:23"], ["her", "Je t'aime moi", "22:32"], ["him", "Je t'aime aussi mon coeur", "22:32"], ["d", "11 décembre 2024"], ["him", "Descend 😌", "00:01"], ["d", "🍟 … deux heures plus tard …"], ["him", "Tu me manques déjà c pas normal", "02:10"], ["her", "Tu me manques aussi bébé", "02:13"], ["him", "Ce fut un énorme plaisirrrrr de te voir mon coeur", "02:45"], ["her", "Ooyy partagé. Ma vie", "02:45"], ["him", "T'es encore plus belle en personne", "02:47"], ["her", "Oyyy merciii ma vie tes yeuxxx", "02:48"], ["her", "Et tu sens bon", "02:48"], ["her", "Khsk tjib lia un capuchon fih ton parfum", "02:49"], ["her", "Pour faire plaisir à ta femme 😌😌", "02:50"], ["him", "Ma femme à moi oui 😌", "02:50"]],
+    end: [["d", "Aujourd'hui"], ["him", "Hbibaaa lhnina", "14:19"], ["her", "Ana hnina", "14:20"], ["him", "Bisous mon coeur", "15:00"], ["her", "Bisous ma vie", "15:08"], ["him", "Kbida ntina", "15:36"], ["her", "Hbiba ntina", "15:59"], ["him", "Et ça continue… 💞", "maintenant"]],
+  };
+  const esc = (s) => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const running = {};
+  function playChat(id) {
+    const box = $("#chat-" + id); if (!box) return; const L = CHATS[id];
+    const run = (running[id] || 0) + 1; running[id] = run; box.innerHTML = ""; let i = 0;
+    const next = () => {
+      if (running[id] !== run || i >= L.length) return;
+      const [w, txt, time, emo] = L[i++];
+      if (w === "d") { box.insertAdjacentHTML("beforeend", `<div class="date-chip">${esc(txt)}</div>`); return setTimeout(next, reduce ? 0 : 450); }
+      const ty = document.createElement("div"); ty.className = "typing " + w; ty.innerHTML = "<i></i><i></i><i></i>"; box.appendChild(ty);
+      setTimeout(() => { if (running[id] !== run) return; ty.remove(); box.insertAdjacentHTML("beforeend", `<div class="bub ${w}${emo ? " em" : ""}">${esc(txt)}<time>${time}</time></div>`); S.msg(); setTimeout(next, reduce ? 0 : 520); }, reduce ? 0 : Math.min(1300, 350 + txt.length * 18));
+    };
+    next();
+  }
+  ["first", "date", "end"].forEach(id => { const ph = $("#chat-" + id).closest(".phone"); whenSeen(ph, () => playChat(id)); });
+  $$("[data-replay]").forEach(b => b.addEventListener("click", () => playChat(b.dataset.replay)));
+
+  /* ================= GUESSES ================= */
+  const G = {
+    jtm: { tag: "Devinette 2", q: "Qui a dit « je t'aime » (ou « kanbghik ») en premier ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 0, two: 1,
+      rev: "<b>Lui !</b> Le 26 octobre 2024 à 7h24 du matin, <b>12 jours</b> après le premier message : « Safi ana wlit kanbghik ». 🥹<br><br>😏 <b>Petit twist :</b> 5 jours plus tôt, elle avait écrit « Sinon je t'aimerai pas »… au conditionnel. Ça compte ? Le jury délibère.<br>Sa première vraie déclaration à elle ? Le lendemain à 2h17 : « Nbghik rebbbek » 😂",
+      after: () => { $("#jtmPhone").style.display = "block"; playChat("love"); } },
+    days: { tag: "Devinette 3", q: "Combien de jours entre le premier message et le premier rendez-vous ?", opts: [["12 jours"], ["30 jours"], ["58 jours"], ["120 jours"]], ok: 2, four: 1,
+      rev: "<b>58 jours.</b> Du 14 octobre au 11 décembre 2024. 58 jours de messages, de vocaux et de « j'ai juste envie de te voir moi ». 🥺" },
+    more: { tag: "Devinette 4", q: "Qui a envoyé le plus de messages ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 1, two: 1,
+      rev: "<b>Elle</b>, de loin : 248 068 messages contre 190 133. 🏆", after: () => { const m = $("#moreStats"); m.style.display = "block"; setTimeout(() => $$("[data-duel]", m).forEach(animDuel), 60); } },
+    record: { tag: "Devinette 5", q: "Le 5 mai 2025, on a battu notre record. Combien de messages en UNE journée ?", opts: [["850"], ["1 700"], ["4 612"], ["9 999"]], ok: 2, four: 1,
+      rev: "<b>4 612 messages</b> en 24h. Elle : 2 872, lui : 1 740. Ça fait un message toutes les 19 secondes. Sans dormir. 🫠" },
+    hour: { tag: "Devinette 6", q: "À quelle heure on s'envoie le plus de messages ?", opts: [["9h ☀️"], ["14h 🍽️"], ["20h 📺"], ["Minuit 🌙"]], ok: 3, four: 1,
+      rev: "<b>Minuit pile</b> (41 532 messages entre 0h et 1h), suivi de 1h du matin, puis 23h, puis 2h. Les heures les plus calmes ? 6h et 7h. Évidemment. 😴" },
+    love: { tag: "Devinette 7", q: "Qui dit le plus « je t'aime » (je t'aime + kanbghik + love you) ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 0, two: 1,
+      rev: "<b>Lui</b> : 1 488 fois, contre 1 084 pour elle. Mais attends de voir les cœurs… 👀", after: () => fillLW("#lw1", LOVE, true) },
+    mavie: { tag: "Devinette 8", q: "Un de ces petits noms est utilisé 7 fois plus par elle que par lui. Lequel ?", opts: [["Bebe"], ["Kbida"], ["Ma vie"], ["Mon amour"]], ok: 2, four: 1,
+      rev: "<b>« Ma vie »</b> : 545 fois par elle, 77 par lui. C'est SA signature. Lui, sa signature c'est « kbida » : 2 645 fois (elle : 317). 🥹", after: () => fillLW("#lw2", NAMES, false) },
+    emoji: { tag: "Devinette 9", q: "Quel est l'emoji qu'elle envoie le plus ?", opts: [["😂"], ["🙄"], ["🥹"], ["♥️"]], ok: 1, four: 1, emo: 1,
+      rev: "<b>🙄, 5 812 fois !</b> 😂 Le roulement d'yeux officiel. Lui, son n°1 c'est 😂 (6 010 fois)… c'est logique, il se trouve drôle.", after: fillPodiums },
+    hearts: { tag: "Devinette 10", q: "Qui envoie le plus de cœurs et d'emojis d'amour (❤️ 🥰 😍 😘…) ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 1, two: 1,
+      rev: "<b>Elle</b> : 2 571 contre 1 417. Il dit « je t'aime » avec des mots, elle avec des cœurs. ♥️ Match nul, tout le monde a gagné." },
+    sorry: { tag: "Devinette 11", q: "Qui s'excuse le plus (désolé·e, sorry, smhli…) ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 0, two: 1,
+      rev: "<b>Lui</b>, 980 fois (elle : 528). Presque 2× plus. Un homme qui sait demander pardon. 😌" },
+    night: { tag: "Devinette 12", q: "Qui dit « bonne nuit / dodo » le plus souvent ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 1, two: 1,
+      rev: "<b>Elle</b>, 926 fois (lui : 481)… MAIS c'est lui qui envoie le dernier message de la nuit le plus souvent (336 contre 245). Elle dit bonne nuit, il continue à parler. 😂" },
+    hbila: { tag: "Bonus", q: "Combien de fois il a écrit « hbila » ?", opts: [["12"], ["89"], ["443"], ["2 000"]], ok: 2, four: 1,
+      rev: "<b>443 fois.</b> Elle ne l'a écrit que 54 fois (sûrement pour se défendre). Le poste est pourvu à vie. 👑" },
+    morning: { tag: "Bonus", q: "Qui envoie le premier message du matin le plus souvent ?", opts: [[avL + "Lui"], [avE + "Elle"]], ok: 0, two: 1,
+      rev: "<b>Lui</b>, 350 fois contre 197. Et il relance la conversation après un long silence 360 fois (elle : 209). Il ne peut pas s'en empêcher. 🥹" },
+  };
+  function buildGuess(el, key) {
+    const g = G[key]; if (!g) return;
+    el.innerHTML = `<span class="tag">${g.tag} · 10 pts</span><div class="gq">${g.q}</div><div class="gopts ${g.two ? "two" : g.four ? "four" : ""}">${g.opts.map((o, i) => `<button class="gopt${g.emo ? " emo" : ""}" data-i="${i}">${o[0]}</button>`).join("")}</div><div class="greveal"></div>`;
+    $$(".gopt", el).forEach(b => b.addEventListener("click", () => {
+      if (el.dataset.done) return; el.dataset.done = 1; const i = +b.dataset.i, bs = $$(".gopt", el);
+      bs[g.ok].classList.add("good");
+      if (i === g.ok) { addScore(10); S.good(); burstAt(b, 30); } else { b.classList.add("bad"); S.bad(); }
+      const rv = $(".greveal", el); rv.innerHTML = (i === g.ok ? "✅ Bravo ! " : "❌ Raté ! ") + g.rev; rv.classList.add("show");
+      g.after && g.after();
+    }));
+  }
+  $$("[data-guess]").forEach(el => buildGuess(el, el.dataset.guess));
+
+  /* slider guess (log scale 1k → 2M) */
+  (() => {
+    const sl = $("#slider"), val = $("#slVal"), toN = (v) => Math.round(Math.pow(10, 3 + (v / 1000) * 3.3) / 100) * 100;
+    const upd = () => val.textContent = fmt(toN(+sl.value)); upd();
+    sl.addEventListener("input", () => { upd(); S.tick(); });
+    $("#slGo").addEventListener("click", () => {
+      if (sl.disabled) return; sl.disabled = true; $("#slGo").style.display = "none";
+      const g = toN(+sl.value), real = 438201, ratio = Math.max(g, real) / Math.min(g, real);
+      const pts = ratio <= 1.15 ? 30 : ratio <= 1.5 ? 20 : ratio <= 2.5 ? 10 : ratio <= 5 ? 5 : 0;
+      addScore(pts); pts >= 20 ? (S.win(), party()) : S.pop();
+      const msg = ratio <= 1.15 ? "INCROYABLE, tu es à moins de 15 % ! 🤯" : g < real ? `Beaucoup plus que ça… ×${ratio.toFixed(1)} 😳` : "Un peu moins quand même 😅";
+      $("#slRev").innerHTML = `Ta réponse : <b>${fmt(g)}</b><br>La vraie réponse : <b>438 201 messages</b> 😱<br>${msg} (+${pts} pts)<br><span class="small">Descends pour voir le détail ↓</span>`;
+      $("#slRev").classList.add("show");
+    });
+  })();
+
+  /* duel bars */
+  function animDuel(d) { const bars = $$(".bar", d), mx = Math.max(...bars.map(b => +b.dataset.w)); bars.forEach(b => b.style.width = (b.dataset.w / mx * 100) + "%"); }
+
+  /* love words + names */
+  const LOVE = [["❤️ Je t'aime", 1064, 800], ["🫶 Kanbghik / nbghik", 414, 281], ["🥺 Tu me manques / twhchtek", 375, 272], ["😘 Bisous", 371, 293], ["💕 Cœurs & emojis d'amour", 1417, 2571]];
+  const NAMES = [["👶 Bebe / bébé", 9262, 3919], ["💗 Hbiba / hbibti / hbibi", 3284, 1813], ["🫀 Kbida / kbidti", 2645, 317], ["🌹 Mon amour", 483, 110], ["✨ Ma vie", 77, 545], ["🌙 Omri", 162, 180], ["❤️ Mon cœur", 166, 56], ["🌍 L3mer", 152, 61]];
+  function fillLW(sel, rows, onPink) {
+    const box = $(sel);
+    box.innerHTML = rows.map(([l, h, f]) => `<div class="item"><div class="lbl"><span>${l}</span><span>${fmt(h + f)}</span></div><div class="split"><i class="h" data-w="${h / (h + f) * 100}"></i><i class="f" data-w="${f / (h + f) * 100}"></i></div><div class="nums"><span class="him-c">Lui ${fmt(h)}</span><span class="her-c">Elle ${fmt(f)}</span></div></div>`).join("");
+    setTimeout(() => $$("i", box).forEach(i => i.style.width = i.dataset.w + "%"), 80);
+  }
+
+  /* emoji podiums */
+  function fillPodiums() {
+    const H = [["🙄", 5812], ["😌", 5322], ["😂", 5215], ["🥹", 3860], ["🙂", 3698], ["♥️", 2445]], M = [["😂", 6010], ["😌", 2237], ["🙄", 1283], ["❤️", 857], ["🙂", 600], ["😍", 468]];
+    const row = ([e, n], i) => `<div class="prow" style="animation:okpop .5s ${i * .1}s both"><span>${["🥇", "🥈", "🥉", "4", "5", "6"][i]}</span><span class="e">${e}</span><span class="n">${fmt(n)}</span></div>`;
+    $("#podHer").innerHTML = H.map(row).join(""); $("#podHim").innerHTML = M.map(row).join("");
+  }
+  fillPodiums();
+
+  /* months chart */
+  (() => {
+    const M = [["2024-10", 6041, 4670], ["2024-11", 8607, 9440], ["2024-12", 14221, 17899], ["2025-01", 18143, 20179], ["2025-02", 16091, 20891], ["2025-03", 11765, 17365], ["2025-04", 14280, 22366], ["2025-05", 12823, 18896], ["2025-06", 6531, 9518], ["2025-07", 3845, 5834], ["2025-10", 6755, 8143], ["2025-11", 5552, 6596], ["2025-12", 2351, 2405], ["2026-01", 2958, 4044], ["2026-02", 1530, 1935], ["2026-03", 3626, 4197], ["2026-04", 7336, 10912], ["2026-05", 8835, 11409], ["2026-06", 7564, 10815], ["2026-07", 7363, 10395], ["2026-08", 8322, 11471], ["2026-09", 10320, 12086], ["2026-10", 5272, 6598]];
+    const MO = ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"];
+    const mx = Math.max(...M.map(m => m[1] + m[2])), box = $("#months");
+    box.innerHTML = M.map(([k, a, b]) => { const [y, mo] = k.split("-"); const t = a + b; return `<div class="m${t === mx ? " peak" : ""}" data-h="${t / mx * 100}"><span class="tip">${MO[+mo - 1]} ${y.slice(2)} · ${fmt(t)}</span><div class="b"></div><span class="lbl">${MO[+mo - 1]} ${y.slice(2)}</span></div>`; }).join("");
+    whenSeen(box.closest("[data-reveal]"), () => $$(".m", box).forEach((m, i) => setTimeout(() => $(".b", m).style.height = m.dataset.h + "%", i * 50)));
+    $$(".m", box).forEach(m => m.addEventListener("click", () => { $$(".m", box).forEach(x => x.classList.remove("on")); m.classList.add("on"); S.tick(); }));
+  })();
+
+  /* heatmap */
+  (() => {
+    const HEAT = [[7128,7002,4126,2281,1458,1041,408,152,97,495,977,1449,2058,2828,3269,3298,2978,2217,1796,1760,2161,3151,3962,4774],[4209,4596,3178,736,108,102,9,31,80,496,975,1491,2165,3682,3959,3283,2831,2944,2449,3634,2653,2874,4326,5508],[5061,6563,4797,2415,612,4,0,44,251,511,1043,2459,2593,2983,5693,4069,4481,3660,2653,2955,2615,2317,3810,4725],[5363,5216,3469,1358,631,6,36,84,442,1470,1986,2662,2369,1679,4708,4306,3543,3062,2558,2825,2807,4269,4489,5342],[7637,7060,4888,1986,269,0,16,63,318,1083,1379,2056,2530,3461,4359,3090,2264,2057,2162,2534,2643,3345,3567,4122],[5240,5057,5142,3421,1533,327,504,421,153,64,346,1107,2728,2708,2733,2435,3903,2738,2945,2885,2608,3925,4977,5506],[6894,5368,5455,3888,1242,23,9,21,260,97,430,641,1698,2294,2826,3008,3247,3166,2877,2242,2342,3894,5404,6401]];
+    window.__HEAT = HEAT;
+  })();
+
+  /* unroll longest word */
+  $("#unrollBtn").addEventListener("click", () => {
+    const w = "bebe" + "e".repeat(63), el = $("#unroll"); el.textContent = ""; let i = 0;
+    const iv = setInterval(() => { el.textContent = w.slice(0, ++i); if (i % 3 === 0) S.tick(); if (i >= w.length) { clearInterval(iv); el.insertAdjacentHTML("beforeend", "<br><span class='small'>67 lettres. Il avait beaucoup de choses à dire.</span>"); burstAt(el, 30); } }, 28);
+  });
+
+  /* ================= SPELLING GAME ================= */
+  (() => {
+    const R = [["saffy", 1, "1 845 fois par elle. Lui écrit « safi » (2 675 fois)."], ["kolchi", 0, "772 fois par lui. Elle écrit « kulshi » (596)."], ["hadshy", 1, "1 151 fois par elle. Lui : « hadchi » (2 229)."], ["inchaallah", 0, "309 fois par lui. Elle : « inshaealah » (508)."], ["ola", 1, "1 631 fois par elle. Lui écrit « wla » (3 275)."], ["chwia", 0, "766 fois par lui. Elle : « chouiya » (476)."], ["hahhahahha", 1, "Le rire signature d'elle, avec le double h. Lui fait « hahahaha » (492 fois)."], ["j'aime (avec ')", 0, "Lui tape une apostrophe droite ' (815 fois). Elle, l'apostrophe courbe ’ de l'iPhone (1 111 fois). Oui, j'ai vérifié. 🤓"]];
+    let i = 0, sc = 0; const box = $("#spell");
+    const show = () => {
+      if (i >= R.length) { box.innerHTML = `<div class="rq">${sc}/${R.length} 🎉</div><p class="rfeed">${sc >= 7 ? "Tu connais nos claviers par cœur 😍" : sc >= 5 ? "Pas mal du tout ! 🤓" : "On écrit vraiment n'importe comment, c'est pas ta faute 😂"}</p><button class="btn small" id="spAgain">Rejouer</button>`; $("#spAgain").onclick = () => { i = 0; sc = 0; show(); }; return; }
+      const [w] = R[i];
+      box.innerHTML = `<div class="rnum">Mot ${i + 1}/${R.length} · 5 pts</div><div class="rq"><span class="word-big">« ${w} »</span></div><div class="gopts two"><button class="gopt" data-a="0">${avL}Lui</button><button class="gopt" data-a="1">${avE}Elle</button></div><div class="rfeed"></div>`;
+      $$(".gopt", box).forEach(b => b.addEventListener("click", () => {
+        if (box.dataset.lock) return; box.dataset.lock = 1; const ok = +b.dataset.a === R[i][1];
+        b.classList.add(ok ? "good" : "bad"); if (ok) { sc++; addScore(5); S.good(); } else S.bad();
+        $(".rfeed", box).textContent = (ok ? "✅ " : "❌ ") + R[i][2];
+        setTimeout(() => { delete box.dataset.lock; i++; show(); }, 2300);
+      }));
+    };
+    show();
+  })();
+
+  /* ================= WHO SAID IT ================= */
+  (() => {
+    const Q = [["Nti tweli mon médecin w ana ghanweli ton consultant IT", 0, "Lui, la première nuit. Un plan de carrière très romantique."], ["Prends du paracetamol si t'as un headache", 1, "Elle, première nuit. Première consultation gratuite. 🩺"], ["Aslan B stands for baby, machi bumble", 0, "Lui, le 16 octobre 2024. 😌"], ["Je viens te chercher mon bébé, chiale pas, je suis là pour toi", 1, "Elle, le soir du tout premier jour ! 🥹"], ["On fera la même photo quand on se mariera", 1, "Elle, AVANT le premier rendez-vous. Elle avait déjà tout prévu. 😂"], ["T'es encore plus belle en personne", 0, "Lui, à 2h47, en rentrant du premier rendez-vous."], ["Et tu sens bon", 1, "Elle, juste après. Le parfum a fait son travail. 😌"], ["Ana howa la définition du mot cool", 0, "Lui. Évidemment lui. 🙄"], ["Un peu de modestie s'impose 😌", 1, "Elle, en réponse à lui (voir citation suivante)."], ["Undisputed undefeated heavyweight champion of the world", 0, "Lui, en parlant de… son niveau au foot. 😂"]];
+    let i = 0, sc = 0; const box = $("#said");
+    const show = () => {
+      if (i >= Q.length) { box.innerHTML = `<div class="rq">${sc}/${Q.length} 🏆</div><p class="rfeed">${sc >= 9 ? "Mémoire parfaite, docteure 🧠💕" : sc >= 6 ? "Tu nous connais vraiment bien 😍" : "On relira nos messages ensemble 😌"}</p><button class="btn small" id="saAgain">Rejouer</button>`; $("#saAgain").onclick = () => { i = 0; sc = 0; show(); }; return; }
+      box.innerHTML = `<div class="rnum">Citation ${i + 1}/${Q.length} · 5 pts</div><div class="rq quote">« ${Q[i][0]} »</div><div class="gopts two"><button class="gopt" data-a="0">${avL}Lui</button><button class="gopt" data-a="1">${avE}Elle</button></div><div class="rfeed"></div>`;
+      $$(".gopt", box).forEach(b => b.addEventListener("click", () => {
+        if (box.dataset.lock) return; box.dataset.lock = 1; const ok = +b.dataset.a === Q[i][1];
+        b.classList.add(ok ? "good" : "bad"); if (ok) { sc++; addScore(5); S.good(); } else S.bad();
+        $(".rfeed", box).textContent = (ok ? "✅ " : "❌ ") + Q[i][2];
+        setTimeout(() => { delete box.dataset.lock; i++; show(); }, 2300);
+      }));
+    };
+    show();
+  })();
+
+  /* ================= HIGHER / LOWER ================= */
+  (() => {
+    const R = [[["👶", "« bebe » écrit par lui", 9262], ["😂", "« 😂 » envoyés par lui", 6010]], [["🙄", "« 🙄 » envoyés par elle", 5812], ["💬", "« saffy » écrit par elle", 1845]], [["👑", "« hbila » écrit par lui", 443], ["🍟", "« McDo » écrit par vous deux", 105]], [["🌙", "Messages envoyés à 2h du mat", 31055], ["📸", "Photos, vidéos & vocaux", 23146]], [["🧔", "« akhti » écrit par lui", 698], ["👩", "« akhuya » écrit par elle", 1030]], [["❓", "Points d'interrogation (lui)", 14790], ["❓", "Points d'interrogation (elle)", 12854]]];
+    let i = 0, sc = 0; const box = $("#hl");
+    const show = () => {
+      if (i >= R.length) { box.innerHTML = `<div class="rq">${sc}/${R.length} 🔥</div><p class="rfeed">${sc >= 5 ? "Intuition de folie 🔮" : "Les chiffres sont fous, hein ? 😂"}</p><button class="btn small" id="hlAgain">Rejouer</button>`; $("#hlAgain").onclick = () => { i = 0; sc = 0; show(); }; return; }
+      const [a, b] = R[i];
+      box.innerHTML = `<div class="rnum">Manche ${i + 1}/${R.length} · 5 pts</div><div class="hl-cards">${[a, b].map((c, k) => `<button class="hl-c" data-k="${k}"><span style="font-size:36px">${c[0]}</span><span>${c[1]}</span><span class="v">?</span></button>`).join("")}</div><div class="rfeed"></div>`;
+      $$(".hl-c", box).forEach(btn => btn.addEventListener("click", () => {
+        if (box.dataset.lock) return; box.dataset.lock = 1; const k = +btn.dataset.k, win = a[2] >= b[2] ? 0 : 1, ok = k === win;
+        $$(".hl-c", box).forEach((c, j) => { $(".v", c).textContent = fmt([a, b][j][2]); c.classList.add(j === win ? "good" : "bad"); });
+        if (ok) { sc++; addScore(5); S.good(); } else S.bad();
+        $(".rfeed", box).textContent = ok ? "✅ Bien vu !" : "❌ Eh non !";
+        if (i === 4) $(".rfeed", box).textContent += " Elle l'appelle « mon frère » plus qu'il ne l'appelle « ma sœur ». 😂";
+        setTimeout(() => { delete box.dataset.lock; i++; show(); }, 2400);
+      }));
+    };
+    show();
+  })();
+
+  /* ================= FUN FACTS ================= */
+  (() => {
+    const F = [["👀", "Messages supprimés", "194", "par elle (lui : 66). On ne saura jamais ce qu'il y avait dedans. Jamais."], ["😂", "Le plus long fou rire", "100", "caractères de « hahhahah… », par elle, le 6 mars 2025. Il devait être très drôle ce jour-là."], ["💌", "Le plus long message", "42 703", "caractères : la lettre des 2 ans, envoyée le 14 octobre 2026 à 00h00 pile."], ["🔁", "Il revient toujours", "360", "fois, c'est lui qui relance après un long silence (elle : 209)."], ["😴", "« Fatigué(e) »", "409 vs 317", "L'informaticien est plus fatigué que le médecin de garde. Cherchez l'erreur."], ["🐝", "Bumble", "52", "mentions depuis le début. Pour une app qu'il avait déjà supprimée le 1er soir…"], ["🍟", "« J'ai faim »", "158", "fois. La faim est un sujet sérieux dans ce couple."], ["⚡", "Réponse éclair", "< 1 min", "pour 83 % de ses réponses et 80 % des siennes. Personne ne laisse l'autre en vu."]];
+    $("#facts").innerHTML = F.map(([e, t, n, d]) => `<button class="fact"><div class="in3d"><div class="f"><span>${e}</span>${t}</div><div class="b"><b>${n}</b>${d}</div></div></button>`).join("");
+    let seen = 0;
+    $$(".fact").forEach(f => f.addEventListener("click", () => { f.classList.toggle("on"); S.pop(); if (!f.dataset.s) { f.dataset.s = 1; seen++; if (seen === F.length) { toast("🕵️ Tous les dossiers secrets ouverts !"); party(); } } }));
+  })();
+
+  /* heatmap render (after HEAT defined) */
+  (() => {
+    const HEAT = window.__HEAT, D = ["L", "M", "M", "J", "V", "S", "D"], mx = Math.max(...HEAT.flat()), box = $("#heat");
+    let h = `<span></span>` + Array.from({ length: 24 }, (_, i) => `<span class="hx">${i % 3 === 0 ? i + "h" : ""}</span>`).join("");
+    HEAT.forEach((row, d) => { h += `<span class="hl">${D[d]}</span>` + row.map((v, k) => `<span class="c" style="opacity:${(.08 + .92 * Math.pow(v / mx, .8)).toFixed(2)};transition-delay:${(k * 20 + d * 30)}ms"></span>`).join(""); });
+    box.innerHTML = h;
+  })();
+
+  /* final reveal */
+  whenSeen($("#finalN").closest("[data-reveal]"), () => { updateFinal(); if (score > 0) { S.win(); party(); } });
+  updateFinal();
+})();
+</script>
+</body>
+</html>
