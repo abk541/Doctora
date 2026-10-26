@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7a5cff">
+<meta name="robots" content="noindex">
+<title>Notre Année en Mots</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%85%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:#f4f1ff}
+.hero{background:radial-gradient(circle at 50% 20%,#fff,#e7e0ff 70%)}
+.cal{font-size:96px;display:inline-block;animation:bob 2s infinite}
+.chart{display:flex;align-items:flex-end;gap:3px;height:150px;padding:10px 4px 0}
+.chart .b{flex:1;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#a78bfa,#7a5cff);height:0;transition:height 1s cubic-bezier(.2,.9,.25,1);cursor:pointer;position:relative}
+.chart .b.gap{background:repeating-linear-gradient(45deg,#ddd 0 5px,#f5f5f5 5px 10px)}
+.chart .b.on{background:linear-gradient(180deg,#ffc94d,#ff4f7e)}
+.legend-m{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--muted);margin-top:4px}
+.rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px max(18px,calc(50vw - 170px)) 24px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.month{flex:none;width:min(340px,84vw);scroll-snap-align:center;border-radius:28px;padding:20px;color:#fff;box-shadow:0 20px 40px rgba(42,31,77,.25);position:relative;overflow:hidden;min-height:470px;display:flex;flex-direction:column;gap:10px;transition:transform .4s}
+.month .mm{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.month h3{font-size:28px;line-height:1.05}
+.month .emo{font-size:56px;position:absolute;right:14px;top:10px;opacity:.9;animation:bob 2.4s infinite}
+.month .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.month .stats div{background:rgba(255,255,255,.18);border-radius:14px;padding:8px 10px;font-size:12px;font-weight:800}
+.month .stats b{display:block;font-family:var(--display);font-size:22px}
+.month .split{display:flex;height:10px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.25)}
+.month .split i{display:block;height:100%}
+.month .chips{display:flex;flex-wrap:wrap;gap:6px}
+.month .chips span{background:#fff;color:var(--plum);border-radius:999px;padding:5px 10px;font-size:13px;font-weight:800}
+.month .ev{background:rgba(0,0,0,.18);border-radius:16px;padding:10px 12px;font-size:14px;line-height:1.4;margin-top:auto}
+.month .em3{font-size:22px;letter-spacing:4px}
+.nav{display:flex;justify-content:center;gap:12px}
+.nav button{width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:var(--shadow);font-size:20px}
+.guessm{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:18px;text-align:left}
+.guessm .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.guessm .opt{background:#f4f1ff;border:2px solid #e2dbff;border-radius:14px;padding:11px;font-weight:800}
+.guessm .opt.good{background:#e3f8ec;border-color:#7fd6a6}.guessm .opt.bad{background:#ffe7e7;border-color:#ffb3b3;animation:shake .4s}
+</style>
+</head>
+<body>
+<main>
+<section class="scene hero center">
+  <div class="wrap stack">
+    <div data-reveal><span class="cal">📅</span></div>
+    <div data-reveal><span class="kicker">Le calendrier de nous</span></div>
+    <h1 class="title" data-reveal>Notre année <em>en mots</em></h1>
+    <p class="lead" data-reveal>24 mois, un par carte. Le thème, les chiffres, nos emojis du moment, les mots qui ont marqué le mois et le grand événement. Glisse les cartes 👉</p>
+    <div class="card" data-reveal><p class="small" style="font-weight:800">Messages par mois · touche une barre</p><div class="chart" id="chart"></div><div class="legend-m"><span>oct. 24</span><span>📱💀</span><span>oct. 26</span></div></div>
+  </div>
+</section>
+<section style="padding:10px 0 30px">
+  <div class="rail" id="rail"></div>
+  <div class="nav"><button id="prev" aria-label="Mois précédent">←</button><button id="next" aria-label="Mois suivant">→</button></div>
+</section>
+<section class="scene center" style="padding-top:30px">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Mini-jeu</span></div>
+    <h2 class="title" data-reveal>Devine <em>le mois</em></h2>
+    <p class="lead" data-reveal>Un indice, quatre mois. Lequel ?</p>
+    <div class="guessm" id="gm" data-reveal></div>
+  </div>
+</section>
+<footer>Notre Année en Mots · <a href="../nous-deux/">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, S, burstAt, party, splitTitles, reveal, shuffle, fmt } = L;
+  const MO = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const M = [
+    ["2024-10", 10711, 6041, 4670, 53, "😂🙂😌🥺", "💘", "Le coup de foudre à distance", ["Roumanie", "codéine", "Vinicius", "Ballon d'Or", "hem9a", "kanbghik"], "14 oct. : « Reeee ». 26 oct. : « Safi ana wlit kanbghik ». Et des débats enflammés sur le Ballon d'Or de Vinicius ⚽.", "#ff8fb1,#ff4f7e"],
+    ["2024-11", 18047, 8607, 9440, 78, "😂🙂😌🥺", "🧩", "On se découvre", ["hubby", "compatibles", "piercing", "bague", "Marrakech"], "Elle commence à l'appeler « hubby » (199 fois au total). 12 nov. : « Je veux la bague babe ». 24 nov. : elle atterrit au Maroc.", "#ffb347,#ff7a59"],
+    ["2024-12", 32120, 14221, 17899, 94, "😂😌🙂🙄", "🍟", "Enfin en vrai", ["Descend 😌", "McDo", "t'embrasser", "Widgetable", "bracelet"], "11 déc., 00h01 : « Descend 😌 ». Premier rendez-vous, premier bisou, le bracelet Tommy au poignet. Le mois le plus amoureux de tous (94 mots doux / 1 000 messages).", "#ff4f7e,#c2185b"],
+    ["2025-01", 38322, 18143, 20179, 65, "😂😌🙄🙂", "🏆", "Le mois record", ["moine", "Bouddha", "stream", "Wukong", "BMW"], "38 322 messages, le record absolu. Le début des 188 jours d'affilée sans manquer un seul jour.", "#7a5cff,#4f46e5"],
+    ["2025-02", 36982, 16091, 20891, 64, "😌😂🙄🙂", "💝", "Saint-Valentin & bêtises", ["Peugeot 308", "akhti ×566", "photos", "alhbib"], "16 fév. : « Ta présence a fait de moi une autre personne ». 25 fév. : bataille de 221 photos. 26 fév. : « akhti » × 566.", "#ff6fa5,#ff3d7f"],
+    ["2025-03", 29130, 11765, 17365, 86, "🥹🙄😌🙂", "🌙", "Ramadan & anniversaire", ["Ramadan", "ftour", "mosquée", "fac", "résidanat"], "Le Ramadan, les révisions… et le 27 mars, son anniversaire : « Aujourd'hui c'est ton jour, mais pour moi chaque jour est une célébration de toi ».", "#2a9d8f,#1f6f6b"],
+    ["2025-04", 36646, 14280, 22366, 49, "🙄🥹😌😂", "🚗", "Le mois des projets", ["Corolla", "budget", "projets", "rouhi"], "Plans de voiture, plans d'avenir, plans de budget. Et le 🙄 prend la tête des emojis d'elle.", "#4f8bff,#2563eb"],
+    ["2025-05", 31719, 12823, 18896, 43, "🙄🥹😂😌", "🔥", "Révisions & record", ["révise", "oral", "proposal", "bague fine"], "3 mai : elle décrit sa demande en mariage idéale 💍. 5 mai : le jour record, 4 612 messages en 24h.", "#ff8a5c,#ef4444"],
+    ["2025-06", 16049, 6531, 9518, 61, "🙄😌🥹♥", "☀️", "L'été arrive", ["rouhi", "été", "graphiques", "oiseau"], "Plus calme côté messages, mais 61 mots doux pour 1 000 messages. Les choses sérieuses commencent.", "#f59e0b,#d97706"],
+    ["2025-07", 9679, 3845, 5834, 35, "🙄😌🥹😂", "📱", "Juste avant l'iPhone", ["Sephora", "ordonnance", "promesses"], "17 juillet : le dernier message avant… l'ère de l'iPhone. 75 jours effacés. Paix à ses données. 📱💀", "#64748b,#334155"],
+    ["gap"],
+    ["2025-10", 14898, 6755, 8143, 57, "😂🥹😌♥", "🎉", "Le retour + 1 an", ["LoveDeclaration.java", "lovelevel", "addTrait", "1 an"], "14 oct. : 1 an ! Et le 19, il lui écrit son amour… en Java, avec un enum Trait { GENTILLESSE, INTELLIGENCE, HUMOUR }. 😂", "#ff4f7e,#7a5cff"],
+    ["2025-11", 12148, 5552, 6596, 51, "😂🥹🙄😌", "🩺", "Dr Baby", ["sushi", "Dr Baby", "nouveau numéro"], "« Khadija Roumanie » devient « Dr Baby » dans son téléphone. Et l'ère des sushis commence 🍣.", "#06b6d4,#0e7490"],
+    ["2025-12", 4756, 2351, 2405, 25, "😂🥹♥🙄", "❄️", "Le mois tranquille", ["iPad", "sushi", "fêtes"], "Le mois le plus calme (on se voyait sûrement plus en vrai 😌).", "#94a3b8,#475569"],
+    ["2026-01", 7002, 2958, 4044, 45, "🥹😂😌🙄", "🦒", "Rêves & projets", ["carrière", "Espagne", "zoo", "cinéma"], "« Bghit nmshi l zoo » / « Oui, en semaine le zoo et samedi cinéma ». Les sorties se planifient.", "#22c55e,#15803d"],
+    ["2026-02", 3465, 1530, 1935, 55, "😂🥹😌🙄", "📿", "Tommy", ["Tommy", "Saint-Valentin", "taquineries"], "Le bracelet refait parler de lui. Toujours au poignet, jamais de dar de smail.", "#1f3b73,#c8102e"],
+    ["2026-03", 7823, 3626, 4197, 49, "😂🥺😌♥", "🎓", "Les stages", ["stages", "timing", "assurance"], "Les gardes et les stages s'enchaînent pour elle. Lui l'encourage à chaque étape.", "#8b5cf6,#6d28d9"],
+    ["2026-04", 18248, 7336, 10912, 35, "😂😭🥺😌", "😭", "Le grand retour du bavardage", ["discord", "brume", "imprévus"], "Les messages repartent à fond (×2,3 par rapport à mars). Et le 😭 entre dans le top 3.", "#ec4899,#be185d"],
+    ["2026-05", 20244, 8835, 11409, 37, "😂😭🙄😌", "📱", "Doctora", ["Doctora", "QCM", "iPad", "lmrida"], "1er mai : il lui code Doctora, une app de révision rien que pour elle. 20 mai : « hadak lqcm klituuuu » 😂.", "#ff8fb1,#ff4f7e"],
+    ["2026-06", 18379, 7564, 10815, 41, "😂😭🥺😌", "💼", "Contrats & projets", ["contrat", "factures", "défis"], "Des projets pro pour lui, des stages pour elle. Toujours 18 000 messages pour se raconter tout ça.", "#0ea5e9,#0369a1"],
+    ["2026-07", 17758, 7363, 10395, 42, "😂🥺🙄🙂", "🤝", "Les entretiens", ["entretien", "Portugal", "migration"], "Les entretiens s'enchaînent. Elle est là à chaque fois : « fière de toi ».", "#14b8a6,#0f766e"],
+    ["2026-08", 19793, 8322, 11471, 43, "😂🥹😌🙄", "🧩", "Escape game & voyages", ["escape room", "Turquie", "Marrakech", "Agadir"], "« Saraha je veux faire escape room walakin nti maghay3jbokch » 😂. Et des idées de voyage : Turquie, Marrakech, Agadir.", "#f97316,#c2410c"],
+    ["2026-09", 22406, 10320, 12086, 54, "😂🙄😌🥹", "🎳", "Bowling & appartements", ["bowling", "appartements", "zoo", "avenir"], "La journée bowling, des recherches d'appartement… et le zoo qui revient dans les plans. L'avenir se construit.", "#a855f7,#7e22ce"],
+    ["2026-10", 11870, 5272, 6598, 41, "😂🥹🙄♥", "💌", "Deux ans", ["la lettre", "pâtisserie", "2 ans", "Kbida ntina"], "14 oct., 00h00 : la lettre des 2 ans, 42 703 caractères. Et aujourd'hui : « Kbida ntina » · « Hbiba ntina ».", "#ff4f7e,#ffc94d"],
+  ];
+  const label = (k) => { const [y, m] = k.split("-"); return `${MO[+m - 1]} ${y}`; };
+  const mx = Math.max(...M.filter(x => x[1]).map(x => x[1]));
+  $("#chart").innerHTML = M.map((x, i) => x[0] === "gap" ? `<div class="b gap" data-i="${i}" data-h="100"></div>` : `<div class="b" data-i="${i}" data-h="${x[1] / mx * 100}"></div>`).join("");
+  L.whenSeen($("#chart").closest("[data-reveal]"), () => $$("#chart .b").forEach((b, i) => setTimeout(() => b.style.height = b.dataset.h + "%", i * 40)));
+  $("#rail").innerHTML = M.map((x, i) => {
+    if (x[0] === "gap") return `<article class="month" data-i="${i}" style="background:repeating-linear-gradient(45deg,#475569 0 14px,#334155 14px 28px)"><span class="mm">août & septembre 2025</span><h3>L'ère de l'iPhone 📱💀</h3><span class="emo">📱</span><p style="font-size:15px">Il est passé sur iPhone. Les messages n'ont pas survécu au voyage. 75 jours sans archives.</p><div class="ev">Ce qu'on sait : on s'aimait quand même. Ce qu'on ne sait pas : tout le reste. On ne parle plus jamais de cet iPhone.</div></article>`;
+    const [k, n, h, f, love, emo, e, th, ch, ev, grad] = x, hp = h / n * 100;
+    return `<article class="month" data-i="${i}" style="background:linear-gradient(160deg,${grad})"><span class="mm">${label(k)}</span><h3>${th}</h3><span class="emo">${e}</span>
+      <div class="stats"><div><b>${fmt(n)}</b>messages</div><div><b>${love}</b>mots doux / 1 000</div></div>
+      <div><div class="split"><i style="width:${hp}%;background:#9cc3ff"></i><i style="width:${100 - hp}%;background:#fff"></i></div><p style="font-size:12px;font-weight:800;margin-top:4px">Lui ${fmt(h)} · Elle ${fmt(f)}</p></div>
+      <div class="em3">${emo}</div><div class="chips">${ch.map(c => `<span>${c}</span>`).join("")}</div><div class="ev">${ev}</div></article>`;
+  }).join("");
+  const rail = $("#rail"), cards = $$(".month", rail);
+  const go = (i) => { i = Math.max(0, Math.min(cards.length - 1, i)); cards[i].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" }); };
+  const curIdx = () => { const c = rail.scrollLeft + rail.clientWidth / 2; let best = 0, bd = 1e9; cards.forEach((el, i) => { const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (d < bd) { bd = d; best = i; } }); return best; };
+  let last = -1;
+  rail.addEventListener("scroll", () => { const i = curIdx(); if (i !== last) { last = i; $$("#chart .b").forEach((b, j) => b.classList.toggle("on", j === i)); S.tick(); } }, { passive: true });
+  $("#prev").onclick = () => go(curIdx() - 1); $("#next").onclick = () => go(curIdx() + 1);
+  $$("#chart .b").forEach(b => b.addEventListener("click", () => { go(+b.dataset.i); rail.scrollIntoView({ behavior: "smooth", block: "center" }); }));
+  // guess the month
+  (() => {
+    const box = $("#gm"), real = M.filter(x => x[0] !== "gap");
+    const Q = shuffle(real).slice(0, 6); let i = 0, sc = 0;
+    const show = () => {
+      if (i >= Q.length) { box.innerHTML = `<p style="font-family:var(--display);font-size:40px;text-align:center;color:#7a5cff">${sc}/6</p><p style="text-align:center;font-weight:800">${sc >= 5 ? "Mémoire de calendrier parfaite 📅" : "On relit les cartes ensemble 😌"}</p><div style="text-align:center;margin-top:10px"><button class="btn small" id="ag">Rejouer</button></div>`; if (sc >= 5) party(); $("#ag").onclick = () => { i = 0; sc = 0; show(); }; return; }
+      const q = Q[i], opts = shuffle([q, ...shuffle(real.filter(x => x !== q)).slice(0, 3)]);
+      box.innerHTML = `<p class="small" style="font-weight:800">Indice ${i + 1}/6</p><p style="font-family:var(--display);font-weight:600;font-size:19px;margin-top:6px">${q[9].replace(/\d+ (oct|nov|déc|fév|mars|mai|juil|juillet|août|sept|janv|avr)\.?/gi, "…")}</p><div class="opts">${opts.map(o => `<button class="opt" data-ok="${o === q ? 1 : 0}">${label(o[0])}</button>`).join("")}</div>`;
+      $$(".opt", box).forEach(b => b.addEventListener("click", () => { if (box.dataset.l) return; box.dataset.l = 1; const ok = b.dataset.ok === "1"; $$(".opt", box).forEach(x => x.dataset.ok === "1" && x.classList.add("good")); if (ok) { sc++; S.good(); burstAt(b, 18); } else { b.classList.add("bad"); S.bad(); } setTimeout(() => { delete box.dataset.l; i++; show(); }, 1500); }));
+    };
+    show();
+  })();
+  splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>

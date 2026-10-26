@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffde59">
+<meta name="robots" content="noindex">
+<title>Nos Inside Jokes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%AA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:#fff6d6;background-image:radial-gradient(#f3d77a 1.2px,transparent 1.2px);background-size:22px 22px}
+.hero{padding-bottom:20px}
+.hero .title{font-family:"Bangers",var(--display);letter-spacing:.04em;font-size:clamp(44px,13vw,80px);color:#ff3d7f;text-shadow:3px 3px 0 #2a1f4d,6px 6px 0 #ffde59;transform:rotate(-3deg)}
+.hero .title em{color:#4f8bff}
+.tools{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.counter{font-family:"Permanent Marker",cursive;font-size:20px;color:#2a1f4d;transform:rotate(-2deg)}
+.board{position:relative;margin:10px auto 0;width:min(100%,680px);height:1700px;touch-action:pan-y;overflow:hidden}
+.st{position:absolute;width:150px;min-height:110px;perspective:800px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transition:filter .2s}
+.st.drag{cursor:grabbing;z-index:20;filter:drop-shadow(0 18px 18px rgba(0,0,0,.3))}
+.st .in3d{position:relative;width:100%;min-height:110px;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.st.flip .in3d{transform:rotateY(180deg)}
+.st .f,.st .b{position:absolute;inset:0;min-height:110px;border-radius:22px;border:5px solid #fff;box-shadow:0 8px 14px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.st .f .e{font-size:38px;line-height:1}
+.st .f .t{font-family:"Bangers",var(--display);font-size:24px;letter-spacing:.03em;line-height:1;margin-top:4px}
+.st .f .t.m{font-family:"Permanent Marker",cursive;font-size:19px}
+.st .b{transform:rotateY(180deg);background:#fff;color:var(--ink);font-size:12.5px;font-weight:700;line-height:1.3;border-color:#2a1f4d}
+.st .b b{display:block;font-family:"Bangers",var(--display);font-size:18px;letter-spacing:.03em;color:#ff3d7f;margin-bottom:2px}
+.st.big{width:190px}
+.st.seen .f::after{content:"✓";position:absolute;top:-10px;right:-10px;width:26px;height:26px;border-radius:50%;background:#2fbf71;color:#fff;font-size:15px;font-weight:800;display:grid;place-items:center;border:3px solid #fff}
+.st.pop{animation:stpop .5s cubic-bezier(.3,1.8,.5,1) backwards}
+@keyframes stpop{from{transform:scale(0) rotate(40deg)}}
+.tape{position:absolute;top:-12px;left:50%;width:60px;height:22px;background:rgba(255,255,255,.65);transform:translateX(-50%) rotate(-4deg);border:1px dashed rgba(0,0,0,.1);z-index:2;pointer-events:none}
+footer{background:#fff6d6}
+</style>
+</head>
+<body>
+<main>
+<section class="scene hero center">
+  <div class="wrap stack">
+    <h1 class="title" data-reveal>Nos inside <em>jokes</em> !!</h1>
+    <p class="lead" data-reveal style="font-weight:700">Le mur des stickers que personne d'autre ne comprend. Fais-les glisser, empile-les, touche-les pour lire l'histoire (et les vrais chiffres).</p>
+    <div class="tools" data-reveal><button class="btn" id="shake">🌪️ Tout secouer</button><button class="btn ghost" id="tidy">🧹 Ranger</button></div>
+    <p class="counter" data-reveal id="cnt">0 histoires lues</p>
+  </div>
+</section>
+<div class="board" id="board"></div>
+<footer>Nos Inside Jokes · <a href="../nous-deux/">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, S, toast, burstAt, party, splitTitles, reveal, store, rnd } = L;
+  const ST = [
+    ["📢", "AKHTI ×566", "#ff3d7f", "#fff", "Le 26 février 2025 à 14h25, il a envoyé « akhti » 566 fois en 2 minutes. Elle l'appelle « akhuya » 1 563 fois. Frère et sœur ? Non. Juste fous.", 1],
+    ["💊", "Codéine", "#4f8bff", "#fff", "La toute première nuit, elle lui prescrit du paracétamol… puis de la codéine. « Tu me prescris de la codéine et c'est moi qui te déçois ?! »"],
+    ["🐝", "B = Baby", "#ffde59", "#2a1f4d", "« Aslan B stands for baby, machi bumble. » Il avait déjà supprimé l'appli le premier soir."],
+    ["🍟", "Descend 😌", "#ff8a5c", "#fff", "11 décembre 2024, 00h01. Deux mots. Le début de tout en vrai. Il a tenu 2h avant d'écrire « tu me manques déjà »."],
+    ["⬆️", "UP", "#7a5cff", "#fff", "Quand il ne répond pas assez vite, elle écrit juste « up ». Plus de 500 fois. Comme sur un forum. 😂", 1],
+    ["😌", "😌😌😌", "#bff0dc", "#2a1f4d", "L'emoji officiel du couple : 7 559 fois. Le « j'ai raison », le « je suis mignon(ne) », le « c'est moi la meilleure »."],
+    ["🙄", "🙄🙄🙄🙄", "#ffd6e3", "#2a1f4d", "5 812 roulements d'yeux de sa part. Le 🙄 est son emoji n°1. Affectueux. (Normalement.)"],
+    ["👑", "Hbila CDI", "#2a1f4d", "#ffde59", "Poste : hbila officielle. Contrat : à vie. Il l'a écrit 438 fois. « 3tani rbi mra hbila » (Dieu m'a donné une folle)."],
+    ["💬", "Saffy", "#ff6fa5", "#fff", "Elle écrit « saffy » (1 819 fois), lui « safi ». Jamais l'inverse. Jamais. C'est une question d'identité."],
+    ["🥰", "Hubby", "#fff", "#ff3d7f", "Elle l'appelle « hubby » 199 fois. Lui l'a écrit… 1 fois. Elle savait déjà, en octobre 2024."],
+    ["😭", "Mon mari", "#ffde59", "#2a1f4d", "« Mon mari jah jou3 ifyqni à 4h, mrid hada » : il a faim à 4h du matin et la réveille. Elle l'appelle déjà « mon mari »."],
+    ["💻", "Java d'amour", "#1e293b", "#7dd3fc", "Pour leurs 1 an, il lui écrit un programme : public class LoveDeclaration { enum Trait { GENTILLESSE, HUMOUR, COURAGE… } }. Romantique ET compilable."],
+    ["🤐", "TG 😌", "#ff3d7f", "#fff", "« Ta gueule », version amoureuse. 234 fois à eux deux. Toujours avec un 😌 derrière (on espère)."],
+    ["🌙", "Je vais dodo", "#334155", "#fff", "Elle annonce « dodo » 403 fois. Elle s'endort réellement… vers 3h. 31 055 messages envoyés à 2h du matin."],
+    ["🤷‍♀️", "Si tu le dis", "#bfe3ff", "#2a1f4d", "Sa réponse quand elle n'est pas d'accord mais a la flemme de le prouver. 137 fois. « Si tu le dis, vraiment si tu le dis. »"],
+    ["🧩", "Machin", "#a855f7", "#fff", "Quand elle ne trouve plus le mot : « machin ». 331 fois. « Très machin » est une phrase complète."],
+    ["📍", "Fink ?", "#22c55e", "#fff", "« T'es où ? » : dès qu'elle disparaît 5 minutes. 314 fois. « Bebeeee finek »."],
+    ["📸", "Wrini", "#f97316", "#fff", "« Montre-moi ! » Chaque photo doit être envoyée immédiatement. 351 fois. Même pour des sushis (« wrini sushi »)."],
+    ["😵", "Awily !", "#ff8fb1", "#fff", "Son cri du cœur quand quelque chose la choque. « Awilyyyyy » : 366 fois chez elle."],
+    ["🚗", "La 308 saraha", "#4f8bff", "#fff", "« Je préfère la 308 saraha. » Les voitures, le Real Madrid et elle : ses 3 sujets préférés (pas dans cet ordre, promis)."],
+    ["⚽", "Vinicius", "#ffffff", "#2a1f4d", "Octobre 2024 : le premier vrai débat du couple portait sur le Ballon d'Or de Vinicius. Elle : « C'est qui ? »"],
+    ["📱", "RIP iPhone", "#64748b", "#fff", "Juillet → septembre 2025 : il passe sur iPhone, 75 jours de messages disparaissent. On n'en parle plus jamais."],
+    ["🎳", "Bowling", "#ef4444", "#fff", "« Haka glti 9bl ma ntzwj bik f bowling. » Il a parlé de mariage avant même la première boule."],
+    ["🧊", "Escape room", "#06b6d4", "#fff", "« Saraha je veux faire escape room walakin nti maghay3jbokch. » Il a déjà décidé qu'elle n'aimerait pas. Défi lancé ?"],
+    ["🎵", "TikTok vs Reels", "#000", "#fff", "Elle envoie les TikToks (115 contre 18). Lui envoie les reels Facebook (154 contre 104). Chacun son algorithme."],
+    ["💍", "La bague babe", "#ffde59", "#ff3d7f", "12 novembre 2024, 4 semaines après le premier message : « Je veux la bague babe ». Sa réponse : c'est à elle de lui offrir… parce que « je suis une princesse ». 😂"],
+    ["📸", "221 photos", "#ec4899", "#fff", "Le 25 février 2025 : 104 photos de lui, puis 117 photos d'elle. La bataille de photos la plus intense de l'histoire."],
+    ["🩺", "Oui docteur", "#2a9d8f", "#fff", "Elle prescrit : « repose-toi » (298 fois), « bois de l'eau », « mange ». Il répond : « oui docteur ». Il le fait parfois."],
+  ];
+  const board = $("#board"); let seen = new Set(store.get("jokes-seen", [])), z = 5;
+  const W = () => board.clientWidth;
+  const place = (el, i, tidy) => {
+    const w = el.offsetWidth || 150, cols = Math.max(2, Math.floor(W() / 170)), cw = W() / cols;
+    const x = tidy ? (i % cols) * cw + (cw - w) / 2 : rnd(0, W() - w), y = tidy ? Math.floor(i / cols) * 150 + 20 : rnd(10, board.clientHeight - 160);
+    el.style.left = x + "px"; el.style.top = y + "px"; el.style.setProperty("--r", (tidy ? rnd(-4, 4) : rnd(-18, 18)) + "deg"); el.style.transform = `rotate(var(--r))`;
+  };
+  board.innerHTML = ST.map(([e, t, bg, fg, story, big], i) => `<div class="st${big ? " big" : ""}${seen.has(i) ? " seen" : ""} pop" data-i="${i}" style="animation-delay:${i * 40}ms"><span class="tape"></span><div class="in3d"><div class="f" style="background:${bg};color:${fg}"><span class="e">${e}</span><span class="t${t.length > 12 ? " m" : ""}">${t}</span></div><div class="b"><b>${t}</b>${story}</div></div></div>`).join("");
+  const els = $$(".st", board);
+  const H = () => { const cols = Math.max(2, Math.floor(W() / 170)); return Math.max(1100, Math.ceil(els.length / cols) * 150 + 90); };
+  const layoutTidy = () => { board.style.height = H() + "px"; els.forEach((el, i) => place(el, i, true)); };
+  const layoutMess = () => els.forEach((el, i) => place(el, i, false));
+  requestAnimationFrame(() => layoutTidy());
+  els.forEach(el => {
+    let sx, sy, ox, oy, moved = false, id = null;
+    el.addEventListener("pointerdown", e => { id = e.pointerId; el.setPointerCapture(id); sx = e.clientX; sy = e.clientY; ox = parseFloat(el.style.left); oy = parseFloat(el.style.top); moved = false; el.classList.add("drag"); el.style.zIndex = ++z; });
+    el.addEventListener("pointermove", e => { if (e.pointerId !== id) return; const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.abs(dx) + Math.abs(dy) > 6) moved = true; if (!moved) return; el.style.left = Math.max(-20, Math.min(W() - el.offsetWidth + 20, ox + dx)) + "px"; el.style.top = Math.max(0, Math.min(board.clientHeight - 120, oy + dy)) + "px"; });
+    el.addEventListener("pointerup", e => { if (e.pointerId !== id) return; id = null; el.classList.remove("drag"); if (!moved) { el.classList.toggle("flip"); S.pop(); const i = +el.dataset.i; if (!seen.has(i)) { seen.add(i); el.classList.add("seen"); store.set("jokes-seen", [...seen]); upd(); burstAt(el, 14); if (seen.size === ST.length) { toast("🏆 Toutes les inside jokes lues ! Diplôme de « nous » obtenu"); party(); } } } else S.tick(); });
+  });
+  const upd = () => $("#cnt").textContent = `${seen.size}/${ST.length} histoires lues ${seen.size === ST.length ? "🏆" : "✨"}`;
+  upd();
+  $("#shake").onclick = () => { els.forEach(el => el.classList.remove("flip")); layoutMess(); S.win(); board.scrollIntoView({ behavior: "smooth" }); };
+  $("#tidy").onclick = () => { layoutTidy(); S.pop(); };
+  addEventListener("resize", layoutTidy);
+  splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>

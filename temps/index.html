@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="robots" content="noindex">
+<title>La Machine à Remonter le Temps</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%8F%B3%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:#0f172a;color:#e2e8f0}
+.title{color:#fff}.lead{color:#cbd5e1}.small{color:#94a3b8}
+.kicker{background:#1e293b;color:var(--gold)}
+.hero{background:radial-gradient(circle at 50% 25%,#334155,#0f172a 70%)}
+.clock{width:150px;height:150px;margin:0 auto;border-radius:50%;border:6px solid var(--gold);position:relative;box-shadow:0 0 50px rgba(255,201,77,.35);background:#1e293b}
+.clock i{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;background:#fff;border-radius:4px}
+.clock .h{width:6px;height:38px;margin-left:-3px;animation:spinr 6s linear infinite}
+.clock .m{width:4px;height:56px;margin-left:-2px;background:var(--rose);animation:spinr 1.5s linear infinite}
+@keyframes spinr{to{transform:rotate(-360deg)}}
+.panel{background:#1e293b;border-radius:24px;padding:18px;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.picker{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.picker input{background:#0f172a;color:#fff;border:2px solid #334155;border-radius:14px;padding:11px 12px;font-size:16px;color-scheme:dark}
+.quick{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.quick button{background:#0f172a;border:2px solid #334155;color:#e2e8f0;border-radius:999px;padding:9px 14px;font-weight:800;font-size:14px}
+.quick button:active{transform:scale(.95)}
+.day{position:relative;overflow:hidden}
+.day.warp{animation:warp .7s cubic-bezier(.3,1.4,.5,1)}
+@keyframes warp{0%{transform:scale(.6) rotate(-6deg);opacity:0;filter:blur(8px)}}
+.dhead{font-family:var(--display);font-size:26px;color:#fff}
+.dsub{color:var(--gold);font-weight:800;font-size:14px}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.dgrid div{background:#0f172a;border-radius:16px;padding:12px;text-align:center}
+.dgrid b{display:block;font-family:var(--display);font-size:28px;color:#fff}
+.dgrid span{font-size:12.5px;font-weight:800;color:#94a3b8}
+.split{display:flex;height:12px;border-radius:999px;overflow:hidden;background:#334155;margin-top:12px}
+.split i{display:block;height:100%;transition:width .8s}
+.words{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.words span{background:#fff;color:var(--plum);border-radius:999px;padding:5px 11px;font-weight:800;font-size:13.5px}
+.sweet{margin-top:14px;background:#efe7dd;border-radius:18px;padding:12px}
+.bub{display:inline-block;padding:8px 12px 18px;border-radius:12px;font-size:15px;position:relative;color:#111;max-width:92%}
+.bub time{position:absolute;right:8px;bottom:3px;font-size:10px;color:#667781}
+.bub.her{background:#fff;border-top-left-radius:2px}.bub.him{background:#d9fdd3;border-top-right-radius:2px;float:right}
+.sweet::after{content:"";display:block;clear:both}
+.mood{display:inline-block;margin-top:10px;border-radius:999px;padding:6px 12px;font-weight:800;font-size:13px;background:#334155}
+.heatwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,12px);gap:3px;width:max-content}
+.heat i{width:12px;height:12px;border-radius:3px;background:#1e293b;cursor:pointer}
+.heat i.on{outline:2px solid var(--gold)}
+.months-l{display:flex;gap:0;font-size:10px;font-weight:800;color:#94a3b8;margin-top:4px;width:max-content}
+.empty-day{text-align:center;padding:20px 6px}
+.empty-day .e{font-size:60px}
+.otd{background:linear-gradient(135deg,#7a5cff,#ff4f7e);border-radius:24px;padding:16px;color:#fff;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+footer{color:#94a3b8}
+#lv-home,#lv-mute{background:#1e293b}
+</style>
+</head>
+<body>
+<main>
+<section class="scene hero center">
+  <div class="wrap stack">
+    <div data-reveal><div class="clock"><i class="h"></i><i class="m"></i></div></div>
+    <div data-reveal><span class="kicker">Destination : n'importe quel jour</span></div>
+    <h1 class="title" data-reveal>La Machine à <em>Remonter le Temps</em></h1>
+    <p class="lead" data-reveal>Choisis une date entre le 14 octobre 2024 et aujourd'hui : combien de messages, à quelle heure on a commencé, nos mots du jour, nos emojis… et un mot doux de ce jour-là quand il y en a un.</p>
+    <div class="otd" data-reveal id="otd"></div>
+  </div>
+</section>
+<section class="scene" style="padding-top:20px">
+  <div class="wrap stack">
+    <div class="panel" data-reveal>
+      <div class="picker"><input type="date" id="date" min="2024-10-14" max="2026-10-25" value="2024-12-11" aria-label="Date"><button class="btn small" id="goBtn">Voyager ⏳</button></div>
+      <div class="quick" style="margin-top:12px">
+        <button data-d="2024-10-14">💬 1er message</button><button data-d="2024-10-26">🫶 1er kanbghik</button><button data-d="2024-12-11">🍟 1er rendez-vous</button><button data-d="2025-03-27">🎂 Son anniversaire</button><button data-d="2025-05-05">🔥 Le record</button><button data-d="2025-10-14">🎉 1 an</button><button data-d="2026-10-14">💌 2 ans</button><button id="rand">🎲 Au hasard</button>
+      </div>
+    </div>
+    <div class="panel day" id="day"></div>
+    <div class="panel" data-reveal><p class="small" style="font-weight:800;margin-bottom:8px">🗓️ Les 742 jours · plus c'est rose, plus on a parlé · touche une case</p><div class="heatwrap" id="hw"><div class="heat" id="heat"></div><div class="months-l" id="ml"></div></div></div>
+  </div>
+</section>
+<footer>La Machine à Remonter le Temps · <a href="../nous-deux/">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="data.js"></script>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, S, burstAt, splitTitles, reveal, fmt } = L;
+  const D = window.DAYS, START = new Date("2024-10-14T12:00:00"), END = new Date("2026-10-25T12:00:00");
+  const MO = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const JO = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  const iso = (d) => d.toISOString().slice(0, 10);
+  const nice = (s) => { const d = new Date(s + "T12:00:00"); return `${JO[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]} ${d.getFullYear()}`; };
+  const SPECIAL = { "2024-10-14": "💬 Le tout premier jour", "2024-10-26": "🫶 Le premier « kanbghik »", "2024-12-11": "🍟 Le premier rendez-vous", "2025-02-26": "📢 Le jour des 566 « akhti »", "2025-03-27": "🎂 Son anniversaire", "2025-05-05": "🔥 Le record absolu", "2025-10-14": "🎉 Un an", "2025-10-19": "💻 LoveDeclaration.java", "2026-05-01": "📱 Naissance de Doctora", "2026-10-14": "💌 La lettre des 2 ans" };
+  const maxN = Math.max(...Object.values(D).map(v => v[0]));
+  function show(s) {
+    const box = $("#day"); box.classList.remove("warp"); void box.offsetWidth; box.classList.add("warp"); S.pop();
+    const v = D[s], dt = new Date(s + "T12:00:00");
+    if (!v) {
+      const iphone = dt >= new Date("2025-07-18") && dt <= new Date("2025-09-29");
+      box.innerHTML = `<div class="dhead">${nice(s)}</div><div class="empty-day"><div class="e">${iphone ? "📱💀" : "🤫"}</div><p style="font-weight:800;margin-top:8px">${iphone ? "L'ère de l'iPhone : les messages de ce jour-là ont disparu. On ne parle plus jamais de cet iPhone." : "Silence radio ce jour-là. Sûrement parce qu'on était ensemble 😌"}</p></div>`;
+    } else {
+      const [n, h, f, love, first, last, emo, voc, sw] = v, hp = n ? h / n * 100 : 50;
+      const mood = love >= 60 ? "💗 Journée très câline" : n >= 1500 ? "🗣️ Journée très bavarde" : n < 80 ? "🌙 Journée calme" : "😌 Journée normale (donc adorable)";
+      box.innerHTML = `<div class="dhead">${nice(s)}</div>${SPECIAL[s] ? `<div class="dsub">${SPECIAL[s]}</div>` : ""}
+        <div class="dgrid"><div><b>${fmt(n)}</b><span>messages</span></div><div><b>${love}</b><span>mots doux</span></div><div><b>${first}</b><span>premier message</span></div><div><b>${last}</b><span>dernier message</span></div></div>
+        <div class="split"><i style="width:${hp}%;background:var(--him)"></i><i style="width:${100 - hp}%;background:var(--her)"></i></div><p class="small" style="font-weight:800;margin-top:4px">Lui ${fmt(h)} · Elle ${fmt(f)}</p>
+        ${emo ? `<p style="font-size:30px;letter-spacing:6px;margin-top:10px">${emo}</p>` : ""}
+        ${voc.length ? `<div class="words">${voc.map(w => `<span>${w}</span>`).join("")}</div>` : ""}
+        <span class="mood">${mood}</span>
+        ${sw ? `<div class="sweet"><div class="bub ${sw[0]}">${sw[1].replace(/</g, "&lt;")}<time>${sw[2]} · ${sw[0] === "him" ? "lui" : "elle"}</time></div></div>` : ""}`;
+      if (love >= 60 || SPECIAL[s]) burstAt(box, 30);
+    }
+    $("#date").value = s;
+    $$("#heat i").forEach(c => c.classList.toggle("on", c.dataset.d === s));
+  }
+  // on this day
+  (() => {
+    const now = new Date(), cands = [1, 2].map(y => { const d = new Date(now); d.setFullYear(now.getFullYear() - y); return iso(d); }).filter(x => x >= "2024-10-14");
+    const pick = cands.find(x => D[x]) || "2024-10-14";
+    const y = new Date().getFullYear() - +pick.slice(0, 4);
+    $("#otd").innerHTML = `<p style="font-weight:800">✨ Il y a ${y} an${y > 1 ? "s" : ""}, jour pour jour</p><p class="small" style="color:#fff;margin-top:4px">${nice(pick)} : ${D[pick] ? fmt(D[pick][0]) + " messages" : "pas de messages"}</p><button class="btn small ghost" style="margin-top:10px" id="otdGo">Y aller ⏳</button>`;
+    $("#otdGo").onclick = () => { show(pick); $("#day").scrollIntoView({ behavior: "smooth", block: "center" }); };
+  })();
+  $("#goBtn").onclick = () => $("#date").value && show($("#date").value);
+  $("#date").addEventListener("change", () => $("#date").value && show($("#date").value));
+  $$(".quick [data-d]").forEach(b => b.onclick = () => show(b.dataset.d));
+  $("#rand").onclick = () => { const ks = Object.keys(D); show(ks[Math.floor(Math.random() * ks.length)]); };
+  // heat calendar
+  (() => {
+    const box = $("#heat"); let h = "", ml = "", d = new Date(START); d.setDate(d.getDate() - d.getDay());
+    let col = 0, lastM = -1;
+    while (d <= END) {
+      for (let r = 0; r < 7; r++) {
+        const s = iso(d), v = D[s], out = d < START || d > END;
+        const a = v ? .15 + .85 * Math.pow(v[0] / maxN, .6) : 0;
+        h += `<i data-d="${s}" style="${out ? "visibility:hidden" : v ? `background:rgba(255,79,126,${a.toFixed(2)})` : ""}" title="${s}"></i>`;
+        d.setDate(d.getDate() + 1);
+      }
+      const m = new Date(d.getTime() - 864e5).getMonth();
+      ml += `<span style="width:15px;display:inline-block">${m !== lastM ? MO[m].slice(0, 3) : ""}</span>`; lastM = m; col++;
+    }
+    box.innerHTML = h; $("#ml").innerHTML = ml;
+    $$("#heat i").forEach(c => c.addEventListener("click", () => { show(c.dataset.d); $("#day").scrollIntoView({ behavior: "smooth", block: "center" }); }));
+    setTimeout(() => { const hw = $("#hw"); hw.scrollLeft = hw.scrollWidth; }, 300);
+  })();
+  show("2024-12-11");
+  splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>

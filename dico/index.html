@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff4f7e">
+<meta name="robots" content="noindex">
+<title>Le Dictionnaire de Nous</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:#fffaf2}
+.hero{background:radial-gradient(circle at 50% 20%,#fff,#ffe9d6 70%)}
+.book{font-size:100px;display:inline-block;animation:bob 2s ease-in-out infinite}
+.search{position:sticky;top:max(10px,env(safe-area-inset-top));z-index:30;display:flex;gap:8px;background:#fffaf2;padding:8px 0}
+.search input{flex:1;border:2px solid #f1dcc9;border-radius:999px;padding:12px 16px;font-size:16px;background:#fff;outline:none}
+.search input:focus{border-color:var(--rose)}
+.letters{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+.letters button{width:32px;height:32px;border-radius:10px;background:#fff;box-shadow:var(--shadow);font-family:var(--display);font-weight:700;color:var(--choco)}
+.letters button.off{opacity:.3}
+.entry{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:16px 16px 14px;position:relative;overflow:hidden}
+.entry::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,var(--him),var(--her));opacity:.0}
+.entry h3{font-size:26px;color:var(--choco);display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.entry h3 .ph{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:700;font-style:italic}
+.entry .def{margin-top:6px;font-size:15.5px}
+.entry .bar{display:flex;height:10px;border-radius:999px;overflow:hidden;background:#eee;margin-top:12px}
+.entry .bar i{display:block;height:100%}
+.entry .nums{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;margin-top:4px}
+.entry .meta{font-size:12.5px;color:var(--muted);font-weight:700;margin-top:8px}
+.bub{display:inline-block;margin-top:10px;padding:8px 12px 18px;border-radius:12px;font-size:14.5px;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.12);max-width:92%}
+.bub time{position:absolute;right:8px;bottom:3px;font-size:10px;color:#667781}
+.bub.her{background:#fff;border:1px solid #eee;border-top-left-radius:2px}
+.bub.him{background:#d9fdd3;border-top-right-radius:2px}
+.list{display:grid;gap:12px}
+.wotd{background:linear-gradient(135deg,#ff8fb1,#ff4f7e);color:#fff;border-radius:26px;padding:20px;box-shadow:var(--shadow)}
+.wotd h3{font-size:34px}
+.quiz{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:20px;text-align:left}
+.quiz .q{font-family:var(--display);font-size:clamp(30px,9vw,44px);color:var(--rose);text-align:center;margin:6px 0 12px}
+.opts{display:grid;gap:9px}
+.opt{text-align:left;background:#fffaf2;border:2px solid #f1dcc9;border-radius:16px;padding:12px 13px;font-weight:700;font-size:14.5px}
+.opt.good{background:#e3f8ec;border-color:#7fd6a6}.opt.bad{background:#ffe7e7;border-color:#ffb3b3;animation:shake .4s}
+.empty{text-align:center;color:var(--muted);font-weight:800;padding:30px}
+</style>
+</head>
+<body>
+<main>
+<section class="scene hero center">
+  <div class="wrap stack">
+    <div data-reveal><span class="book">📖</span></div>
+    <div data-reveal><span class="kicker">Édition limitée · 2 exemplaires</span></div>
+    <h1 class="title" data-reveal>Le Dictionnaire <em>de Nous</em></h1>
+    <p class="lead" data-reveal>Tous les mots qu'on a inventés, tordus ou adoptés en 438 201 messages. Avec la date de naissance de chaque mot, qui l'utilise le plus, et une vraie phrase en exemple.</p>
+    <div class="wotd" data-reveal id="wotd"></div>
+  </div>
+</section>
+<section class="scene" style="padding-top:20px">
+  <div class="wrap stack">
+    <div class="search"><input id="q" type="search" placeholder="Chercher un mot… (kbida, saffy, 😌)" autocomplete="off" aria-label="Chercher"></div>
+    <div class="letters" id="letters"></div>
+    <div class="list" id="list"></div>
+  </div>
+</section>
+<section class="scene center" style="background:#fff0e6">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker">Mini-jeu</span></div>
+    <h2 class="title" data-reveal>Devine <em>la définition</em></h2>
+    <p class="lead" data-reveal>8 mots, 3 définitions. Une seule est la bonne.</p>
+    <div class="quiz" id="quiz" data-reveal></div>
+  </div>
+</section>
+<footer>Le Dictionnaire de Nous · <a href="../nous-deux/">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="data.js"></script>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, avL, avE, S, toast, burstAt, party, splitTitles, reveal, shuffle, fmt } = L;
+  const D = window.DICO;
+  const key = (t) => (t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().match(/[a-z0-9]/) || ["#"])[0].replace(/[0-9]/, "#");
+  const card = (e) => {
+    const tot = e.him + e.her, h = tot ? e.him / tot * 100 : 50;
+    const who = e.ex[1] === "him" ? "him" : "her";
+    return `<article class="entry" data-reveal><h3>${e.t} <span class="ph">${tot ? fmt(tot) + " fois" : ""}</span></h3><p class="def">${e.def}</p>
+      ${tot ? `<div class="bar"><i style="width:${h}%;background:var(--him)"></i><i style="width:${100 - h}%;background:var(--her)"></i></div><div class="nums"><span class="him-c">Lui ${fmt(e.him)}</span><span class="her-c">Elle ${fmt(e.her)}</span></div>` : ""}
+      ${e.first ? `<p class="meta">🐣 Né le ${e.first[0]}, écrit pour la première fois par ${e.first[1] === "him" ? "lui" : "elle"}</p>` : ""}
+      <div class="bub ${who}">${e.ex[2].replace(/</g, "&lt;")}<time>${e.ex[0] || ""} · ${who === "him" ? "lui" : "elle"}</time></div></article>`;
+  };
+  const render = (f = "", letter = null) => {
+    const n = f.trim().toLowerCase();
+    const R = D.filter(e => (!n || (e.t + " " + e.def).toLowerCase().includes(n)) && (!letter || key(e.t) === letter));
+    $("#list").innerHTML = R.length ? R.map(card).join("") : `<p class="empty">Aucun mot trouvé… à inventer ensemble ? 😌</p>`;
+    reveal($("#list"));
+  };
+  const letters = [...new Set(D.map(e => key(e.t)))].sort();
+  $("#letters").innerHTML = letters.map(l => `<button data-l="${l}">${l.toUpperCase()}</button>`).join("") + `<button data-l="">✕</button>`;
+  let cur = null;
+  $$("#letters button").forEach(b => b.addEventListener("click", () => { cur = b.dataset.l || null; $$("#letters button").forEach(x => x.classList.toggle("off", cur && x.dataset.l !== cur && x.dataset.l)); render($("#q").value, cur); S.tick(); }));
+  $("#q").addEventListener("input", () => render($("#q").value, cur));
+  render();
+  // word of the day
+  const day = Math.floor(Date.now() / 864e5), w = D[day % D.length];
+  $("#wotd").innerHTML = `<p class="small" style="color:#fff;font-weight:800">✨ Le mot du jour</p><h3>${w.t}</h3><p style="margin-top:6px">${w.def}</p>`;
+  // quiz
+  (() => {
+    const box = $("#quiz"), pool = D.filter(e => e.t.length < 18);
+    let qs = shuffle(pool).slice(0, 8), i = 0, sc = 0;
+    const show = () => {
+      if (i >= qs.length) { box.innerHTML = `<p class="q">${sc}/8</p><p style="text-align:center;font-weight:800">${sc >= 7 ? "Linguiste officielle du couple 🎓" : sc >= 5 ? "Tu parles couramment le « nous » 😌" : "Il va falloir relire le dictionnaire 📖"}</p><div style="text-align:center;margin-top:12px"><button class="btn small" id="again">Rejouer</button></div>`; if (sc >= 6) party(); $("#again").onclick = () => { qs = shuffle(pool).slice(0, 8); i = 0; sc = 0; show(); }; return; }
+      const e = qs[i], wrong = shuffle(pool.filter(x => x !== e)).slice(0, 2), opts = shuffle([e, ...wrong]);
+      box.innerHTML = `<p class="small" style="font-weight:800">Mot ${i + 1}/8</p><p class="q">${e.t}</p><div class="opts">${opts.map(o => `<button class="opt" data-ok="${o === e ? 1 : 0}">${o.def.replace(new RegExp(e.t.split(" ")[0], "ig"), "…")}</button>`).join("")}</div>`;
+      $$(".opt", box).forEach(b => b.addEventListener("click", () => { if (box.dataset.l) return; box.dataset.l = 1; const ok = b.dataset.ok === "1"; $$(".opt", box).forEach(x => x.dataset.ok === "1" && x.classList.add("good")); if (ok) { sc++; S.good(); burstAt(b, 20); } else { b.classList.add("bad"); S.bad(); } setTimeout(() => { delete box.dataset.l; i++; show(); }, 1500); }));
+    };
+    show();
+  })();
+  splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>

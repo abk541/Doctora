@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4a261">
+<meta name="robots" content="noindex">
+<title>La Maison de Nos Rêves</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%A1%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:#fff7ef}
+.hero{background:radial-gradient(circle at 50% 20%,#fff,#ffe6cc 70%)}
+.house-wrap{position:relative;max-width:360px;margin:0 auto}
+#house{width:100%;display:block;filter:drop-shadow(0 18px 24px rgba(122,79,56,.25))}
+#house .wall{transition:fill .5s}
+#house .emo{font-size:26px;transition:opacity .4s}
+.step{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:18px;text-align:left}
+.step .q{font-family:var(--display);font-weight:600;font-size:clamp(20px,5.4vw,24px);margin:6px 0 12px;color:var(--choco)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{background:#fff7ef;border:2px solid #f6dcc4;border-radius:16px;padding:12px 10px;font-weight:800;font-size:14.5px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;transition:transform .15s}
+.opt:active{transform:scale(.95)}
+.opt .e{font-size:28px}
+.opt .sw{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.opt.on{background:#ffe1c2;border-color:#f4a261}
+.pbar{height:10px;border-radius:999px;background:#f6dcc4;overflow:hidden}
+.pbar i{display:block;height:100%;background:#f4a261;transition:width .4s}
+.who{display:flex;gap:10px;justify-content:center}
+.who button{display:flex;flex-direction:column;align-items:center;gap:6px;background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:14px 22px;font-weight:800}
+.who .av{width:70px;height:70px}
+.cmp{display:grid;gap:8px;text-align:left}
+.row{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:12px 14px}
+.row .ql{font-size:12.5px;font-weight:800;color:var(--muted)}
+.row .ans{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.row .ans div{border-radius:12px;padding:8px;font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px}
+.row .ans .av{width:24px;height:24px;border-width:2px}
+.row.same{background:#e6f9ef}
+.row .quip{font-size:13px;color:var(--choco-2);margin-top:6px;font-weight:700}
+.score{font-family:var(--display);font-size:64px;color:#f4a261;line-height:1}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<main>
+<section class="scene hero center">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="color:#c2410c">Jeu à deux 🏡</span></div>
+    <h1 class="title" data-reveal>La maison <em>de nos rêves</em></h1>
+    <p class="lead" data-reveal id="intro">Construis ta maison idéale en 12 choix, puis envoie-la-lui : il construira la sienne, et on verra si on est compatibles… (spoiler : la couleur du mur va poser problème 😂)</p>
+    <div class="house-wrap" data-reveal>
+      <svg id="house" viewBox="0 0 320 260" aria-label="La maison">
+        <rect x="0" y="228" width="320" height="32" rx="6" fill="#9be7a3"/>
+        <polygon points="160,20 20,120 300,120" fill="#c2410c"/>
+        <rect x="140" y="40" width="16" height="40" fill="#7a4f38"/>
+        <rect class="wall" x="40" y="118" width="240" height="112" rx="6" fill="#ffd6e3"/>
+        <rect x="140" y="160" width="40" height="70" rx="20" fill="#7a4f38"/>
+        <circle cx="172" cy="196" r="3" fill="#ffc94d"/>
+        <rect x="60" y="140" width="56" height="44" rx="8" fill="#d9ecff" stroke="#fff" stroke-width="4"/>
+        <rect x="204" y="140" width="56" height="44" rx="8" fill="#d9ecff" stroke="#fff" stroke-width="4"/>
+        <text class="emo" id="e1" x="88" y="171" text-anchor="middle">🛋️</text>
+        <text class="emo" id="e2" x="232" y="171" text-anchor="middle">🛏️</text>
+        <text class="emo" id="e3" x="160" y="108" text-anchor="middle">❤️</text>
+        <text class="emo" id="e4" x="28" y="222">🌳</text>
+        <text class="emo" id="e5" x="270" y="222"></text>
+        <text class="emo" id="e6" x="208" y="222"></text>
+        <text class="emo" id="e7" x="92" y="222"></text>
+      </svg>
+    </div>
+  </div>
+</section>
+<section class="scene" style="padding-top:10px">
+  <div class="wrap stack">
+    <div id="pickWho" class="center stack"><p style="font-weight:800">Qui construit ?</p><div class="who"><button data-w="her"><img class="av" src="../anniversaire/img/elle.png" alt="">Khadija</button><button data-w="him"><img class="av" src="../anniversaire/img/lui.png" alt="">Abdelkader</button></div></div>
+    <div id="game" class="hide stack"><div class="pbar"><i id="pb"></i></div><div class="step" id="step"></div></div>
+    <div id="result" class="hide stack center"></div>
+  </div>
+</section>
+<footer>La Maison de Nos Rêves · <a href="../nous-deux/">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, S, toast, burstAt, party, splitTitles, reveal, avL, avE, wa } = L;
+  const Q = [
+    ["Dans quelle ville ?", [["🏙️", "Casablanca"], ["🏛️", "Rabat"], ["🌴", "Marrakech"], ["🌊", "Tanger"], ["✈️", "À l'étranger"], ["🏔️", "Ifrane"]]],
+    ["Quel genre de maison ?", [["🏢", "Appart en ville"], ["🏡", "Maison + jardin"], ["🏊", "Villa + piscine"], ["🕌", "Un riad"]]],
+    ["La couleur du mur du salon 🎨", [["#ffd6e3", "Rose poudré"], ["#c8e6c9", "Vert sauge"], ["#cfe8ff", "Bleu ciel"], ["#efe3d3", "Beige"], ["#ffffff", "Blanc"], ["#e2a07a", "Terracotta"]], "color"],
+    ["Le style de déco", [["✨", "Moderne minimaliste"], ["🏺", "Marocain traditionnel"], ["🪴", "Bohème cosy"], ["🧱", "Industriel"]]],
+    ["Combien d'enfants ?", [["👶", "1"], ["👧👦", "2"], ["👨‍👩‍👧‍👦", "3"], ["🏫", "4 et plus"], ["🤪", "On verra sans devenir fous"]]],
+    ["Un animal ?", [["🐱", "Un chat"], ["🐶", "Un chien"], ["🐹", "Un hamster (comme Doctora)"], ["🚫", "Aucun"]]],
+    ["Qui cuisine ?", [["👨‍🍳", "Lui"], ["👩‍🍳", "Elle"], ["🧑‍🤝‍🧑", "Ensemble"], ["🍟", "McDo, évidemment"]]],
+    ["La pièce rien qu'à elle", [["🩺", "Un bureau de docteure"], ["👗", "Un dressing géant"], ["📚", "Un coin lecture"], ["🧘‍♀️", "Une salle de sport"]]],
+    ["La pièce rien qu'à lui", [["🎮", "Un setup gaming"], ["💻", "Un bureau de dev"], ["⚽", "Une salle foot (écran géant)"], ["🚗", "Un garage pour la 308"]]],
+    ["La chambre", [["🛏️", "Lit king size"], ["👑", "Lit à baldaquin"], ["☁️", "Matelas cocon au sol"], ["🌌", "Plafond étoilé"]]],
+    ["Le rituel du soir", [["🎬", "Film + plaid"], ["🗣️", "Parler jusqu'à 2h"], ["😴", "Dodo à 22h (lol)"], ["🤗", "Câlins"]]],
+    ["La lune de miel", [["🏝️", "Bali"], ["🕌", "Istanbul"], ["🐠", "Maldives"], ["🇪🇸", "Espagne"], ["🗾", "Japon"]]],
+  ];
+  const QUIP = { 2: "🎨 La dispute du mur est officiellement ouverte (comme prévu dans la lettre).", 4: "👶 Rappel : la réponse officielle, c'est « on verra sans devenir fous ».", 6: "🍳 Il faudra un planning de cuisine. Ou un abonnement McDo.", 10: "🌙 Statistiquement, ce sera « parler jusqu'à 2h » (31 055 messages à 2h du mat).", 11: "🌍 Solution : les deux. Une lune de miel en deux étapes." };
+  const NAME = { her: "Khadija", him: "Abdelkader" };
+  const hp = new URLSearchParams(location.hash.slice(1)); const pFrom = hp.get("from"), pA = hp.get("a");
+  const partner = pFrom && pA && pA.length === Q.length ? { who: pFrom, a: [...pA].map(Number) } : null;
+  let me = null, ans = [], i = 0;
+  if (partner) { $("#intro").innerHTML = `<b>${NAME[partner.who]}</b> a construit sa maison idéale 🏡 À toi de construire la tienne… puis on compare !`; }
+  const paintHouse = (a) => {
+    if (a[2] != null) $("#house .wall").setAttribute("fill", Q[2][1][a[2]][0]);
+    const em = (k, q) => a[q] != null ? Q[q][1][a[q]][0] : "";
+    $("#e1").textContent = a[3] != null ? em(1, 3) : "🛋️"; $("#e2").textContent = a[9] != null ? em(1, 9) : "🛏️";
+    $("#e3").textContent = a[1] != null ? em(1, 1) : "❤️"; $("#e5").textContent = a[5] != null && a[5] !== 3 ? em(1, 5) : "";
+    $("#e6").textContent = a[4] != null ? em(1, 4).slice(0, 4) : ""; $("#e7").textContent = a[6] != null ? em(1, 6) : "";
+  };
+  $$("#pickWho button").forEach(b => b.onclick = () => { me = b.dataset.w; if (partner && partner.who === me) { toast("C'est l'autre qui doit répondre maintenant 😌"); } $("#pickWho").classList.add("hide"); $("#game").classList.remove("hide"); show(); S.pop(); });
+  if (partner) { const other = partner.who === "her" ? "him" : "her"; $$("#pickWho button").forEach(b => { if (b.dataset.w === partner.who) b.classList.add("hide"); }); }
+  function show() {
+    $("#pb").style.width = (i / Q.length * 100) + "%";
+    const [q, opts, kind] = Q[i];
+    $("#step").innerHTML = `<p class="small" style="font-weight:800">Choix ${i + 1}/${Q.length}</p><p class="q">${q}</p><div class="opts">${opts.map(([e, t], k) => `<button class="opt" data-k="${k}">${kind === "color" ? `<span class="sw" style="background:${e}"></span>` : `<span class="e">${e}</span>`}${t}</button>`).join("")}</div>`;
+    $$(".opt", $("#step")).forEach(b => b.onclick = () => { b.classList.add("on"); ans[i] = +b.dataset.k; paintHouse(ans); S.good(); setTimeout(() => { i++; i < Q.length ? show() : finish(); }, 350); });
+  }
+  function finish() {
+    $("#pb").style.width = "100%"; $("#game").classList.add("hide"); const R = $("#result"); R.classList.remove("hide"); party();
+    const link = location.origin + location.pathname + (partner ? `#from=${partner.who}&a=${partner.a.join("")}&bw=${me}&b=${ans.join("")}` : `#from=${me}&a=${ans.join("")}`);
+    let h = `<h2 class="title" style="font-size:32px">Ta maison est prête 🏡</h2>`;
+    if (partner) {
+      const same = ans.filter((v, k) => v === partner.a[k]).length, pct = Math.round(same / Q.length * 100);
+      h += `<p class="score">${pct}%</p><p style="font-weight:800">de compatibilité immobilière ${pct >= 75 ? "💞 Les clés sont à vous !" : pct >= 50 ? "😌 Quelques négociations à prévoir" : "😂 Il va falloir deux maisons"}</p><div class="cmp">` +
+        Q.map(([q, opts], k) => { const a = opts[ans[k]], b = opts[partner.a[k]], s = ans[k] === partner.a[k], mine = me === "her" ? avE : avL, his = partner.who === "her" ? avE : avL; return `<div class="row${s ? " same" : ""}"><span class="ql">${q} ${s ? "✅" : ""}</span><div class="ans"><div style="background:#fff7ef">${mine}${a[1]}</div><div style="background:#fff7ef">${his}${b[1]}</div></div>${!s && QUIP[k] ? `<p class="quip">${QUIP[k]}</p>` : ""}</div>`; }).join("") + `</div>`;
+      if (pct >= 75) setTimeout(party, 600);
+    } else {
+      h += `<p class="lead">Maintenant, envoie ta maison à ${me === "her" ? "Abdelkader" : "Khadija"} : il/elle construit la sienne, et vous verrez votre % de compatibilité.</p>`;
+    }
+    h += `<button class="btn" id="send">${partner ? "Envoyer le résultat 💬" : "Lui envoyer ma maison 💬"}</button><button class="btn ghost small" id="redo" style="margin-top:8px">Recommencer</button>`;
+    R.innerHTML = h;
+    $("#send").onclick = () => wa(partner ? `🏡 J'ai construit ma maison aussi ! Compare nos réponses ici : ${link}` : `🏡 J'ai construit la maison de nos rêves ! À toi de construire la tienne, et on verra si on est compatibles 😌 ${link}`);
+    $("#redo").onclick = () => { ans = []; i = 0; R.classList.add("hide"); $("#game").classList.remove("hide"); show(); };
+    R.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  const pB = hp.get("b"), pBW = hp.get("bw");
+  if (partner && pB && pBW && pB.length === Q.length) { me = pBW; ans = [...pB].map(Number); paintHouse(ans); $("#pickWho").classList.add("hide"); $("#intro").innerHTML = `Le verdict est tombé : voici vos deux maisons, comparées 🏡`; setTimeout(finish, 400); }
+  splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>
