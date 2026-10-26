@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0ea5a4">
+<meta name="robots" content="noindex">
+<title>Dr. Baby's Clinic</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A9%BA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:#ecfbfa}
+.title{color:#0f766e}.title em{color:var(--rose)}
+.kicker{color:#0f766e}
+.lv-gate{background:radial-gradient(circle at 50% 30%,#5eead4,#0f766e)}
+.lv-gate .doc{width:130px;height:130px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 14px 30px rgba(0,0,0,.25)}
+.room{background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:20px;text-align:center;position:relative;overflow:hidden}
+.room h2{font-size:24px;color:#0f766e}
+.patient{display:flex;gap:12px;align-items:center;text-align:left}
+.patient .av{width:72px;height:72px}
+.tag{display:inline-block;background:#ccfbf1;color:#0f766e;border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:800;margin:3px 3px 0 0}
+.steps{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.steps span{width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;font-size:16px;opacity:.4}
+.steps span.on{opacity:1;background:#ccfbf1}.steps span.done{opacity:1;background:#2fbf71}
+.heartzone{position:relative;height:220px;display:flex;align-items:center;justify-content:center}
+.heart{font-size:110px;transition:transform .12s;user-select:none}
+.heart.beat{transform:scale(1.25)}
+.bpm{font-family:var(--display);font-size:40px;color:var(--rose)}
+.thermo{position:relative;width:60px;height:240px;margin:10px auto;border-radius:30px;background:#f1f5f9;box-shadow:inset 0 2px 8px rgba(0,0,0,.1);overflow:hidden}
+.thermo i{position:absolute;left:0;right:0;bottom:0;height:10%;background:linear-gradient(0deg,#ef4444,#f97316);transition:height .05s linear}
+.thermo .zone{position:absolute;left:0;right:0;background:rgba(47,191,113,.28);border-top:2px dashed #2fbf71;border-bottom:2px dashed #2fbf71}
+.temp{font-family:var(--display);font-size:44px;color:#ef4444}
+.hold{user-select:none;-webkit-user-select:none;touch-action:none}
+.xray{position:relative;width:min(300px,80vw);aspect-ratio:3/4;margin:0 auto;border-radius:20px;overflow:hidden;background:#0b1220}
+.xray svg{position:absolute;inset:0;width:100%;height:100%}
+.xray canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.dx{display:grid;gap:8px;text-align:left}
+.dx button{background:#f0fdfa;border:2px solid #ccfbf1;border-radius:16px;padding:12px;font-weight:800}
+.dx button.no{background:#ffe7e7;border-color:#ffb3b3;animation:shake .4s}.dx button.yes{background:#e3f8ec;border-color:#7fd6a6}
+.meds{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.med{background:#f0fdfa;border:2px solid #ccfbf1;border-radius:16px;padding:10px;font-weight:800;font-size:13.5px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.med .e{font-size:26px}
+.med.on{background:#ccfbf1;border-color:#14b8a6}
+.rx{background:#fff;border:2px solid #0f766e;border-radius:16px;padding:18px;text-align:left;background-image:repeating-linear-gradient(180deg,transparent 0 29px,#e2f5f3 29px 30px);font-family:var(--hand);font-size:24px;line-height:30px;color:#0f3d3a;position:relative}
+.rx .hd{font-family:var(--display);font-size:16px;line-height:1.3;color:#0f766e;margin-bottom:8px}
+.rx .sig{text-align:right;margin-top:8px}
+.rx .stamp{position:absolute;right:14px;top:14px;border:3px solid var(--rose);color:var(--rose);font-family:var(--display);font-size:13px;border-radius:8px;padding:2px 6px;transform:rotate(10deg);line-height:1.2}
+.stars{font-size:30px;letter-spacing:4px}
+.xh{transform-box:fill-box;transform-origin:center;animation:xb .8s ease-in-out infinite}
+@keyframes xb{50%{transform:scale(1.07)}}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="lv-gate" id="gate">
+  <img class="doc" src="../anniversaire/img/elle.png" alt="">
+  <h1>Dr. Baby's Clinic 🩺</h1>
+  <p style="font-weight:700;max-width:380px">Docteure, un patient vous attend en salle 1. Symptômes graves. Il dit que c'est urgent (il dit toujours ça).</p>
+  <button class="btn" data-enter>Commencer la consultation</button>
+</div>
+<main>
+<section class="scene center" style="padding-top:70px">
+  <div class="wrap stack">
+    <div class="steps" id="steps"><span>📋</span><span>🫀</span><span>🌡️</span><span>🩻</span><span>🔬</span><span>💊</span></div>
+    <div class="room" id="room"></div>
+    <p class="small"><a href="../" style="color:#0f766e;font-weight:800">📚 Après la consultation : réviser tes QCM sur Doctora</a></p>
+  </div>
+</section>
+<footer>Dr. Baby's Clinic · <a href="../nous-deux/">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, S, toast, burstAt, party, reveal, avL, IMG, shuffle, wa } = L;
+  L.setColors(["#14b8a6", "#ff4f7e", "#ffc94d", "#ccfbf1", "#fff"], ["🩺", "💊", "❤️", "💉", "🩹"]);
+  let stars = 0, step = 0;
+  const room = $("#room");
+  const setStep = (k) => { step = k; $$("#steps span").forEach((s, i) => { s.classList.toggle("on", i === k); s.classList.toggle("done", i < k); }); room.animate([{ opacity: 0, transform: "translateY(20px)" }, { opacity: 1, transform: "none" }], { duration: 400 }); };
+  const SYM = ["Tachycardie sévère quand vous entrez dans la pièce", "Sourit tout seul devant son téléphone", "Dit « hbila » 40 fois par jour", "Envie irrésistible de McDo à 2h du matin", "Ne peut pas enlever un bracelet Tommy", "Fièvre persistante depuis le 14 octobre 2024", "Écrit des pavés de 119 messages", "Appelle tout le monde « bebe »"];
+  // 1. dossier
+  function s0() {
+    setStep(0);
+    room.innerHTML = `<h2>📋 Dossier patient</h2><div class="patient" style="margin-top:12px">${avL.replace('class="av"', 'class="av"')}<div><b style="font-family:var(--display);font-size:20px">Abdelkader</b><p class="small">Groupe sanguin : McDo+ · Allergies : la distance · Médecin traitant : vous</p></div></div><p style="font-weight:800;margin-top:14px;text-align:left">Symptômes déclarés :</p><div style="text-align:left">${shuffle(SYM).slice(0, 4).map(s => `<span class="tag">${s}</span>`).join("")}</div><button class="btn" style="margin-top:16px" id="n">Ausculter le patient 🫀</button>`;
+    $("#n").onclick = s1;
+  }
+  // 2. heartbeat rhythm
+  function s1() {
+    setStep(1);
+    room.innerHTML = `<h2>🫀 Auscultation</h2><p class="small">Tape sur le cœur pile quand il bat. 8 battements.</p><div class="heartzone"><div class="heart" id="hrt">❤️</div></div><div class="bpm"><span id="bpm">72</span> bpm</div><p class="small" id="hf">Prête ? Ça commence…</p>`;
+    let beats = 0, hits = 0, bpm = 72, beatAt = 0, tapped = false, timer;
+    const hrt = $("#hrt");
+    const beat = () => {
+      if (beats >= 8) return done();
+      beats++; tapped = false; beatAt = performance.now(); hrt.classList.add("beat"); S.beat(); setTimeout(() => hrt.classList.remove("beat"), 160);
+      timer = setTimeout(beat, Math.max(380, 900 - beats * 50));
+    };
+    hrt.addEventListener("pointerdown", () => {
+      if (tapped || !beatAt) return; tapped = true; const dt = performance.now() - beatAt;
+      if (dt < 300) { hits++; bpm += 14; $("#bpm").textContent = bpm; $("#hf").textContent = ["Parfait !", "Dans le rythme 💓", "Il s'accélère…", "C'est vous qui faites ça ?"][hits % 4]; burstAt(hrt, 10); } else { $("#hf").textContent = "Un peu tard… le cœur bat trop vite 😅"; }
+    });
+    const done = () => { clearTimeout(timer); const st = hits >= 6 ? 3 : hits >= 4 ? 2 : 1; stars += st; $("#hf").innerHTML = `${hits}/8 battements · ${"⭐".repeat(st)}<br><b>Diagnostic partiel :</b> ${bpm} bpm. Tachycardie qui s'aggrave à chaque fois que la docteure s'approche.`; room.insertAdjacentHTML("beforeend", `<button class="btn" style="margin-top:12px" id="n">Prendre la température 🌡️</button>`); $("#n").onclick = s2; S.good(); };
+    setTimeout(beat, 1200);
+  }
+  // 3. thermometer hold
+  function s2() {
+    setStep(2);
+    room.innerHTML = `<h2>🌡️ Température</h2><p class="small">Reste appuyée pour faire monter, lâche dans la zone verte (fièvre d'amour : 38,5 à 39,5°).</p><div class="thermo"><div class="zone" id="zone"></div><i id="merc"></i></div><div class="temp"><span id="tv">36,5</span>°</div><button class="btn hold" id="hold">Appuyer longtemps 👆</button><p class="small" id="tf"></p>`;
+    const min = 35, max = 42, toH = (t) => (t - min) / (max - min) * 100;
+    $("#zone").style.bottom = toH(38.5) + "%"; $("#zone").style.height = (toH(39.5) - toH(38.5)) + "%";
+    let t = 36.5, iv = null, tries = 0;
+    const upd = () => { $("#merc").style.height = toH(t) + "%"; $("#tv").textContent = t.toFixed(1).replace(".", ","); };
+    upd();
+    const start = (e) => { e.preventDefault(); if (iv) return; t = 36.5; iv = setInterval(() => { t += .045; if (t >= max) { t = max; } upd(); if (Math.random() < .2) S.tick(); }, 30); };
+    const stop = () => {
+      if (!iv) return; clearInterval(iv); iv = null; tries++;
+      if (t >= 38.5 && t <= 39.5) { const st = tries === 1 ? 3 : tries === 2 ? 2 : 1; stars += st; S.win(); burstAt($("#tv"), 30); $("#tf").innerHTML = `${"⭐".repeat(st)} <b>${t.toFixed(1).replace(".", ",")}° :</b> fièvre d'amour confirmée. Persistante depuis le 14 octobre 2024.`; $("#hold").outerHTML = `<button class="btn" id="n">Faire une radio 🩻</button>`; $("#n").onclick = s3; }
+      else if (t > 39.5) { S.bad(); $("#tf").textContent = t >= 41.5 ? "🫠 Il a fondu. Réessaie (doucement)." : "Trop chaud ! Réessaie."; }
+      else { S.bad(); $("#tf").textContent = "Pas assez… il cache sa fièvre. Réessaie."; }
+    };
+    const h = $("#hold"); h.addEventListener("pointerdown", start); h.addEventListener("pointerup", stop); h.addEventListener("pointerleave", stop); h.addEventListener("pointercancel", stop);
+  }
+  // 4. x-ray scratch
+  function s3() {
+    setStep(3);
+    room.innerHTML = `<h2>🩻 Radiographie</h2><p class="small">Frotte avec ton doigt pour révéler la radio du thorax.</p><div class="xray" id="xr"><svg viewBox="0 0 300 400"><g stroke="#cfe8ff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".85"><path d="M150 40 V360"/>${[90, 130, 170, 210, 250].map((y, k) => `<path d="M150 ${y} C ${110 - k * 4} ${y - 10}, ${70 - k * 4} ${y + 10}, ${60 - k * 2} ${y + 40}"/><path d="M150 ${y} C ${190 + k * 4} ${y - 10}, ${230 + k * 4} ${y + 10}, ${240 + k * 2} ${y + 40}"/>`).join("")}</g><path d="M150 285 C 100 245, 95 195, 125 185 C 140 180, 150 192, 150 200 C 150 192, 160 180, 175 185 C 205 195, 200 245, 150 285 Z" fill="#ff4f7e" opacity=".95" class="xh"/><text x="150" y="232" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="17" fill="#fff">KHADIJA</text><text x="150" y="382" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="800" font-size="12" fill="#cfe8ff">Corps étranger détecté : une docteure</text></svg><canvas id="cv"></canvas></div><p class="small" id="xf"></p>`;
+    const cv = $("#cv"), c = cv.getContext("2d"), box = $("#xr"); let done = false, mv = 0;
+    const fit = () => { const d = devicePixelRatio || 1; cv.width = box.clientWidth * d; cv.height = box.clientHeight * d; c.setTransform(d, 0, 0, d, 0, 0); c.fillStyle = "#1e293b"; c.fillRect(0, 0, box.clientWidth, box.clientHeight); c.fillStyle = "#64748b"; c.font = "bold 16px Fredoka, sans-serif"; c.textAlign = "center"; c.fillText("👆 frotte ici", box.clientWidth / 2, box.clientHeight / 2); c.globalCompositeOperation = "destination-out"; };
+    fit();
+    let draw = false;
+    const pos = (e) => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    const scr = (e) => { if (!draw || done) return; e.preventDefault(); const [x, y] = pos(e); c.beginPath(); c.arc(x, y, 26, 0, 6.28); c.fill(); if (++mv % 10 === 0) { S.tick(); chk(); } };
+    const chk = () => { const d = c.getImageData(0, 0, cv.width, cv.height).data; let cl = 0, tot = 0; for (let i = 3; i < d.length; i += 4 * 50) { tot++; if (d[i] === 0) cl++; } if (cl / tot > .55 && !done) { done = true; cv.style.transition = "opacity .6s"; cv.style.opacity = 0; stars += 3; S.win(); party(); $("#xf").innerHTML = `⭐⭐⭐ <b>Résultat :</b> un cœur en parfait état… avec un nom gravé dedans. Inopérable.`; room.insertAdjacentHTML("beforeend", `<button class="btn" style="margin-top:12px" id="n">Poser le diagnostic 🔬</button>`); $("#n").onclick = s4; } };
+    cv.addEventListener("pointerdown", e => { draw = true; scr(e); }); cv.addEventListener("pointermove", scr); addEventListener("pointerup", () => draw = false);
+    cv.addEventListener("touchmove", e => e.preventDefault(), { passive: false });
+  }
+  // 5. diagnosis
+  function s4() {
+    setStep(4);
+    const DX = [["🤧 Simple rhume", "Le patient conteste : « Un rhume ne dure pas 2 ans, docteure. »"], ["😴 Manque de sommeil", "Possible (31 055 messages à 2h du matin), mais ce n'est pas la cause principale."], ["🍟 Carence en McDo", "Symptôme réel, mais secondaire."], ["💘 Amour chronique incurable", ""], ["🙄 Il fait semblant", "Le patient est vexé. Il ne fait jamais semblant."]];
+    room.innerHTML = `<h2>🔬 Diagnostic</h2><p class="small">Au vu de l'auscultation, de la température et de la radio, docteure…</p><div class="dx" style="margin-top:12px">${shuffle(DX).map(([d, f]) => `<button data-f="${f}">${d}</button>`).join("")}</div><p class="small" id="df" style="margin-top:10px;font-weight:800"></p>`;
+    let tries = 0;
+    $$(".dx button", room).forEach(b => b.onclick = () => { tries++; if (b.dataset.f) { b.classList.remove("no"); void b.offsetWidth; b.classList.add("no"); S.bad(); $("#df").textContent = "❌ " + b.dataset.f; return; } b.classList.add("yes"); const st = tries === 1 ? 3 : tries === 2 ? 2 : 1; stars += st; S.win(); burstAt(b, 30); $("#df").innerHTML = `${"⭐".repeat(st)} Diagnostic confirmé : <b>amour chronique incurable</b>. Pronostic : 70 ans minimum.`; room.insertAdjacentHTML("beforeend", `<button class="btn" style="margin-top:12px" id="n">Rédiger l'ordonnance 💊</button>`); $("#n").onclick = s5; });
+  }
+  // 6. prescription
+  function s5() {
+    setStep(5);
+    const MEDS = [["🤗", "Câlins", "3 fois par jour, à vie"], ["💋", "Bisous", "à volonté, sans ordonnance"], ["🍟", "McDo à 2h du matin", "1 fois par semaine"], ["😴", "Dodo avant minuit", "(on peut toujours rêver)"], ["☕", "Pause café sur notre banc", "en cas de journée difficile"], ["🎳", "Sortie surprise", "1 fois par mois"], ["💌", "Mot doux surprise", "1 par jour, au hasard"], ["🚫", "Interdiction de bouder", "plus de 10 minutes"], ["📿", "Bracelet Tommy", "à porter en continu"], ["🌙", "Bonne nuit obligatoire", "jamais fâchés"]];
+    const sel = new Set([0, 1]);
+    room.innerHTML = `<h2>💊 Ordonnance</h2><p class="small">Choisis les traitements (minimum 3).</p><div class="meds" style="margin-top:12px">${MEDS.map(([e, t], k) => `<button class="med${sel.has(k) ? " on" : ""}" data-k="${k}"><span class="e">${e}</span>${t}</button>`).join("")}</div><div class="rx" id="rx" style="margin-top:14px"></div><div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;align-items:center"><button class="btn" id="send">Envoyer l'ordonnance au patient 💬</button><button class="btn ghost small" id="again">Nouvelle consultation</button></div>`;
+    const today = new Date().toLocaleDateString("fr-FR");
+    const render = () => { $("#rx").innerHTML = `<span class="stamp">AMOUR<br>CHRONIQUE</span><div class="hd">🩺 Dr. Baby · Clinique du Cœur<br>Patient : Abdelkader · ${today}</div>${[...sel].map(k => `• ${MEDS[k][1]} : ${MEDS[k][2]}`).join("<br>")}<div class="sig">Dr. Baby ✍️<br><span style="font-size:18px">${"⭐".repeat(Math.min(15, stars))} (${stars}/15)</span></div>`; };
+    render();
+    $$(".med", room).forEach(b => b.onclick = () => { const k = +b.dataset.k; sel.has(k) ? sel.delete(k) : sel.add(k); b.classList.toggle("on"); S.pop(); render(); });
+    $("#send").onclick = () => { if (sel.size < 3) return toast("Minimum 3 traitements, docteure 😌"); wa(`🩺 ORDONNANCE · Dr. Baby\nPatient : Abdelkader\nDiagnostic : amour chronique incurable\n\n${[...sel].map(k => `${MEDS[k][0]} ${MEDS[k][1]} : ${MEDS[k][2]}`).join("\n")}\n\nTraitement à suivre à vie. Aucun remboursement possible. 😌`); };
+    $("#again").onclick = () => { stars = 0; s0(); };
+    party();
+  }
+  L.gate("gate", () => s0());
+})();
+</script>
+</body>
+</html>

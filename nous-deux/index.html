@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff4f7e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Nous deux">
+<meta name="robots" content="noindex">
+<title>Nous deux</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%9E%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="../anniversaire/img/elle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:var(--mallow)}
+.hero{min-height:100svh;display:flex;align-items:center;background:radial-gradient(circle at 50% 18%,#fff,#ffd6e3 60%,#ff9ebd)}
+.couple{display:flex;justify-content:center;align-items:center;gap:4px}
+.couple .av{width:96px;height:96px}
+.couple .l{animation:lean 2s ease-in-out infinite}.couple .r{animation:lean 2s ease-in-out infinite reverse}
+@keyframes lean{50%{transform:translateX(8px) rotate(6deg)}}
+.couple .h{font-size:40px;animation:beat 1s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.15)}}
+.hero .title{font-size:clamp(46px,14vw,84px)}
+.counter{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.counter div{background:#fff;border-radius:18px;padding:10px 4px;box-shadow:var(--shadow)}
+.counter b{display:block;font-family:var(--display);font-size:clamp(24px,7vw,34px);color:var(--rose);font-variant-numeric:tabular-nums}
+.counter span{font-size:11.5px;font-weight:800;color:var(--muted)}
+.note{background:#fff;border-radius:22px;padding:16px;box-shadow:var(--shadow)}
+.note .hand{font-family:var(--hand);font-size:28px;color:var(--plum);line-height:1.15}
+.next{font-weight:800;color:var(--choco-2)}
+.group h2{font-size:26px;color:var(--choco);margin:30px 0 12px;display:flex;align-items:center;gap:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (min-width:560px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.tile{position:relative;display:flex;flex-direction:column;gap:6px;border-radius:24px;padding:16px 14px 14px;color:#fff;text-decoration:none;box-shadow:0 14px 28px rgba(0,0,0,.14);min-height:150px;overflow:hidden;transition:transform .2s}
+.tile:active{transform:scale(.96)}
+.tile .e{font-size:38px;line-height:1}
+.tile b{font-family:var(--display);font-size:18px;line-height:1.1}
+.tile small{font-size:12.5px;font-weight:700;opacity:.92;line-height:1.3}
+.tile .badge{position:absolute;top:10px;right:10px;background:#fff;color:var(--rose);font-size:10.5px;font-weight:800;border-radius:999px;padding:3px 8px}
+.tile .seen{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.95);color:#2fbf71;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800}
+.tile::after{content:"";position:absolute;right:-30px;bottom:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.15)}
+.scroll-hint{font-size:14px;color:var(--choco-2);font-weight:800;animation:bob 1.6s infinite}
+.share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+</style>
+</head>
+<body data-home="no">
+<main>
+<section class="hero center">
+  <div class="wrap stack">
+    <div data-reveal class="couple"><img class="av l" src="../anniversaire/img/lui.png" alt="Abdelkader"><span class="h">💞</span><img class="av r" src="../anniversaire/img/elle.png" alt="Khadija"></div>
+    <h1 class="title" data-reveal>Nous <em>deux</em></h1>
+    <p class="lead" data-reveal>Toutes nos pages, nos jeux et nos souvenirs, au même endroit. Ensemble depuis :</p>
+    <div class="counter" data-reveal><div><b id="cd">0</b><span>jours</span></div><div><b id="ch">0</b><span>heures</span></div><div><b id="cm">0</b><span>minutes</span></div><div><b id="cs">0</b><span>secondes</span></div></div>
+    <p class="next" data-reveal id="next"></p>
+    <div class="note" data-reveal><p class="small" style="font-weight:800">💌 Le petit mot du jour</p><p class="hand" id="note"></p></div>
+    <p class="scroll-hint">Descends pour tout voir ↓</p>
+  </div>
+</section>
+<section class="scene" style="padding-top:20px">
+  <div class="wrap" id="groups"></div>
+  <div class="wrap stack center" style="margin-top:34px">
+    <div class="card" data-reveal><p style="font-weight:800">📲 Astuce : ajoute cette page à ton écran d'accueil</p><p class="small" style="margin-top:4px">Dans Safari : bouton Partager ⬆️ puis « Sur l'écran d'accueil ». Notre petite app à nous. 😌</p></div>
+    <div class="share" data-reveal><button class="btn" id="shareBtn">Partager le lien 💬</button></div>
+  </div>
+</section>
+<footer>Fait avec 438 201 messages d'amour · depuis le 14 octobre 2024</footer>
+</main>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, store, S, splitTitles, reveal, wa } = L;
+  const START = new Date("2024-10-14T01:18:00");
+  const tick = () => { let s = Math.floor((Date.now() - START) / 1000); const d = Math.floor(s / 86400); s -= d * 86400; const h = Math.floor(s / 3600); s -= h * 3600; const m = Math.floor(s / 60); s -= m * 60; $("#cd").textContent = d.toLocaleString("fr-FR"); $("#ch").textContent = h; $("#cm").textContent = m; $("#cs").textContent = s; };
+  tick(); setInterval(tick, 1000);
+  (() => { const now = new Date(); let y = now.getFullYear(); let a = new Date(y, 9, 14); if (a < now) a = new Date(++y, 9, 14); const days = Math.ceil((a - now) / 864e5), n = y - 2024; $("#next").textContent = days === 0 ? `🎉 C'est aujourd'hui ! Joyeux ${n} ans !` : `🎂 Nos ${n} ans dans ${days} jour${days > 1 ? "s" : ""} (14 octobre ${y})`; })();
+  const NOTES = ["Kbida ntina. Hbiba ntina.", "Tu es ma pause café préférée ☕", "Mon cœur ne bat que pour toi.", "Même dans 70 ans, tu seras ma hbila.", "Le meilleur swipe de toute ma vie 🐝", "Descend 😌 (pour un câlin)", "Tu me manques déjà. C'est pas normal.", "Ma docteure préférée de l'univers 🩺", "Je te choisis. Encore. Et encore.", "Tu sens bon (c'est elle qui l'a dit en premier) 😌", "Reeee. Buna seară. Je t'aime.", "Un McDo à 2h du matin ? 🍟", "Ta présence a fait de moi une autre personne.", "Safi ana wlit kanbghik. Depuis le 26 octobre 2024.", "Ma vie, mon omri, ma kbidti."];
+  $("#note").textContent = NOTES[Math.floor(Date.now() / 864e5) % NOTES.length];
+  const G = [
+    ["💌 À lire", [["../anniversaire/", "💌", "La lettre des 2 ans", "La lettre, animée, avec nos photos", "#ff8fb1,#ff4f7e"], ["../nous/", "💬", "Nous Wrapped", "2 ans de WhatsApp en chiffres et jeux", "#5b2a86,#2a1f4d"], ["../labo/", "🔬", "Le Labo du Couple", "Personnalités, forces, chantiers", "#2a9d8f,#1f6f6b"], ["../annee/", "📅", "Notre année en mots", "24 mois, 24 cartes", "#a78bfa,#7a5cff", 1], ["../dico/", "📖", "Le dictionnaire de nous", "Kbida, saffy, akhti, hbila…", "#ffb347,#ff7a59", 1], ["../temps/", "⏳", "La machine à remonter le temps", "N'importe quel jour de notre histoire", "#334155,#0f172a", 1]]],
+    ["🎮 À jouer", [["../jeux/", "🎡", "Le Parc d'Amour", "15 attractions et mini-jeux", "#ff6fa5,#ff3d7f"], ["../quiz/", "🎯", "Le grand quiz couple", "À deux : qui connaît le mieux l'autre ?", "#7a5cff,#4f46e5", 1], ["../maison/", "🏡", "La maison de nos rêves", "À deux : notre % de compatibilité", "#f4a261,#e76f51", 1], ["../clinique/", "🩺", "Dr. Baby's Clinic", "Soigne le patient (lui)", "#2dd4bf,#0f766e", 1], ["../blagues/", "🤪", "Nos inside jokes", "Le mur des stickers", "#ffde59,#f59e0b", 1]]],
+    ["🌍 À rêver", [["../bucket/", "🌍", "Notre bucket list", "Tout ce qu'on s'est promis", "#46c2b2,#2a9d8f", 1]]],
+    ["📚 À réviser", [["../", "🐹", "Doctora", "Ton app de révision (QCM & cours)", "#ffc94d,#ff8fb1"]]],
+  ];
+  const seen = new Set(store.get("hub-seen", []));
+  $("#groups").innerHTML = G.map(([t, items]) => `<div class="group"><h2 data-reveal>${t}</h2><div class="grid">${items.map(([href, e, title, d, grad, isNew], k) => `<a class="tile" data-reveal style="--d:${k * .06}s;background:linear-gradient(150deg,${grad})" href="${href}" data-href="${href}"><span class="e">${e}</span><b>${title}</b><small>${d}</small>${seen.has(href) ? `<span class="seen">✓</span>` : isNew ? `<span class="badge">NOUVEAU</span>` : ""}</a>`).join("")}</div></div>`).join("");
+  $$(".tile").forEach(a => a.addEventListener("click", () => { seen.add(a.dataset.href); store.set("hub-seen", [...seen]); S.pop(); }));
+  $("#shareBtn").onclick = () => wa("💞 Toutes nos pages au même endroit : " + location.origin + location.pathname);
+  splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>

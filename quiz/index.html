@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7a5cff">
+<meta name="robots" content="noindex">
+<title>Le Grand Quiz Couple</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AF%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:linear-gradient(180deg,#2a1f4d,#5b2a86);min-height:100vh;color:#fff}
+.title{color:#fff}.title em{color:var(--gold)}.lead{color:#e9e3ff}.small{color:#cfc4ff}
+.kicker{background:#3b2a63;color:var(--gold)}
+.vs{display:flex;align-items:center;justify-content:center;gap:12px}
+.vs .av{width:84px;height:84px}
+.vs b{font-family:var(--display);font-size:34px;color:var(--gold);animation:bob 1.4s infinite}
+.panel{background:#fff;color:var(--ink);border-radius:26px;padding:20px;box-shadow:0 20px 40px rgba(0,0,0,.3);text-align:left}
+.panel .q{font-family:var(--display);font-weight:600;font-size:clamp(20px,5.4vw,24px);margin:6px 0 12px}
+.opts{display:grid;gap:8px}
+.opt{background:#f4f1ff;border:2px solid #e2dbff;border-radius:16px;padding:12px 13px;font-weight:800;font-size:15px;text-align:left;display:flex;align-items:center;gap:10px}
+.opt .e{font-size:24px}
+.opt.good{background:#e3f8ec;border-color:#7fd6a6;animation:okpop .4s}.opt.bad{background:#ffe7e7;border-color:#ffb3b3;animation:shake .4s}.opt.pick{background:#ffe9a8;border-color:#ffc94d}
+.modes{display:grid;gap:12px}
+.mode{background:#fff;color:var(--ink);border-radius:22px;padding:16px;text-align:left;display:flex;gap:12px;align-items:center;box-shadow:0 14px 30px rgba(0,0,0,.25);width:100%}
+.mode .e{font-size:34px}
+.mode b{display:block;font-family:var(--display);font-size:18px}
+.mode small{color:var(--muted);font-weight:700}
+.who{display:flex;gap:10px;justify-content:center}
+.who button{display:flex;flex-direction:column;align-items:center;gap:6px;background:#fff;color:var(--ink);border-radius:22px;padding:12px 20px;font-weight:800}
+.who .av{width:62px;height:62px}
+.pbar{height:10px;border-radius:999px;background:rgba(255,255,255,.2);overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--gold);transition:width .4s}
+.big{font-family:var(--display);font-size:72px;color:var(--gold);line-height:1}
+.hide{display:none!important}
+footer{color:#cfc4ff}
+</style>
+</head>
+<body>
+<main>
+<section class="scene center">
+  <div class="wrap stack">
+    <div data-reveal><div class="vs"><img class="av" src="../anniversaire/img/elle.png" alt=""><b>VS</b><img class="av" src="../anniversaire/img/lui.png" alt=""></div></div>
+    <div data-reveal><span class="kicker">Jeu à deux · chacun sur son téléphone</span></div>
+    <h1 class="title" data-reveal>Le grand quiz <em>couple</em></h1>
+    <p class="lead" data-reveal id="intro">Réponds à 12 questions sur toi, envoie le lien : l'autre doit deviner tes réponses. Qui connaît le mieux l'autre ?</p>
+    <div id="home" class="stack">
+      <p style="font-weight:800">C'est qui ?</p>
+      <div class="who"><button data-w="her"><img class="av" src="../anniversaire/img/elle.png" alt="">Khadija</button><button data-w="him"><img class="av" src="../anniversaire/img/lui.png" alt="">Abdelkader</button></div>
+    </div>
+    <div id="play" class="hide stack"><div class="pbar"><i id="pb"></i></div><div class="panel" id="panel"></div></div>
+    <div id="end" class="hide stack"></div>
+  </div>
+</section>
+<footer>Le Grand Quiz Couple · <a href="../nous-deux/" style="color:var(--gold)">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, S, toast, burstAt, party, splitTitles, reveal, wa } = L;
+  const NAME = { her: "Khadija", him: "Abdelkader" };
+  const Q = [
+    ["Mon plat préféré", [["🍣", "Sushi"], ["🍟", "McDo"], ["🍕", "Pizza"], ["🥘", "Tajine"], ["🫓", "Msemen"]]],
+    ["Ma façon préférée de recevoir de l'amour", [["💬", "Des mots doux"], ["🤗", "Des câlins"], ["📅", "Du temps ensemble"], ["🩺", "Qu'on prenne soin de moi"], ["🎁", "Des petites surprises"]]],
+    ["Quand je suis énervé(e), ce qui me calme", [["🤗", "Un câlin"], ["👂", "Qu'on m'écoute"], ["🌫️", "Du temps seul(e)"], ["🍫", "Manger"], ["😴", "Dormir"]]],
+    ["Mon emoji préféré", [["😌", "😌"], ["🙄", "🙄"], ["😂", "😂"], ["🥹", "🥹"], ["♥️", "♥️"]]],
+    ["Ma sortie idéale", [["🍽️", "Un bon resto"], ["🎬", "Un ciné"], ["🌊", "Une balade sur la corniche"], ["🛋️", "Soirée plaid à la maison"], ["✈️", "Un voyage"]]],
+    ["Mon moment préféré de la journée", [["🌅", "Le matin"], ["☀️", "L'après-midi"], ["🌙", "Le soir"], ["🦉", "2h du matin"]]],
+    ["Ma plus grande peur", [["🕷️", "Les araignées"], ["💔", "Perdre l'autre"], ["📚", "Rater un examen / un projet"], ["⏰", "Être en retard"], ["🪳", "Les cafards"]]],
+    ["Le super-pouvoir que je voudrais", [["🕊️", "Voler"], ["🌀", "La téléportation (fini la distance)"], ["🧠", "Lire dans les pensées"], ["⏸️", "Arrêter le temps"]]],
+    ["Ce que je préfère chez toi", [["😊", "Ton sourire"], ["😂", "Ton humour"], ["🧸", "Ta tendresse"], ["🧠", "Ton intelligence"], ["🎶", "Ta voix"]]],
+    ["Ma destination de rêve", [["🏝️", "Bali"], ["🕌", "Istanbul"], ["🗾", "Japon"], ["🐠", "Maldives"], ["🗼", "Paris"]]],
+    ["Ce que je fais quand tu ne réponds pas", [["⬆️", "J'écris « up »"], ["📍", "« Fink ? »"], ["😤", "Je boude"], ["😌", "Je patiente (vraiment)"]]],
+    ["Mon souvenir préféré de nous", [["🍟", "Le McDo à 2h du matin"], ["💋", "Le premier bisou"], ["☕", "Les pauses café"], ["🎳", "Le bowling"], ["💌", "La lettre des 2 ans"]]],
+  ];
+  const GT = ["Son plat préféré ?", "Sa façon préférée de recevoir de l'amour ?", "Quand il/elle est énervé(e), qu'est-ce qui le/la calme ?", "Son emoji préféré ?", "Sa sortie idéale ?", "Son moment préféré de la journée ?", "Sa plus grande peur ?", "Le super-pouvoir qu'il/elle voudrait ?", "Ce qu'il/elle préfère chez toi ?", "Sa destination de rêve ?", "Ce qu'il/elle fait quand tu ne réponds pas ?", "Son souvenir préféré de vous deux ?"];
+  const hp = new URLSearchParams(location.hash.slice(1)); const pFrom = hp.get("from"), pA = hp.get("a");
+  const guessMode = pFrom && pA && pA.length === Q.length;
+  let me = null, i = 0, ans = [], score = 0;
+  if (guessMode) {
+    $("#intro").innerHTML = `<b>${NAME[pFrom]}</b> a répondu à 12 questions sur elle/lui. À toi de deviner ! 🎯`;
+    $$("#home .who button").forEach(b => b.dataset.w === pFrom && b.classList.add("hide"));
+  }
+  $$("#home .who button").forEach(b => b.onclick = () => { me = b.dataset.w; $("#home").classList.add("hide"); $("#play").classList.remove("hide"); show(); S.pop(); });
+  function show() {
+    $("#pb").style.width = (i / Q.length * 100) + "%";
+    const [q, opts] = Q[i], target = guessMode ? +pA[i] : null;
+    const title = guessMode ? GT[i] : q;
+    $("#panel").innerHTML = `<p class="small" style="font-weight:800;color:var(--muted)">${guessMode ? `Devine · ${NAME[pFrom]}` : "À propos de toi"} · ${i + 1}/${Q.length}</p><p class="q">${title}</p><div class="opts">${opts.map(([e, t], k) => `<button class="opt" data-k="${k}"><span class="e">${e}</span>${t}</button>`).join("")}</div>`;
+    $$(".opt", $("#panel")).forEach(b => b.onclick = () => {
+      if ($("#panel").dataset.l) return; $("#panel").dataset.l = 1; const k = +b.dataset.k;
+      if (guessMode) { const ok = k === target; $$(".opt", $("#panel"))[target].classList.add("good"); if (ok) { score++; S.good(); burstAt(b, 18); } else { b.classList.add("bad"); S.bad(); } }
+      else { ans[i] = k; b.classList.add("pick"); S.pop(); }
+      setTimeout(() => { delete $("#panel").dataset.l; i++; i < Q.length ? show() : end(); }, guessMode ? 1300 : 350);
+    });
+  }
+  function end() {
+    $("#pb").style.width = "100%"; $("#play").classList.add("hide"); const E = $("#end"); E.classList.remove("hide");
+    const base = location.origin + location.pathname;
+    if (guessMode) {
+      const r = score >= 11 ? "Âme sœur certifiée 💞" : score >= 8 ? "Tu la/le connais par cœur 😍" : score >= 5 ? "Pas mal ! Encore quelques McDo à 2h pour réviser 🍟" : "Il va falloir parler encore plus (si c'est possible) 😂";
+      E.innerHTML = `<p class="big">${score}/12</p><p style="font-weight:800;font-size:18px">${r}</p><button class="btn" id="tell">Lui envoyer mon score 💬</button><button class="btn ghost" id="mine">À mon tour : répondre sur moi</button>`;
+      if (score >= 8) party();
+      $("#tell").onclick = () => wa(`🎯 J'ai eu ${score}/12 à ton quiz ! ${r}`);
+      $("#mine").onclick = () => { location.hash = ""; location.reload(); };
+    } else {
+      const link = base + `#from=${me}&a=${ans.join("")}`;
+      E.innerHTML = `<p class="big">✅</p><p style="font-weight:800;font-size:18px">Tes réponses sont prêtes !</p><p class="lead">Envoie le lien à ${me === "her" ? "Abdelkader" : "Khadija"} : il/elle doit deviner tes 12 réponses.</p><button class="btn" id="send">Envoyer le défi 💬</button>`;
+      $("#send").onclick = () => wa(`🎯 Défi : est-ce que tu me connais vraiment ? Devine mes 12 réponses ici 👉 ${link}`);
+      party();
+    }
+  }
+  splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>

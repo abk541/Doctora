@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a9d8f">
+<meta name="robots" content="noindex">
+<title>Notre Bucket List</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8D%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/love.css">
+<style>
+body{background:#effaf6}
+.hero{background:radial-gradient(circle at 50% 20%,#fff,#d1f2e6 70%)}
+.globe{font-size:100px;display:inline-block;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.prog{background:#fff;border-radius:999px;height:22px;overflow:hidden;box-shadow:inset 0 2px 6px rgba(0,0,0,.08)}
+.prog i{display:block;height:100%;width:0;border-radius:999px;background:repeating-linear-gradient(45deg,#2a9d8f 0 12px,#46c2b2 12px 24px);transition:width .8s cubic-bezier(.2,.9,.25,1)}
+.cat h2{font-size:24px;color:#1f6f6b;margin:26px 0 10px;display:flex;align-items:center;gap:8px}
+.items{display:grid;gap:10px}
+.it{display:flex;gap:12px;align-items:center;background:#fff;border-radius:20px;padding:13px 14px;box-shadow:var(--shadow);text-align:left;width:100%;transition:transform .2s}
+.it:active{transform:scale(.98)}
+.it .e{font-size:28px;flex:none;width:44px;height:44px;border-radius:14px;background:#effaf6;display:grid;place-items:center}
+.it b{display:block;font-family:var(--display);font-size:17px;color:var(--ink)}
+.it small{display:block;font-size:12.5px;color:var(--muted);font-weight:700;margin-top:2px}
+.it .ck{margin-left:auto;flex:none;width:32px;height:32px;border-radius:50%;border:3px solid #cfe3de;display:grid;place-items:center;font-size:16px;color:transparent}
+.it.done{background:#e6f9ef}
+.it.done b{text-decoration:line-through;text-decoration-color:rgba(47,191,113,.6);text-decoration-thickness:3px}
+.it.done .ck{background:#2fbf71;border-color:#2fbf71;color:#fff}
+.it .who{font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;margin-left:4px}
+.it .who.her{background:#ffe1ea;color:#ff4f7e}.it .who.him{background:#dce8ff;color:#4f8bff}.it .who.both{background:#fff4cf;color:#b7791f}
+.add{display:flex;gap:8px}
+.add input{flex:1;border:2px solid #cfe3de;border-radius:999px;padding:12px 16px;font-size:16px;outline:none}
+.wheel-box{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:0 auto}
+.wheel{position:absolute;inset:0;border-radius:50%;border:8px solid #fff;box-shadow:var(--shadow);transition:transform 4s cubic-bezier(.12,.75,.15,1);overflow:hidden}
+.wheel span{position:absolute;left:50%;top:50%;width:46%;height:20px;margin-top:-10px;transform-origin:0 50%;font-size:22px;text-align:right;padding-right:8px}
+.pointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:34px;z-index:3}
+.hub{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px;border-radius:50%;background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;font-size:24px;z-index:2}
+.pick{font-family:var(--display);font-size:22px;color:#1f6f6b;min-height:1.4em}
+</style>
+</head>
+<body>
+<main>
+<section class="scene hero center">
+  <div class="wrap stack">
+    <div data-reveal><span class="globe">🌍</span></div>
+    <div data-reveal><span class="kicker" style="color:#1f6f6b">Tout ce qu'on s'est promis</span></div>
+    <h1 class="title" data-reveal>Notre <em>bucket list</em></h1>
+    <p class="lead" data-reveal>Chaque envie retrouvée dans nos messages (avec qui l'a proposée et quand), plus tes propres idées. Coche quand c'est fait ✅</p>
+    <div data-reveal><div class="prog"><i id="pbar"></i></div><p class="small" style="font-weight:800;margin-top:6px" id="ptxt"></p></div>
+  </div>
+</section>
+<section class="scene" style="padding-top:10px">
+  <div class="wrap" id="list"></div>
+  <div class="wrap stack" style="margin-top:26px">
+    <div class="card" data-reveal><p style="font-weight:800;margin-bottom:8px">➕ Ajouter une envie</p><div class="add"><input id="newIt" placeholder="Ex : voir les aurores boréales" maxlength="60" aria-label="Nouvelle envie"><button class="btn small" id="addBtn">Ajouter</button></div></div>
+  </div>
+</section>
+<section class="scene center" style="background:#d9f3ea">
+  <div class="wrap stack">
+    <div data-reveal><span class="kicker" style="color:#1f6f6b">On fait quoi ensuite ?</span></div>
+    <h2 class="title" data-reveal>La roue de la <em>prochaine aventure</em></h2>
+    <div class="wheel-box" data-reveal><div class="pointer">🔻</div><div class="wheel" id="wheel"></div><div class="hub">🌍</div></div>
+    <div data-reveal><button class="btn" id="spin">Tourner 🎡</button></div>
+    <p class="pick" id="pick"></p>
+    <div data-reveal><button class="btn ghost small" id="share">Envoyer notre liste sur WhatsApp 💬</button></div>
+  </div>
+</section>
+<footer>Notre Bucket List · <a href="../nous-deux/">retour à l'accueil 🏠</a></footer>
+</main>
+<script src="../shared/love.js"></script>
+<script>
+(() => {
+  const { $, $$, S, toast, burstAt, party, splitTitles, reveal, store, wa } = L;
+  const CATS = [
+    ["✈️ Voyages", [["v1", "🌏", "Voyager ensemble", "« Je veux qu'on voyage ensemble » · elle, janv. 2025", "her"], ["v2", "🕌", "Istanbul", "« Nmshiw istanbul ? » · elle, mars 2025", "her"], ["v3", "🏝️", "Bali", "« Khsna nmshiw l bali » · elle, mai 2025", "her"], ["v4", "🇪🇸", "L'Espagne", "« Nmshiw ntfrju fiha en espagne » · elle, avril 2025", "her"], ["v5", "🇹🇷", "La Turquie", "elle, août 2026", "her"], ["v6", "🌴", "Marrakech à deux", "« Ndiru marrakech ? » · elle, août 2026", "her"], ["v7", "🏖️", "Agadir ou le Nord", "lui, août 2026", "him"], ["v8", "🇷🇴", "La Roumanie, là où tout a commencé", "« Twhcht la Roumanie » · elle", "her"]]],
+    ["🎉 Sorties", [["s1", "🍟", "McDo à 2h du matin", "Le premier rendez-vous, 11 déc. 2024", "both", 1], ["s2", "☕", "Pause café sur notre banc", "Nearshore, nos minutes volées", "both", 1], ["s3", "🎳", "Une journée bowling", "Fait ! Fin de l'été 2026", "both", 1], ["s4", "🦒", "Une journée au zoo", "« Je veux aller au zoo m3ak » · lui, oct. 2025", "him", 1], ["s5", "🎬", "Une soirée ciné", "« Bghit nmshi l cinema » · elle, mars 2026", "her"], ["s6", "⚽", "Un match au stade ensemble", "« Bebe anmchiw ntfrjo f match » · lui, avril 2025", "him"], ["s7", "🔐", "Un escape game", "« …walakin nti maghay3jbokch » · lui, août 2026 😂", "him"], ["s8", "🏖️", "La plage et du reggaeton", "lui, mars 2025", "him"], ["s9", "🛍️", "Shopping ensemble", "« Ta tji wnmchiw shopping ana wyak » · lui", "him"], ["s10", "🍣", "Un resto de sushis (pour elle)", "58 mentions de sushi par elle 🍣", "her"], ["s11", "🍽️", "Un dîner dans un très bon resto", "lui, Saint-Valentin 2025", "him"]]],
+    ["💞 Nous", [["n1", "📸", "« La même photo » le jour du mariage", "« On fera la même photo quand on se mariera » · elle, 10 déc. 2024", "her"], ["n2", "💍", "La demande : un dîner, une bague fine, la question", "elle, 3 mai 2025 (c'est noté 😌)", "her"], ["n3", "👩‍🍳", "Cuisiner notre premier vrai repas ensemble", "La lettre des 2 ans", "him"], ["n4", "🛒", "Nos premières courses pour notre chez-nous", "La lettre des 2 ans", "him"], ["n5", "🎨", "Se disputer gentiment sur la couleur d'un mur", "La lettre des 2 ans (elle gagnera)", "both"], ["n6", "📖", "Relire notre premier message ensemble", "« Reeee… buna ziwa »", "both"]]],
+    ["🏠 Grands projets", [["g1", "💒", "Le mariage", "548 messages sur le sujet à vous deux", "both"], ["g2", "🏡", "Notre maison", "« Notre maison », « chez nous » : 195 fois", "both"], ["g3", "👶", "Des bébés (combien ? on verra sans devenir fous)", "107 fois par lui, 36 par elle", "both"], ["g4", "👴👵", "Vieillir ensemble et raconter « McDo à 2h » aux petits-enfants", "La lettre des 2 ans", "both"]]],
+  ];
+  let done = new Set(store.get("bucket-done", null) || CATS.flatMap(c => c[1]).filter(x => x[5]).map(x => x[0]));
+  let custom = store.get("bucket-custom", []);
+  const all = () => [...CATS.flatMap(c => c[1]), ...custom.map((t, i) => ["c" + i, "⭐", t, "Ajouté par toi", "her"])];
+  const render = () => {
+    const cats = [...CATS, ...(custom.length ? [["⭐ Nos idées", custom.map((t, i) => ["c" + i, "⭐", t, "Ajouté par toi", "her"])]] : [])];
+    $("#list").innerHTML = cats.map(([c, items]) => `<div class="cat"><h2>${c}</h2><div class="items">${items.map(([id, e, t, src, who]) => `<button class="it${done.has(id) ? " done" : ""}" data-id="${id}"><span class="e">${e}</span><span><b>${t}</b><small>${src}<span class="who ${who}">${who === "her" ? "elle" : who === "him" ? "lui" : "nous"}</span></small></span><span class="ck">✓</span></button>`).join("")}</div></div>`).join("");
+    $$(".it").forEach(b => b.addEventListener("click", () => { const id = b.dataset.id; if (done.has(id)) done.delete(id); else { done.add(id); burstAt(b, 20); S.good(); } b.classList.toggle("done"); store.set("bucket-done", [...done]); prog(); }));
+    prog(); wheel();
+  };
+  const prog = () => { const A = all(), d = A.filter(x => done.has(x[0])).length; $("#pbar").style.width = (d / A.length * 100) + "%"; $("#ptxt").textContent = `${d}/${A.length} réalisés ${d === A.length ? "🏆 Il faut une nouvelle liste !" : "· encore " + (A.length - d) + " aventures à vivre"}`; if (d === A.length) party(); };
+  const wheel = () => { const todo = all().filter(x => !done.has(x[0])).slice(0, 12), n = Math.max(todo.length, 1), deg = 360 / n; const COLS = ["#bff0dc", "#ffd6e3", "#fff1c2", "#d9ecff", "#e7e0ff", "#ffe1d1"]; $("#wheel").style.background = `conic-gradient(${todo.map((_, i) => `${COLS[i % 6]} ${i * deg}deg ${(i + 1) * deg}deg`).join(",") || "#eee 0 360deg"})`; $("#wheel").innerHTML = todo.map((x, i) => `<span style="transform:rotate(${i * deg + deg / 2 - 90}deg)">${x[1]}</span>`).join(""); $("#wheel").dataset.items = JSON.stringify(todo.map(x => x[1] + " " + x[2])); };
+  let rot = 0, busy = false;
+  $("#spin").onclick = () => { const items = JSON.parse($("#wheel").dataset.items || "[]"); if (busy || !items.length) return; busy = true; const n = items.length, deg = 360 / n, t = Math.floor(Math.random() * n), want = 360 - (t * deg + deg / 2); rot += 360 * 5 + ((want - (rot % 360)) + 360) % 360; $("#wheel").style.transform = `rotate(${rot}deg)`; let k = 0; const iv = setInterval(() => { S.tick(); if (++k > 24) clearInterval(iv); }, 150); $("#pick").textContent = "…"; setTimeout(() => { busy = false; S.win(); $("#pick").textContent = "Prochaine aventure : " + items[t] + " !"; burstAt($("#pick"), 40); }, 4100); };
+  $("#addBtn").onclick = () => { const v = $("#newIt").value.trim(); if (!v) return toast("Écris une envie 🥹"); custom.push(v); store.set("bucket-custom", custom); $("#newIt").value = ""; render(); S.good(); toast("⭐ Ajouté à notre liste !"); };
+  $("#share").onclick = () => { const A = all(); wa("🌍 Notre bucket list (" + A.filter(x => done.has(x[0])).length + "/" + A.length + ") :\n" + A.map(x => (done.has(x[0]) ? "✅ " : "⬜ ") + x[2]).join("\n") + "\n\nOn coche la prochaine quand ? 😌"); };
+  render(); splitTitles(); reveal();
+})();
+</script>
+</body>
+</html>
