@@ -1,19 +1,15 @@
 {
-  "name": "Dr.Baby",
+  "name": "Dr.Baby · Révision internat",
   "short_name": "Dr.Baby",
-  "description": "QCM médical privé, local et doux.",
+  "description": "QCM internat/résidanat vérifiés, cours et suivi de progression, avec un chat qui te soutient.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f8f2e8",
-  "theme_color": "#111c1a",
+  "background_color": "#fff4f7",
+  "theme_color": "#ff6f9a",
   "orientation": "any",
+  "lang": "fr",
   "icons": [
-    {
-      "src": "./assets/brand/hamster.png",
-      "sizes": "526x474",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    { "src": "./assets/brand/hamster.png", "sizes": "526x474", "type": "image/png", "purpose": "any" }
   ]
 }
