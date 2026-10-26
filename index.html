@@ -1,55 +1,51 @@
 <!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#111c1a" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Dr.Baby" />
-    <meta name="description" content="Révision médicale privée, locale et douce." />
-    <title>Dr.Baby</title>
-    <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="icon" href="./assets/brand/hamster.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./assets/brand/hamster.png" />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <div class="boot" id="boot" aria-hidden="true">
-      <div class="boot-mark"><img src="./assets/brand/hamster.png" alt="" /></div>
-      <p>préparation du cabinet Dr.Baby</p>
-    </div>
+<html lang="fr" data-theme="rose">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff6f9a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Dr.Baby">
+<meta name="description" content="Révision internat/résidanat : QCM vérifiés, cours et suivi, avec un chat qui te soutient.">
+<meta name="robots" content="noindex">
+<title>Dr.Baby</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/brand/hamster.png" type="image/png">
+<link rel="apple-touch-icon" href="./assets/brand/hamster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<script>try{var t=JSON.parse(localStorage.getItem("doctora_v2")||"{}").settings;t=t&&t.theme||"rose";if(t==="auto")t=matchMedia("(prefers-color-scheme: dark)").matches?"nuit":"rose";document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <button class="brand" data-go="home" aria-label="Accueil"><img src="./assets/brand/hamster.png" alt=""><span>Dr.<b>Baby</b></span></button>
+  <div class="top-right">
+    <span class="streak" id="streak" title="Jours de révision d'affilée">🔥 0</span>
+    <button class="icon-btn" data-go="settings" aria-label="Réglages">⚙️</button>
+  </div>
+</header>
 
-    <div class="app" id="app">
-      <div class="ambient" aria-hidden="true">
-        <span class="line line-a"></span>
-        <span class="line line-b"></span>
-        <span class="glow glow-a"></span>
-        <span class="glow glow-b"></span>
-      </div>
+<main id="screen" tabindex="-1" aria-live="polite"></main>
 
-      <aside class="rail" aria-label="Navigation">
-        <button class="rail-logo" data-route="home" aria-label="Accueil"><img src="./assets/brand/hamster.png" alt="" /></button>
-        <button class="rail-item active" data-route="home"><span>⌂</span><em>Accueil</em></button>
-        <button class="rail-item" data-route="study"><span>✦</span><em>Réviser</em></button>
-        <button class="rail-item" data-route="courses"><span>▤</span><em>Cours</em></button>
-        <button class="rail-item" data-route="errors"><span>↻</span><em>Erreurs</em></button>
-        <button class="rail-item" data-route="progress"><span>◌</span><em>Score</em></button>
-        <button class="rail-item" data-route="garden"><span>♡</span><em>Secret</em></button>
-      </aside>
+<nav class="tabs" aria-label="Navigation">
+  <button data-go="home" data-tab="home"><span>🏠</span>Accueil</button>
+  <button data-go="subjects" data-tab="subjects"><span>📚</span>Réviser</button>
+  <button data-go="review" data-tab="review"><span>🔁</span>Erreurs<i class="badge" id="dueBadge" hidden></i></button>
+  <button data-go="stats" data-tab="stats"><span>📊</span>Stats</button>
+  <button data-go="courses" data-tab="courses"><span>📄</span>Cours</button>
+</nav>
 
-      <main id="screen" class="screen" aria-live="polite"></main>
-    </div>
+<div class="cat" id="cat" aria-hidden="true">
+  <div class="bubble" id="bubble"></div>
+  <button class="cat-btn" id="catBtn" tabindex="-1" aria-label="Le chat"><img src="./assets/brand/hamster.png" alt=""></button>
+</div>
+<div id="hearts" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
-    <div id="reaction" class="reaction hidden" role="status" aria-live="assertive">
-      <article class="reaction-card">
-        <img id="reactionImage" alt="" />
-        <p id="reactionMessage"></p>
-      </article>
-    </div>
-
-    <div id="particles" class="particles" aria-hidden="true"></div>
-    <script src="./app.js"></script>
-  </body>
+<noscript><p style="padding:24px">Active JavaScript pour utiliser Dr.Baby 🐱</p></noscript>
+<script src="./app.js"></script>
+</body>
 </html>

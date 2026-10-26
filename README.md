@@ -1,101 +1,55 @@
-# Dr.Baby Web
+# Dr.Baby (Doctora)
 
-Static iPad Safari/PWA version of the private study gift.
+Application de révision pour l'internat/résidanat (programme FMPR), en HTML/CSS/JS statique, hébergée sur GitHub Pages et installable sur iPhone/iPad (Safari → Partager → « Sur l'écran d'accueil »).
 
-## Host On GitHub Pages
+Le reste du dépôt contient nos pages perso (`nous-deux/`, `anniversaire/`, `jeux/`…), servies à côté de l'app.
 
-1. Commit the contents of `DoctoraWeb` to a GitHub repository.
-2. Enable GitHub Pages for the branch/folder you publish.
-3. Open the Pages URL on the iPad in Safari.
-4. Use Safari Share > Add to Home Screen for the best app-like feel.
+## Fichiers
 
-## Question Bank
+| Fichier | Rôle |
+| --- | --- |
+| `index.html` | coquille de l'app (en-tête, onglets, chat flottant) |
+| `app.js` | toute la logique : écrans, sessions, répétition espacée, stats, réglages |
+| `styles.css` | styles et thèmes (Rose, Menthe, Lavande, Nuit, Auto) |
+| `sw.js` | service worker : réseau d'abord pour le code et les données, cache d'abord pour les PDF et images |
+| `data/qcm.json` | banque de QCM |
+| `data/courses.json` | liste des PDF de `content/cours/` |
+| `assets/brand/hamster.png` | le chat qui flotte (oui, le fichier s'appelle hamster) |
 
-The app now loads real bundled QCM from:
+## Banque de questions (`data/qcm.json`)
 
-`data/qcm_concours_medical_difficulties.json`
+```json
+{
+  "meta": { "version": 2, "categories": [{ "id": "urg", "name": "Urgences", "emoji": "🚑" }], "levels": ["easy", "medium", "hard", "god"] },
+  "questions": [
+    { "id": "urg-001", "cat": "urg", "chapter": "Pneumothorax", "level": "easy",
+      "q": "…", "options": ["bonne réponse", "faux", "faux", "faux"], "answer": 0, "explain": "…" }
+  ]
+}
+```
 
-Expected shape:
+- Une seule bonne réponse par question, 4 propositions. L'ordre est mélangé à l'affichage, donc la bonne réponse peut rester en position 0 dans le fichier.
+- `level` : `easy`, `medium`, `hard`, `god` (affiché « Dr. House »).
+- Matières : `urg` Urgences, `med` Pathologie médicale, `chir` Pathologie chirurgicale, `ana` Anatomie, `bio` Biologie.
+- Les identifiants servent à la progression : ne pas renuméroter les questions existantes. Pour en ajouter, prendre l'identifiant suivant de la matière.
+- Les questions s'appuient sur des notions consensuelles des cours du programme. Les chiffres qui dépendent de recommandations récentes ont été évités autant que possible.
 
-- `questions[].question`
-- `questions[].answer_a` through `questions[].answer_d`
-- `questions[].correct_answer`, using `A`, `B`, `C`, or `D`
-- `questions[].difficulty`, using `easy`, `medium`, `hard`, or `god_level`
-- `questions[].explanation`
-- `questions[].category`
-- `questions[].topic`
+## Fonctionnalités
 
-The session engine is adaptive:
+- **Session rapide** : 10 questions adaptatives. Le niveau monte avec la série de bonnes réponses (0-1 facile, 2-3 moyen, 4-5 difficile, 6+ Dr. House) et des erreurs à revoir sont glissées dedans.
+- **Par matière / chapitre**, avec un filtre de niveau.
+- **Examen blanc** chronométré (20, 40, 60 ou 100 questions, 1 min/question), corrigé à la fin.
+- **Mes erreurs** : répétition espacée (boîtes de Leitner). Une question ratée revient tout de suite, puis à 2, 4, 8, 16 et 32 jours quand elle est réussie.
+- **Favoris** et **signalement** d'une question (envoyé par WhatsApp).
+- **Stats** : réussite par matière et par niveau, 7 derniers jours, chapitres à retravailler, série de jours.
+- **Cours** : les PDF du programme.
+- **Réglages** : thème, sons, chat, objectif quotidien, surnom, sauvegarde/restauration de la progression (fichier JSON), remise à zéro.
+- **Mots secrets** débloqués au fil des réponses.
 
-- streak `0-1`: easy
-- streak `2-3`: medium
-- streak `4-5`: hard
-- streak `6+`: god_level
+## Progression
 
-After every two correct answers in a row, the next question is selected from the next harder level. A wrong answer resets the streak and brings the next question back down.
+Tout est stocké en local dans le navigateur, clé `doctora_v2`. Il n'y a pas de compte ni de serveur. Penser à exporter une sauvegarde depuis les Réglages avant de changer de téléphone.
 
-The UI never asks her to upload anything. It only reads bundled local files published with the app.
+## Mise à jour
 
-## Courses
-
-The `Cours` tab loads the bundled PDF library from:
-
-`data/courses.json`
-
-Course PDFs live in:
-
-`content/cours/`
-
-The current bundled course files are:
-
-- `urgences_2018.pdf`
-- `medicale_2018.pdf`
-- `chirurgicale_2018.pdf`
-- `anatomie_2018.pdf`
-- `anatomie_schema.pdf`
-- `biologie_2018.pdf`
-- `qe_residanat_internat.pdf`
-- `qe_residanat_classees.pdf`
-
-To add a course, place the PDF in `content/cours/`, then add an entry to `data/courses.json`. No Swift, upload flow, account, or internet source is involved.
-
-## Progress Saving
-
-This is a static web app, so there is no server account or database.
-
-Progress saves automatically in Safari using local browser storage:
-
-- XP
-- streak
-- correct answers
-- wrong QCM marked `À revoir`
-- recent history
-
-The Progress screen also creates a `Sauvegarde` code. Copy it to Notes if you want a manual backup. Paste it into Restore to recover progress later.
-
-## Medical Reliability
-
-The correction screen uses only the bundled JSON:
-
-- her selected answer
-- the correct answer
-- the bundled explanation
-- the local source file, page, and topic
-
-If a verified explanation is missing, the app says:
-
-`Je n’ai pas trouvé d’explication fiable dans les documents intégrés.`
-
-The cute joke layer is separate from the medical correction layer.
-
-## Mascot Asset
-
-The only reaction/logo image currently used by the app is:
-
-`assets/brand/hamster.png`
-
-The older private reaction images are not referenced by the app or cache. The hamster is used as the app icon, the header mascot, and the answer reaction image.
-
-## Privacy Note
-
-If the GitHub repository is public, the bundled mascot/PDF-derived question data are public too. Use a private repository or private hosting if those assets must stay private.
+Après une modification de `app.js`, `styles.css` ou `data/qcm.json`, incrémenter `CACHE_NAME` dans `sw.js`.

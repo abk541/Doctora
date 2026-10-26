@@ -5,42 +5,48 @@
       "title": "Urgences 2018",
       "category": "Urgences",
       "file": "./content/cours/urgences_2018.pdf",
-      "summary": "Cours d’urgences intégré localement pour les révisions rapides et les retours aux sources."
+      "summary": "Cours d’urgences intégré localement pour les révisions rapides et les retours aux sources.",
+      "cat": "urg"
     },
     {
       "id": "cours_medicale_2018",
       "title": "Pathologie médicale 2018",
       "category": "Médecine",
       "file": "./content/cours/medicale_2018.pdf",
-      "summary": "Support de pathologie médicale pour revoir les chapitres avant les QCM."
+      "summary": "Support de pathologie médicale pour revoir les chapitres avant les QCM.",
+      "cat": "med"
     },
     {
       "id": "cours_chirurgicale_2018",
       "title": "Pathologie chirurgicale 2018",
       "category": "Chirurgie",
       "file": "./content/cours/chirurgicale_2018.pdf",
-      "summary": "Cours de pathologie chirurgicale intégré dans l’app, consultable sans upload."
+      "summary": "Cours de pathologie chirurgicale intégré dans l’app, consultable sans upload.",
+      "cat": "chir"
     },
     {
       "id": "cours_anatomie_2018",
       "title": "Anatomie 2018",
       "category": "Anatomie",
       "file": "./content/cours/anatomie_2018.pdf",
-      "summary": "Cours d’anatomie pour les bases et les rappels structurés."
+      "summary": "Cours d’anatomie pour les bases et les rappels structurés.",
+      "cat": "ana"
     },
     {
       "id": "cours_anatomie_schema",
       "title": "Anatomie - Schémas",
       "category": "Anatomie",
       "file": "./content/cours/anatomie_schema.pdf",
-      "summary": "Support visuel d’anatomie avec schémas, utile quand le cerveau dit wa laaaa."
+      "summary": "Support visuel d’anatomie avec schémas, utile quand le cerveau dit wa laaaa.",
+      "cat": "ana"
     },
     {
       "id": "cours_biologie_2018",
       "title": "Biologie 2018",
       "category": "Biologie",
       "file": "./content/cours/biologie_2018.pdf",
-      "summary": "Cours de biologie intégré pour consolider les notions utiles aux QCM."
+      "summary": "Cours de biologie intégré pour consolider les notions utiles aux QCM.",
+      "cat": "bio"
     },
     {
       "id": "cours_qe_internat",
